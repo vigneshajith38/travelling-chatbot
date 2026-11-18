@@ -1,0 +1,31 @@
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm
+
+# Python & Backend
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+wanderwise.db
+*.sqlite3
+.pytest_cache/
+.coverage
+htmlcov/
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+
+# System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
