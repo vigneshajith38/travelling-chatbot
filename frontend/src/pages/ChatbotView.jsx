@@ -693,8 +693,8 @@ export default function ChatbotView() {
                               📍 Click markers to preview stops, timings, and road curvature routes:
                             </span>
                             <InteractiveMap
-                              activities={msg.structured_data.itinerary.flatMap(d => d.activities)}
-                              height="340px"
+                              activities={msg.structured_data.itinerary.flatMap(d => (d.activities || []).map(a => ({ ...a, day_number: d.day_number })))}
+                              height="380px"
                             />
                           </div>
                         )}

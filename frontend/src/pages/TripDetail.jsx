@@ -197,8 +197,8 @@ export default function TripDetail() {
     );
   }
 
-  // All activities flattened for the interactive map
-  const allActivities = trip.itinerary_days?.flatMap(d => d.activities) || [];
+  // All activities flattened for the interactive map with explicit day_number
+  const allActivities = trip.itinerary_days?.flatMap(d => (d.activities || []).map(a => ({ ...a, day_number: d.day_number }))) || [];
 
   return (
     <div className="space-y-6 pb-20">
