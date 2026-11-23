@@ -392,11 +392,9 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
     )
 
     models_to_try = [
-        "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        settings.GEMINI_MODEL,
         "gemini-3.5-flash",
-        "gemini-3.8-flash"
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite"
     ]
     seen = set()
     candidate_models = [m for m in models_to_try if m and not (m in seen or seen.add(m))]
@@ -407,7 +405,7 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
             from google.genai import types
             client = genai.Client(
                 api_key=api_key,
-                http_options=types.HttpOptions(timeout=12000)
+                http_options=types.HttpOptions(timeout=6000)
             )
             resp = client.models.generate_content(
                 model=model_name,
