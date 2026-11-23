@@ -38,10 +38,10 @@ You possess encyclopedic, authentic, and nuanced knowledge across the entire wor
 - **Structured Formatting:** Use clean Markdown with headers, bullet points, itemized cost tables, and bold highlights.
 """
 
-# Supported candidate models in priority order: gemini-3.1-flash-lite first for fastest latency
+# Supported candidate models in priority order: gemini-3.5-flash-lite first for fastest verified latency
 CANDIDATE_MODELS = [
-    "gemini-3.1-flash-lite",
     "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
     "gemini-3.5-flash",
     "gemini-3.8-flash"
 ]
@@ -142,13 +142,127 @@ DESTINATION_INTELLIGENCE: Dict[str, Dict[str, Any]] = {
             "Piping-hot Tonkotsu ramen with rich slow-simmered pork bone broth and thin noodles in Shinjuku"
         ],
         "safety_road_notes": "Tokyo is one of the safest cities globally. Keep a Suica/Pasmo transit card ready for seamless subway transfers."
+    },
+    "mysore": {
+        "name": "Mysore (Mysuru), Karnataka",
+        "altitude_terrain": "770m Chamundi Hill foothills on the southern Deccan Plateau with royal tree-lined boulevards and royal lakes",
+        "best_season": "October to March (Pleasant daytime temperatures of 20°C - 28°C; Grand Dasara festival in Sep/Oct)",
+        "climate_notes": "Pleasant tropical climate. Warm in April-May (up to 34°C); Southwest Monsoon showers from June to September.",
+        "best_photo_windows": [
+            {"time": "06:45 PM - 07:45 PM", "location": "Mysore Palace Courtyard", "condition": "Sunday/Holiday evening illumination with 100,000 incandescent golden bulbs"},
+            {"time": "05:30 PM - 06:30 PM", "location": "Chamundi Hill Viewpoint", "condition": "Crimson sunset overlooking illuminated Mysore city panorama and monolith Nandi"}
+        ],
+        "offbeat_gems": [
+            {"name": "Ranganathittu Kaveri River Boat Islet", "desc": "Quiet river sanctuary glide past nesting spoonbills, painted storks, and sunning mugger crocodiles."},
+            {"name": "Daria Daulat Bagh Teakwood Summer Palace", "desc": "Tipu Sultan's island retreat in Srirangapatna with ornate painted floral timber walls and battle murals."}
+        ],
+        "food_secrets": [
+            "Original melt-in-the-mouth Mysore Pak freshly churned in pure desi ghee at legendary Guru Sweet Mart",
+            "Crispy Mysore Masala Dosa smeared with spicy red garlic-chutney paste at historic Mylari Hotel in Nazarbad"
+        ],
+        "safety_road_notes": "Comfortable, clean, and safe royal city. Well-connected to Bangalore via the 10-lane Expressway and Vande Bharat Express."
+    },
+    "mysuru": {
+        "name": "Mysuru (Mysore), Karnataka",
+        "altitude_terrain": "770m Chamundi Hill foothills on the southern Deccan Plateau with royal tree-lined boulevards and royal lakes",
+        "best_season": "October to March (Pleasant daytime temperatures of 20°C - 28°C; Grand Dasara festival in Sep/Oct)",
+        "climate_notes": "Pleasant tropical climate. Warm in April-May (up to 34°C); Southwest Monsoon showers from June to September.",
+        "best_photo_windows": [
+            {"time": "06:45 PM - 07:45 PM", "location": "Mysore Palace Courtyard", "condition": "Sunday/Holiday evening illumination with 100,000 incandescent golden bulbs"},
+            {"time": "05:30 PM - 06:30 PM", "location": "Chamundi Hill Viewpoint", "condition": "Crimson sunset overlooking illuminated Mysore city panorama and monolith Nandi"}
+        ],
+        "offbeat_gems": [
+            {"name": "Ranganathittu Kaveri River Boat Islet", "desc": "Quiet river sanctuary glide past nesting spoonbills, painted storks, and sunning mugger crocodiles."},
+            {"name": "Daria Daulat Bagh Teakwood Summer Palace", "desc": "Tipu Sultan's island retreat in Srirangapatna with ornate painted floral timber walls and battle murals."}
+        ],
+        "food_secrets": [
+            "Original melt-in-the-mouth Mysore Pak freshly churned in pure desi ghee at legendary Guru Sweet Mart",
+            "Crispy Mysore Masala Dosa smeared with spicy red garlic-chutney paste at historic Mylari Hotel in Nazarbad"
+        ],
+        "safety_road_notes": "Comfortable, clean, and safe royal city. Well-connected to Bangalore via the 10-lane Expressway and Vande Bharat Express."
+    },
+    "udupi": {
+        "name": "Udupi, Karnataka",
+        "altitude_terrain": "Arabian Sea coastal plain framed by the emerald foothills of the Western Ghats, coconut palms, and Suvarna river estuaries",
+        "best_season": "October to March (Comfortable coastal sea breezes, clear blue skies, and pleasant 22°C - 30°C temperatures)",
+        "climate_notes": "Tropical coastal climate. Heavy, scenic monsoon rains from June to September. October onwards is ideal for island ferries and beaches.",
+        "best_photo_windows": [
+            {"time": "05:15 PM - 06:15 PM", "location": "St. Mary's Island Basalt Columns", "condition": "Golden hour sun hitting the hexagonal volcanic rock pillars and turquoise surf"},
+            {"time": "05:30 PM - 06:45 PM", "location": "Kaup Beach 1901 Lighthouse", "condition": "Dramatic sunset over the Arabian Sea from the cliffside lighthouse balcony"}
+        ],
+        "offbeat_gems": [
+            {"name": "Delta Beach (Kodi Bengre) Suvarna River Estuary", "desc": "Secluded narrow peninsula where the river meets the sea, famous for mangrove kayaking and fresh toddy shacks."},
+            {"name": "Padubidri Blue Flag Beach Boardwalk", "desc": "Eco-certified pristine beach with immaculate wooden walking decks, gentle waves, and sea breezes."}
+        ],
+        "food_secrets": [
+            "Authentic Udupi Brahmin breakfast of melt-in-the-mouth Goli Baje, crispy Masala Dosa, and filter coffee at 100-year-old Mitra Samaj on Car Street",
+            "Fiery Coastal Karavali Kundapura Ghee Roast paired with paper-thin soft Neer Dosa at local family eateries"
+        ],
+        "safety_road_notes": "Swimming is strictly prohibited at St. Mary's Island due to sharp underwater basalt rocks and strong rip currents. Observe lifeguard warnings at Malpe and Kaup."
+    },
+    "gokarna": {
+        "name": "Gokarna, Karnataka",
+        "altitude_terrain": "Rugged laterite coastal cliffs overlooking five golden crescent beaches along the Arabian Sea",
+        "best_season": "October to March (Sunny beach days, cool sea breezes, and vibrant beachside cafe life)",
+        "climate_notes": "Tropical climate with dramatic monsoon downpours between June and September.",
+        "best_photo_windows": [
+            {"time": "05:30 PM - 06:30 PM", "location": "Om Beach Cliff / Kudle Sunset Point", "condition": "Crimson sunset reflecting off the natural Om-shaped rock curves"},
+            {"time": "06:30 AM - 07:45 AM", "location": "Half Moon Beach Headland", "condition": "Morning light illuminating untouched golden sand coves"}
+        ],
+        "offbeat_gems": [
+            {"name": "Mirjan Fort Laterite Ruins", "desc": "16th-century fortress overgrown with emerald moss and surrounded by quiet village waterways."},
+            {"name": "Nirvana Beach Across Aghanashini", "desc": "Deserted white sand stretch known for occasional bioluminescent evening glows."}
+        ],
+        "food_secrets": [
+            "Nutella banana pancakes and fresh papaya juice at clifftop cafes overlooking Kudle beach",
+            "Traditional Brahmin thali and coconut curry around Kotitirtha temple lake"
+        ],
+        "safety_road_notes": "Watch your footing along the cliff path between Om Beach and Paradise Beach, especially in flip-flops."
+    },
+    "coorg": {
+        "name": "Coorg (Kodagu), Karnataka",
+        "altitude_terrain": "900m - 1,750m High-altitude Western Ghats coffee plateau surrounded by dense evergreen rainforests and misty cardamom valleys",
+        "best_season": "October to April (Aromatic coffee blossoming season, pleasant 15°C - 25°C daytime weather)",
+        "climate_notes": "Cool highland climate year-round. Monsoons (July-August) bring lush waterfalls and misty landscapes.",
+        "best_photo_windows": [
+            {"time": "05:15 PM - 06:15 PM", "location": "Raja's Seat Madikeri", "condition": "Panoramic sunset over layers of purple mountain mist"},
+            {"time": "08:30 AM - 09:30 AM", "location": "Abbey Falls Spice Trail", "condition": "Morning mist rising off the falls surrounded by wild pepper vines"}
+        ],
+        "offbeat_gems": [
+            {"name": "Namdroling Golden Temple Bylakuppe", "desc": "One of India's largest Tibetan monastic settlements with 40ft gilded Buddha statues and prayer wheels."},
+            {"name": "Chelavara Falls & Chomakund Peak", "desc": "Natural tortoise-shaped rock waterfall nestled deep within private coffee plantations."}
+        ],
+        "food_secrets": [
+            "Authentic Kodava Pandi Curry (or mushroom/bamboo shoot curry) flavored with dark wild kachampuli vinegar",
+            "Steamed soft Kadambuttu (rice dumplings) and Noolputtu (string hoppers) with coconut milk"
+        ],
+        "safety_road_notes": "Curving mountain roads require alert driving. Carry light woolens for chilly evenings."
+    },
+    "hampi": {
+        "name": "Hampi, Karnataka",
+        "altitude_terrain": "Ancient boulder-strewn UNESCO World Heritage river valley across the Tungabhadra River with 14th-century Vijayanagara ruins",
+        "best_season": "October to March (Clear blue skies and comfortable daytime exploring temperatures)",
+        "climate_notes": "Semi-arid climate. Midday can be hot (28°C - 34°C); mornings and evenings are pleasantly breezy.",
+        "best_photo_windows": [
+            {"time": "06:00 AM - 07:15 AM", "location": "Matanga Hill Summit", "condition": "360-degree sunrise over miles of ancient stone temples and banana groves"},
+            {"time": "05:30 PM - 06:30 PM", "location": "Hemakuta Hill Sunset", "condition": "Golden sunlight bathing stone gopurams and monolithic shrines"}
+        ],
+        "offbeat_gems": [
+            {"name": "Anegundi (Hippy Island) & Sanapur Lake", "desc": "Cross by wicker coracle boat to swim in granite boulder reservoirs and explore ancient Kishkindha caves."},
+            {"name": "Zenana Enclosure & Lotus Mahal", "desc": "Impeccably preserved Indo-Islamic vaulted arches and royal elephant stables."}
+        ],
+        "food_secrets": [
+            "Traditional South Indian banana leaf thali with crispy vada, sambar, and buttermilk at Mango Tree Cafe",
+            "Wood-fired thin crust pizzas and ginger lemon honey tea at riverside Anegundi shacks"
+        ],
+        "safety_road_notes": "Wear comfortable walking shoes with good traction for walking over granite boulders and temple stones."
     }
 }
 
 # Extensive worldwide and Indian destination lookup list
 POPULAR_GLOBAL_DESTINATIONS = [
     "India", "Goa, India", "Delhi, India", "New Delhi, India", "Mumbai, Maharashtra",
-    "Bengaluru, Karnataka", "Bangalore, Karnataka", "Mysore, Karnataka", "Hampi, Karnataka", "Coorg, Karnataka",
+    "Bengaluru, Karnataka", "Bangalore, Karnataka", "Mysore, Karnataka", "Mysuru, Karnataka", "Udupi, Karnataka", "Mangalore, Karnataka", "Hampi, Karnataka", "Coorg, Karnataka",
     "Jaipur, Rajasthan", "Udaipur, Rajasthan", "Jodhpur, Rajasthan", "Jaisalmer, Rajasthan",
     "Kerala, India", "Munnar, Kerala", "Kochi, Kerala", "Alleppey, Kerala", "Varkala, Kerala", "Wayanad, Kerala",
     "Manali, Himachal Pradesh", "Shimla, Himachal Pradesh", "Spiti Valley, Himachal Pradesh", "Kasol, Himachal Pradesh",
@@ -514,35 +628,74 @@ def extract_and_update_memory(
     return memory
 
 def generate_fallback_destination_guide(destination: str) -> str:
-    """Generates the 16-section complete master destination guide (Section 4) when offline."""
+    """Generates the 16-section complete master destination guide (Section 4) with authentic landmark intelligence."""
     clean_d = destination.split(",")[0].strip()
     dest_key = clean_d.lower()
     intel = DESTINATION_INTELLIGENCE.get(dest_key, {})
     lat, lng = resolve_destination_coordinates(destination)
 
+    # 1. Attractions from regional bank or intelligence
+    from app.services.itinerary_service import REGIONAL_LANDMARK_BANKS
+    bank_items = REGIONAL_LANDMARK_BANKS.get(dest_key, [])
+    if bank_items:
+        attractions_text = "\n".join([f"• **{item['title']}** ({item['loc']}): {item['desc']}" for item in bank_items[:4]])
+    else:
+        attractions_text = (
+            f"• **{clean_d} Historic Center & Heritage Quarter:** Foundational architecture showcasing centuries of regional culture.\n"
+            f"• **{clean_d} Central Civic Square & Grand Promenade:** Vibrant cultural gathering point surrounded by iconic civic landmarks.\n"
+            f"• **{clean_d} National Heritage Museum & Art Gallery:** Housing treasured regional archaeological relics and classical fine arts."
+        )
+
+    # 2. Hidden Gems
+    gems = intel.get("offbeat_gems", [])
+    if gems:
+        gems_text = "\n".join([f"• **{g['name']}:** {g['desc']}" for g in gems])
+    else:
+        gems_text = (
+            f"• **Artisan Heritage Workshops of {clean_d}:** Generational family craft studios tucked down quiet cobblestone lanes.\n"
+            f"• **Secret Scenic Overlook:** Tranquil high-altitude or waterfront vantage point offering panoramic vistas away from tour crowds."
+        )
+
+    # 3. Local Food
+    foods = intel.get("food_secrets", [])
+    if foods:
+        food_text = "\n".join([f"• {f}" for f in foods])
+    else:
+        food_text = (
+            f"• Signature local delicacies prepared with authentic regional spices and time-honored slow-cooked techniques.\n"
+            f"• Traditional morning breakfast specials, hot savory snacks, and freshly prepared regional artisan beverages."
+        )
+
+    # 4. Best Photography Windows
+    photos = intel.get("best_photo_windows", [])
+    if photos:
+        photo_text = "\n".join([f"• **{p['time']} — {p['location']}:** {p['condition']}" for p in photos])
+    else:
+        photo_text = (
+            f"• **Morning Golden Hour (06:00 AM - 07:15 AM):** Soft dawn sunlight illuminating foundational monuments with zero crowds.\n"
+            f"• **Twilight / Blue Hour (05:45 PM - 06:45 PM):** High panoramic vantage points capturing colorful sunset horizons."
+        )
+
+    road_notes = intel.get("safety_road_notes", "Use registered ride apps, prepaid transit counters, and licensed guides.")
+
     return (
         f"# 🗺️ Complete Travel Guide: **{clean_d}**\n\n"
         f"### 1. 🌟 Destination Overview & Geographical Context\n"
         f"**{clean_d}** is located at coordinates **{lat:.4f}°N, {lng:.4f}°E**. "
-        f"{intel.get('altitude_terrain', 'Characterized by scenic regional topography, vibrant cultural squares, and rich historical heritage.')}\n\n"
+        f"{intel.get('altitude_terrain', 'Characterized by picturesque regional topography, vibrant cultural squares, and rich historical heritage.')}\n\n"
         f"### 2. 🏛️ Top Attractions & Historic Landmarks\n"
-        f"• **Historic Heritage Quarter:** Architectural foundation showcasing centuries of regional culture and monuments.\n"
-        f"• **Central Grand Promenade & Square:** Cultural gathering point bordered by iconic civic architecture.\n"
-        f"• **National Heritage Museum Complex:** Housing precious regional archaeological artifacts, royal relics, and fine arts.\n\n"
+        f"{attractions_text}\n\n"
         f"### 3. 💎 Hidden Gems & Offbeat Secrets\n"
-        f"• **Artisan Heritage Workshop Alleys:** Quaint cobblestone lanes with generational family studios away from tour buses.\n"
-        f"• **Secret Scenic Overlook:** Tranquil vantage point offering 360-degree views without crowds.\n\n"
+        f"{gems_text}\n\n"
         f"### 4. 🏄 Best Experiences & Signature Activities\n"
-        f"• Guided heritage walking trails through historic quarters.\n"
-        f"• Evening acoustic cultural performances and sunset river/coastal walks.\n"
-        f"• Sampling authentic regional specialties on curated street gastronomy trails.\n\n"
+        f"• Guided heritage walking trails through centuries-old quarters and bustling artisan markets.\n"
+        f"• Evening acoustic cultural performances, illuminated landmark walks, and sunset viewpoints.\n"
+        f"• Sampling authentic regional specialties and traditional breakfast staples on curated food trails.\n\n"
         f"### 5. 🍲 Local Food & Famous Regional Dishes\n"
-        f"• Signature local delicacies prepared with authentic regional spices and slow-cooked techniques.\n"
-        f"• Traditional morning breakfast specials and flaky artisan flatbreads.\n"
-        f"• Authentic regional desserts and refreshing spiced beverages.\n\n"
+        f"{food_text}\n\n"
         f"### 6. ☕ Best Restaurants, Cafes & Street Food\n"
         f"• Legendary heritage cafes serving artisanal filter coffee and fresh local bakes.\n"
-        f"• Iconic evening food stalls celebrated for authentic local recipes.\n"
+        f"• Iconic evening food stalls celebrated for authentic family recipes and street snacks.\n"
         f"• Scenic garden and waterfront eateries offering ambient dusk dining.\n\n"
         f"### 7. 🏨 Accommodation Recommendations\n"
         f"• **Budget Tier (₹1,200 - ₹2,500 / night):** Centrally-located boutique hostels and comfortable family-run homestays.\n"
@@ -551,7 +704,7 @@ def generate_fallback_destination_guide(destination: str) -> str:
         f"### 8. 🚆 Transportation Options & Getting Around\n"
         f"• **Local Transit / Metro / City Buses:** Efficient and cost-effective for traveling between central hubs.\n"
         f"• **Ride-Hailing & Cabs:** Readily available app cabs (Uber / Ola) and metered taxis.\n"
-        f"• **Walking:** Heritage old quarters are best explored on foot.\n\n"
+        f"• **Walking:** Heritage old quarters and temple streets are best explored on foot.\n\n"
         f"### 9. 💰 Estimated Travel Expenses\n"
         f"• **Budget Traveler:** ₹1,800 - ₹2,500 ($22 - $30) per person/day.\n"
         f"• **Mid-Range Balanced:** ₹4,500 - ₹7,500 ($55 - $90) per person/day.\n"
@@ -562,6 +715,7 @@ def generate_fallback_destination_guide(destination: str) -> str:
         f"{intel.get('climate_notes', 'Pleasant daytime temperatures (20°C - 28°C) with cooler evenings.')} "
         f"Pack comfortable walking shoes, breathable clothing, sunglasses, and an evening jacket or umbrella depending on season.\n\n"
         f"### 12. 🛡️ Safety Precautions & Local Scams\n"
+        f"• **Local Logistics Advisory:** {road_notes}\n"
         f"• Keep valuables secure in crowded transit stations and markets.\n"
         f"• Use registered ride apps or prepaid counters to avoid unmetered fare inflation.\n"
         f"• Verified Emergency Hotlines: **112 (National Integrated Emergency)**, **100 (Police)**.\n\n"
@@ -573,8 +727,7 @@ def generate_fallback_destination_guide(destination: str) -> str:
         f"• Famous local bazaars for handwoven textiles, spices, teas, and indigenous handicrafts.\n"
         f"• Government-recognized emporiums for certified quality souvenirs.\n\n"
         f"### 15. 📸 Photography & Scenic Locations\n"
-        f"• **Morning Golden Hour (06:00 AM - 07:15 AM):** Soft dawn sunlight illuminating monuments without crowds.\n"
-        f"• **Twilight / Blue Hour (05:45 PM - 06:45 PM):** High vantage points capturing golden sunset horizons.\n\n"
+        f"{photo_text}\n\n"
         f"### 16. 🚗 Nearby Destinations Worth Exploring (Day Trips)\n"
         f"• Picturesque hill stations, cascading waterfalls, and historic forts located within a 40-90 km scenic drive."
     )

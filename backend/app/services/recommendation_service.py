@@ -217,6 +217,42 @@ CURATED_DESTINATIONS = [
         "highlights": ["Tegallalang Rice Terraces", "Campuhan Ridge Walk", "Uluwatu Sunset Kecak Dance", "Tirta Empul Holy Springs", "Kelingking Beach Vista"],
         "is_hidden_gem": False,
         "mood_tags": ["relaxation", "nature", "beaches", "wellness", "romantic", "adventure"]
+    },
+    {
+        "id": 13,
+        "name": "Mysore (Mysuru), Karnataka",
+        "country": "India",
+        "region": "South India",
+        "category": "Cultural experiences",
+        "description": "Royal City of Palaces celebrated for Indo-Saracenic royal architecture, fragrant sandalwood, Mysore Pak, and Chamundi Hill.",
+        "image_url": "https://images.unsplash.com/photo-1600100397608-f010f443b740?auto=format&fit=crop&w=1200&q=80",
+        "budget_level": "moderate",
+        "estimated_daily_budget": 3000.0,
+        "best_season": "Oct - Mar",
+        "rating": 4.86,
+        "lat": 12.2958,
+        "lng": 76.6394,
+        "highlights": ["Mysore Palace (Amba Vilas)", "Chamundi Hill & Monolith Nandi", "Devaraja Market & Mysore Pak", "Brindavan Gardens Musical Fountains", "St. Philomena's Cathedral"],
+        "is_hidden_gem": False,
+        "mood_tags": ["cultural", "palaces", "food", "heritage", "photography", "scenic"]
+    },
+    {
+        "id": 14,
+        "name": "Udupi, Karnataka",
+        "country": "India",
+        "region": "South India",
+        "category": "Coastal & Spiritual",
+        "description": "Coastal paradise featuring ancient Sri Krishna Matha, basalt columns of St. Mary's Island, Kaup Lighthouse, and legendary Udupi gastronomy.",
+        "image_url": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=1200&q=80",
+        "budget_level": "budget",
+        "estimated_daily_budget": 2400.0,
+        "best_season": "Oct - Mar",
+        "rating": 4.84,
+        "lat": 13.3409,
+        "lng": 74.7421,
+        "highlights": ["Sri Krishna Matha & Kanakana Kindi", "St. Mary's Island Basalt Rocks", "Malpe Beach & Sea Walk Pier", "Kaup Beach 1901 Lighthouse", "Mitra Samaj Masala Dosa & Goli Baje"],
+        "is_hidden_gem": False,
+        "mood_tags": ["beaches", "cultural", "food", "budget", "peaceful", "photography"]
     }
 ]
 

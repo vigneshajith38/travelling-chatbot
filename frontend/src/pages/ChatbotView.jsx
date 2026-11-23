@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { 
-  Send, Sparkles, Compass, MapPin, Calendar, 
-  Users, Wallet, Sliders, ShieldCheck, Luggage, 
-  CloudRain, Plus, Trash2, ArrowRight, CheckCircle2, 
+import {
+  Send, Sparkles, Compass, MapPin, Calendar,
+  Users, Wallet, Sliders, ShieldCheck, Luggage,
+  CloudRain, Plus, Trash2, ArrowRight, CheckCircle2,
   MessageSquare, Zap, RefreshCw, ChevronDown, ChevronUp, Star,
   PanelLeftClose, PanelLeftOpen, Search, X, Check, Eye, HelpCircle, Layers
 } from 'lucide-react';
@@ -243,7 +243,7 @@ export default function ChatbotView() {
     }
   };
 
-  const filteredSessions = sessions.filter(s => 
+  const filteredSessions = sessions.filter(s =>
     !searchQuery || (s.title && s.title.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
@@ -252,10 +252,9 @@ export default function ChatbotView() {
       {/* ======================================================== */}
       {/* 1. COLLAPSIBLE CHATBOT SIDEBAR (ChatGPT / Claude Style)   */}
       {/* ======================================================== */}
-      <aside 
-        className={`${
-          sidebarOpen ? 'w-80' : 'w-0 -translate-x-full'
-        } transition-all duration-300 ease-in-out bg-[#0f241d] text-cream-100 flex flex-col border-r border-forest-900/60 shrink-0 z-30 overflow-hidden relative shadow-soft-lg`}
+      <aside
+        className={`${sidebarOpen ? 'w-80' : 'w-0 -translate-x-full'
+          } transition-all duration-300 ease-in-out bg-[#0f241d] text-cream-100 flex flex-col border-r border-forest-900/60 shrink-0 z-30 overflow-hidden relative shadow-soft-lg`}
       >
         {/* Brand & New Chat */}
         <div className="p-4 border-b border-forest-800/60 flex flex-col gap-3">
@@ -295,13 +294,12 @@ export default function ChatbotView() {
 
         {/* DeepSearch Mode Pill in Sidebar */}
         <div className="px-3 pt-3">
-          <div 
+          <div
             onClick={() => setDeepSearchEnabled(!deepSearchEnabled)}
-            className={`p-2.5 rounded-xl cursor-pointer border transition-all flex items-center justify-between ${
-              deepSearchEnabled
-                ? 'bg-emerald-950/80 border-emerald-500/70 text-white shadow-soft-sm'
-                : 'bg-forest-900/50 border-forest-800/60 text-cream-300/80 hover:bg-forest-800/60'
-            }`}
+            className={`p-2.5 rounded-xl cursor-pointer border transition-all flex items-center justify-between ${deepSearchEnabled
+              ? 'bg-emerald-950/80 border-emerald-500/70 text-white shadow-soft-sm'
+              : 'bg-forest-900/50 border-forest-800/60 text-cream-300/80 hover:bg-forest-800/60'
+              }`}
           >
             <div className="flex items-center gap-2">
               <div className={`p-1.5 rounded-lg ${deepSearchEnabled ? 'bg-emerald-500 text-forest-950' : 'bg-forest-800 text-emerald-400'}`}>
@@ -347,11 +345,10 @@ export default function ChatbotView() {
               <div
                 key={s.id}
                 onClick={() => handleSelectSession(s.id)}
-                className={`p-2.5 rounded-xl cursor-pointer text-xs font-medium transition-all flex items-center justify-between group ${
-                  sessionId === s.id
-                    ? 'bg-forest-800 text-white font-semibold border-l-4 border-emerald-400 shadow-sm'
-                    : 'text-cream-300/80 hover:bg-forest-800/50 hover:text-white'
-                }`}
+                className={`p-2.5 rounded-xl cursor-pointer text-xs font-medium transition-all flex items-center justify-between group ${sessionId === s.id
+                  ? 'bg-forest-800 text-white font-semibold border-l-4 border-emerald-400 shadow-sm'
+                  : 'text-cream-300/80 hover:bg-forest-800/50 hover:text-white'
+                  }`}
               >
                 <div className="flex items-center gap-2 overflow-hidden">
                   <MessageSquare className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -444,11 +441,10 @@ export default function ChatbotView() {
             {/* DeepSearch Quick Toggle in Header */}
             <button
               onClick={() => setDeepSearchEnabled(!deepSearchEnabled)}
-              className={`px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 transition-all ${
-                deepSearchEnabled
-                  ? 'bg-emerald-600 text-white shadow-soft-sm'
-                  : 'bg-sand-100 hover:bg-sand-200 text-slate-600 border border-sand-300'
-              }`}
+              className={`px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 transition-all ${deepSearchEnabled
+                ? 'bg-emerald-600 text-white shadow-soft-sm'
+                : 'bg-sand-100 hover:bg-sand-200 text-slate-600 border border-sand-300'
+                }`}
             >
               <Zap className="w-3 h-3 text-current" />
               <span className="text-[11px]">{deepSearchEnabled ? 'DeepSearch ON' : 'DeepSearch'}</span>
@@ -467,7 +463,7 @@ export default function ChatbotView() {
         {/* Chat Feed Messages */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-12 py-6 space-y-6">
           <div className="max-w-3xl mx-auto space-y-6">
-            
+
             {/* If NO messages yet, render ChatGPT/Claude style starter hero */}
             {messages.length === 0 ? (
               <div className="py-8 sm:py-14 text-center space-y-6">
@@ -533,32 +529,31 @@ export default function ChatbotView() {
 
                   {/* Message Bubble Container */}
                   <div
-                    className={`p-4 sm:p-5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-soft-sm max-w-[94%] sm:max-w-[88%] ${
-                      msg.role === 'user'
-                        ? 'bg-forest-800 text-white rounded-tr-none'
-                        : 'bg-white text-slate-800 border border-sand-300/80 rounded-tl-none'
-                    }`}
+                    className={`p-4 sm:p-5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-soft-sm max-w-[94%] sm:max-w-[88%] ${msg.role === 'user'
+                      ? 'bg-forest-800 text-white rounded-tr-none'
+                      : 'bg-white text-slate-800 border border-sand-300/80 rounded-tl-none'
+                      }`}
                   >
                     {/* Text content with full Markdown rendering */}
                     <div className={`prose prose-sm max-w-none leading-relaxed ${msg.role === 'user' ? 'text-white' : 'text-slate-800'}`}>
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          table: ({node, ...props}) => <div className="overflow-x-auto my-3"><table className="min-w-full divide-y divide-sand-300 text-xs border border-sand-200 rounded-xl shadow-sm overflow-hidden" {...props} /></div>,
-                          thead: ({node, ...props}) => <thead className="bg-sand-100/90 text-slate-800 font-bold border-b border-sand-300" {...props} />,
-                          th: ({node, ...props}) => <th className="px-3 py-2 text-left font-bold text-slate-900 border-b border-sand-300 bg-sand-100" {...props} />,
-                          td: ({node, ...props}) => <td className="px-3 py-2 border-b border-sand-200 text-slate-700" {...props} />,
-                          tr: ({node, ...props}) => <tr className="hover:bg-sand-50/70 transition-colors" {...props} />,
-                          a: ({node, ...props}) => <a className="text-emerald-700 hover:text-emerald-900 underline font-semibold transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
-                          h1: ({node, ...props}) => <h1 className="text-base font-bold text-slate-900 mt-3 mb-1.5 font-serif" {...props} />,
-                          h2: ({node, ...props}) => <h2 className="text-sm font-bold text-slate-900 mt-2.5 mb-1 font-serif" {...props} />,
-                          h3: ({node, ...props}) => <h3 className="text-xs font-bold text-forest-800 uppercase tracking-wider mt-2 mb-1" {...props} />,
-                          ul: ({node, ...props}) => <ul className="list-disc list-outside pl-4 space-y-1 my-2 text-inherit" {...props} />,
-                          ol: ({node, ...props}) => <ol className="list-decimal list-outside pl-4 space-y-1 my-2 text-inherit" {...props} />,
-                          li: ({node, ...props}) => <li className="text-xs sm:text-sm text-inherit pl-0.5" {...props} />,
-                          p: ({node, ...props}) => <p className="mb-2 last:mb-0 leading-relaxed text-inherit" {...props} />,
-                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-emerald-600 pl-3 italic my-2 text-slate-600 bg-sand-50/80 py-1.5 rounded-r text-xs sm:text-sm" {...props} />,
-                          strong: ({node, ...props}) => <strong className={`font-bold ${msg.role === 'user' ? 'text-white' : 'text-slate-900'}`} {...props} />
+                          table: ({ node, ...props }) => <div className="overflow-x-auto my-3"><table className="min-w-full divide-y divide-sand-300 text-xs border border-sand-200 rounded-xl shadow-sm overflow-hidden" {...props} /></div>,
+                          thead: ({ node, ...props }) => <thead className="bg-sand-100/90 text-slate-800 font-bold border-b border-sand-300" {...props} />,
+                          th: ({ node, ...props }) => <th className="px-3 py-2 text-left font-bold text-slate-900 border-b border-sand-300 bg-sand-100" {...props} />,
+                          td: ({ node, ...props }) => <td className="px-3 py-2 border-b border-sand-200 text-slate-700" {...props} />,
+                          tr: ({ node, ...props }) => <tr className="hover:bg-sand-50/70 transition-colors" {...props} />,
+                          a: ({ node, ...props }) => <a className="text-emerald-700 hover:text-emerald-900 underline font-semibold transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                          h1: ({ node, ...props }) => <h1 className="text-base font-bold text-slate-900 mt-3 mb-1.5 font-serif" {...props} />,
+                          h2: ({ node, ...props }) => <h2 className="text-sm font-bold text-slate-900 mt-2.5 mb-1 font-serif" {...props} />,
+                          h3: ({ node, ...props }) => <h3 className="text-xs font-bold text-forest-800 uppercase tracking-wider mt-2 mb-1" {...props} />,
+                          ul: ({ node, ...props }) => <ul className="list-disc list-outside pl-4 space-y-1 my-2 text-inherit" {...props} />,
+                          ol: ({ node, ...props }) => <ol className="list-decimal list-outside pl-4 space-y-1 my-2 text-inherit" {...props} />,
+                          li: ({ node, ...props }) => <li className="text-xs sm:text-sm text-inherit pl-0.5" {...props} />,
+                          p: ({ node, ...props }) => <p className="mb-2 last:mb-0 leading-relaxed text-inherit" {...props} />,
+                          blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-emerald-600 pl-3 italic my-2 text-slate-600 bg-sand-50/80 py-1.5 rounded-r text-xs sm:text-sm" {...props} />,
+                          strong: ({ node, ...props }) => <strong className={`font-bold ${msg.role === 'user' ? 'text-white' : 'text-slate-900'}`} {...props} />
                         }}
                       >
                         {msg.content}
@@ -628,33 +623,30 @@ export default function ChatbotView() {
                         <div className="flex items-center gap-1 bg-sand-100 p-1 rounded-xl border border-sand-300 text-xs font-semibold">
                           <button
                             onClick={() => setActiveTabByMsgId(prev => ({ ...prev, [msg.id]: 'schedule' }))}
-                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-                              (activeTabByMsgId[msg.id] || 'schedule') === 'schedule'
-                                ? 'bg-white text-forest-900 shadow-sm font-bold'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${(activeTabByMsgId[msg.id] || 'schedule') === 'schedule'
+                              ? 'bg-white text-forest-900 shadow-sm font-bold'
+                              : 'text-slate-600 hover:text-slate-900'
+                              }`}
                           >
                             <Calendar className="w-3.5 h-3.5" />
                             <span>Day Schedule</span>
                           </button>
                           <button
                             onClick={() => setActiveTabByMsgId(prev => ({ ...prev, [msg.id]: 'map' }))}
-                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-                              activeTabByMsgId[msg.id] === 'map'
-                                ? 'bg-white text-forest-900 shadow-sm font-bold'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${activeTabByMsgId[msg.id] === 'map'
+                              ? 'bg-white text-forest-900 shadow-sm font-bold'
+                              : 'text-slate-600 hover:text-slate-900'
+                              }`}
                           >
                             <MapPin className="w-3.5 h-3.5" />
                             <span>Interactive Route Map</span>
                           </button>
                           <button
                             onClick={() => setActiveTabByMsgId(prev => ({ ...prev, [msg.id]: 'budget' }))}
-                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-                              activeTabByMsgId[msg.id] === 'budget'
-                                ? 'bg-white text-forest-900 shadow-sm font-bold'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                            className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${activeTabByMsgId[msg.id] === 'budget'
+                              ? 'bg-white text-forest-900 shadow-sm font-bold'
+                              : 'text-slate-600 hover:text-slate-900'
+                              }`}
                           >
                             <Wallet className="w-3.5 h-3.5" />
                             <span>Budget</span>
@@ -1080,7 +1072,7 @@ export default function ChatbotView() {
         {/* ======================================================== */}
         <div className="p-3 sm:p-4 bg-white/90 backdrop-blur-md border-t border-sand-200 shrink-0">
           <div className="max-w-3xl mx-auto space-y-2">
-            
+
             {/* Quick Prompt Carousel */}
             <div className="flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
               {QUICK_MOOD_PROMPTS.map((promptText, idx) => (
@@ -1106,11 +1098,10 @@ export default function ChatbotView() {
               <button
                 type="button"
                 onClick={() => setDeepSearchEnabled(!deepSearchEnabled)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${
-                  deepSearchEnabled
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'bg-white hover:bg-sand-100 text-slate-700 border border-sand-300'
-                }`}
+                className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${deepSearchEnabled
+                  ? 'bg-emerald-600 text-white shadow-sm'
+                  : 'bg-white hover:bg-sand-100 text-slate-700 border border-sand-300'
+                  }`}
                 title="Toggle DeepSearch Mode"
               >
                 <Zap className="w-3.5 h-3.5" />

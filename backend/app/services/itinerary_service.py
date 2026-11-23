@@ -59,6 +59,12 @@ GLOBAL_DESTINATION_COORDINATES = {
     "south goa": (15.0100, 74.0200),
     "mysore": (12.2958, 76.6394),
     "mysuru": (12.2958, 76.6394),
+    "udupi": (13.3409, 74.7421),
+    "malpe": (13.3562, 74.7042),
+    "kaup": (13.2241, 74.7454),
+    "mangalore": (12.9141, 74.8560),
+    "mangaluru": (12.9141, 74.8560),
+    "murudeshwar": (14.0941, 74.4849),
     "hampi": (15.3350, 76.4600),
     "coorg": (12.4244, 75.7382),
     "madikeri": (12.4244, 75.7382),
@@ -278,6 +284,58 @@ REGIONAL_LANDMARK_BANKS = {
         {"slot": "morning", "time": "08:30 AM", "title": "Senso-ji Temple & Nakamise Street", "desc": "Walk under the giant red Kaminarimon lantern and sample freshly grilled rice crackers.", "loc": "Asakusa, Taito City", "lat": 35.7148, "lng": 139.7967, "cost": 300.0, "dur": 110, "mode": "walking", "cat": "culture", "indoor": False},
         {"slot": "afternoon", "time": "01:00 PM", "title": "Meiji Jingu Shrine & Yoyogi Forest", "desc": "Peaceful cedar forest sanctuary honoring the Meiji Emperor, right in the center of Tokyo.", "loc": "Shibuya City", "lat": 35.6764, "lng": 139.6993, "cost": 0.0, "dur": 90, "mode": "walking", "cat": "nature", "indoor": False},
         {"slot": "evening", "time": "06:00 PM", "title": "Shibuya Scramble Crossing & Sky Observatory", "desc": "Witness the world's busiest pedestrian crossing under neon towers from a 230m open-air roof.", "loc": "Shibuya Sky", "lat": 35.6580, "lng": 139.7016, "cost": 1400.0, "dur": 100, "mode": "transit", "cat": "photo", "indoor": True}
+    ],
+    "mysore": [
+        # Day 1: Royal Grandeur & Ancient Hill
+        {"slot": "morning", "time": "09:00 AM", "title": "Mysore Palace (Amba Vilas Palace)", "desc": "Wander through the breathtaking Indo-Saracenic royal halls, stained glass ceilings, and intricately carved mahogany pavilions.", "loc": "Sayyaji Rao Road, Mysuru", "lat": 12.3052, "lng": 76.6552, "cost": 100.0, "dur": 120, "mode": "walking", "cat": "culture", "indoor": True},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Devaraja Market & Guru Sweets Mysore Pak", "desc": "130-year-old historic market sampling authentic melt-in-the-mouth Mysore Pak, sandalwood essential oils, and fresh jasmine garlands.", "loc": "Devaraja Mohalla, Mysuru", "lat": 12.3101, "lng": 76.6514, "cost": 150.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": False},
+        {"slot": "evening", "time": "05:00 PM", "title": "Chamundi Hill & Monolithic Nandi Twilight", "desc": "Ascend 1,000 stone steps to Sri Chamundeshwari Temple and marvel at the 16-foot monolithic granite Nandi statue overlooking sunset city views.", "loc": "Chamundi Hill, Mysuru", "lat": 12.2743, "lng": 76.6710, "cost": 50.0, "dur": 120, "mode": "driving", "cat": "photo", "indoor": False},
+        # Day 2: Art, Architecture & Illuminated Fountains
+        {"slot": "morning", "time": "09:30 AM", "title": "Jaganmohan Palace & Raja Ravi Varma Art Gallery", "desc": "1861 royal palace housing one of South India's finest collections of classical paintings and original oil masterpieces.", "loc": "Subbarayanakere, Mysuru", "lat": 12.3082, "lng": 76.6496, "cost": 75.0, "dur": 110, "mode": "walking", "cat": "culture", "indoor": True},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "St. Philomena's Cathedral & Neo-Gothic Spires", "desc": "Admire 175-foot towering cathedrals inspired by Cologne Cathedral with subterranean crypt relics.", "loc": "Ashoka Road, Mysuru", "lat": 12.3210, "lng": 76.6579, "cost": 0.0, "dur": 75, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "06:00 PM", "title": "Brindavan Gardens & KRS Dam Musical Fountains", "desc": "Terraced botanical gardens beside the Krishna Raja Sagara reservoir featuring evening illuminated musical dancing fountain shows.", "loc": "KRS Dam, Srirangapatna", "lat": 12.4244, "lng": 76.5724, "cost": 50.0, "dur": 120, "mode": "driving", "cat": "relaxation", "indoor": False},
+        # Day 3: River Safaris & Tipu Sultan's Heritage
+        {"slot": "morning", "time": "07:30 AM", "title": "Ranganathittu Bird Sanctuary Boat Safari", "desc": "Glide quietly along Kaveri river islets spotting painted storks, spoonbills, and sunbathing marsh crocodiles.", "loc": "Ranganathittu, Srirangapatna", "lat": 12.4246, "lng": 76.6547, "cost": 150.0, "dur": 120, "mode": "transit", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Srirangapatna Fort & Daria Daulat Bagh (Summer Palace)", "desc": "Tipu Sultan's historic river island fortress, battlefield ramparts, and teakwood summer palace adorned with Persian murals.", "loc": "Srirangapatna Island", "lat": 12.4222, "lng": 76.6853, "cost": 50.0, "dur": 110, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:30 PM", "title": "Karanji Lake Nature Park & Walk-through Aviary", "desc": "Serene 90-acre lake promenade featuring India's largest walk-through butterfly and bird aviary amid evening breeze.", "loc": "Nazarbad, Mysuru", "lat": 12.3021, "lng": 76.6713, "cost": 50.0, "dur": 90, "mode": "walking", "cat": "nature", "indoor": False}
+    ],
+    "udupi": [
+        # Day 1: Spiritual Sanctum & Coastal Sea Walk
+        {"slot": "morning", "time": "08:00 AM", "title": "Sri Krishna Matha & Kanakana Kindi Darshan", "desc": "Centuries-old Dvaita spiritual center where devotees view Lord Krishna through the sacred 9-holed silver-plated Kanakana Kindi window.", "loc": "Car Street, Udupi", "lat": 13.3409, "lng": 74.7525, "cost": 0.0, "dur": 120, "mode": "walking", "cat": "culture", "indoor": True},
+        {"slot": "afternoon", "time": "01:00 PM", "title": "Mitra Samaj Heritage Tiffin & Masala Dosa", "desc": "Legendary Car Street Brahmin canteen serving authentic crispy Udupi masala dosa, steamed idlis, goli baje, and fresh filter coffee.", "loc": "Car Street, Udupi", "lat": 13.3415, "lng": 74.7518, "cost": 120.0, "dur": 75, "mode": "walking", "cat": "food", "indoor": True},
+        {"slot": "evening", "time": "05:00 PM", "title": "Malpe Beach & Sea Walk Breakwater Promenade", "desc": "Stroll down the 450-meter scenic stone sea walk jutting into the Arabian Sea with fishing trawlers and crimson sunset horizons.", "loc": "Malpe, Udupi", "lat": 13.3562, "lng": 74.7042, "cost": 0.0, "dur": 110, "mode": "driving", "cat": "photo", "indoor": False},
+        # Day 2: Geological Wonders & Colonial Lighthouse
+        {"slot": "morning", "time": "08:30 AM", "title": "St. Mary's Island Columnar Basalt Formations", "desc": "Take a ferry to this UNESCO Geo-Heritage wonder to explore millions-of-years-old hexagonal basalt lava rock pillars and turquoise waters.", "loc": "St. Mary's Island, Malpe", "lat": 13.3792, "lng": 74.6733, "cost": 400.0, "dur": 150, "mode": "transit", "cat": "adventure", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Karavali Coastal Seafood / Veg Ghee Roast Feast", "desc": "Savor authentic Coastal Karnataka cuisine including Kundapura ghee roast, neer dosa, spicy curries, and rasam rice.", "loc": "Court Road, Udupi", "lat": 13.3385, "lng": 74.7450, "cost": 350.0, "dur": 90, "mode": "driving", "cat": "food", "indoor": True},
+        {"slot": "evening", "time": "05:00 PM", "title": "Kaup (Kapu) Beach & 1901 British Lighthouse", "desc": "Climb the spiral staircase of the 120-year-old operating black-and-white stone lighthouse for breathtaking 360-degree ocean views at dusk.", "loc": "Kaup, Udupi", "lat": 13.2241, "lng": 74.7454, "cost": 50.0, "dur": 110, "mode": "driving", "cat": "photo", "indoor": False},
+        # Day 3: Estuaries, Mangroves & Blue Flag Sands
+        {"slot": "morning", "time": "08:30 AM", "title": "Delta Beach (Kodi Bengre) Estuary & Mangrove Kayaking", "desc": "Peaceful peninsula where the Suvarna River gently meets the Arabian Sea, flanked by coconut groves and kayaking channels.", "loc": "Kodi Bengre, Udupi", "lat": 13.4330, "lng": 74.6930, "cost": 300.0, "dur": 130, "mode": "driving", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Anegudde Vinayaka Temple & Kumbhashi", "desc": "Historic hilltop pilgrimage shrine dedicated to Lord Ganesha set amidst lush paddy fields and sacred ponds.", "loc": "Anegudde, Kundapura", "lat": 13.5683, "lng": 74.7088, "cost": 0.0, "dur": 90, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:30 PM", "title": "Padubidri Blue Flag Beach Sunset & Boardwalk", "desc": "Relax along the eco-certified, spotlessly clean golden shoreline featuring wooden sun decks, gentle waves, and twilight sea breezes.", "loc": "Padubidri, Udupi", "lat": 13.1417, "lng": 74.7820, "cost": 20.0, "dur": 100, "mode": "driving", "cat": "relaxation", "indoor": False}
+    ],
+    "gokarna": [
+        {"slot": "morning", "time": "08:00 AM", "title": "Mahabaleshwar Temple & Kotitirtha Sacred Lake", "desc": "Ancient 4th-century Dravidian temple enshrining the sacred Atmalinga with the tranquil holy stone-banked Kotitirtha tank.", "loc": "Car Street, Gokarna", "lat": 14.5428, "lng": 74.3168, "cost": 0.0, "dur": 90, "mode": "walking", "cat": "culture", "indoor": True},
+        {"slot": "afternoon", "time": "01:00 PM", "title": "Kudle Beach Shacks & Nutella Banana Pancakes", "desc": "Laidback crescent bay with rustic cliffside shacks serving fresh coconut water, tropical fruit bowls, and seafood.", "loc": "Kudle Beach, Gokarna", "lat": 14.5360, "lng": 74.3195, "cost": 350.0, "dur": 110, "mode": "walking", "cat": "food", "indoor": False},
+        {"slot": "evening", "time": "05:00 PM", "title": "Om Beach Cliff Sunset Walk & Namaste Cafe", "desc": "Watch crimson dusk skies from the natural rock curves shaped like the sacred Hindu 'Om' symbol.", "loc": "Om Beach, Gokarna", "lat": 14.5218, "lng": 74.3180, "cost": 0.0, "dur": 120, "mode": "walking", "cat": "photo", "indoor": False},
+        {"slot": "morning", "time": "07:30 AM", "title": "Gokarna 5-Beach Cliff Trek (Half Moon to Paradise)", "desc": "Rugged coastal trail weaving over granite headlands between secluded golden coves accessible only by foot or boat.", "loc": "Paradise Beach Trail", "lat": 14.5098, "lng": 74.3265, "cost": 0.0, "dur": 180, "mode": "walking", "cat": "adventure", "indoor": False},
+        {"slot": "afternoon", "time": "02:00 PM", "title": "Mirjan Fort Moss-Covered Ramparts", "desc": "16th-century laterite fortress built by Queen Chennabhairadevi featuring secret passage tunnels and watchtowers.", "loc": "Mirjan, Kumta", "lat": 14.4921, "lng": 74.4206, "cost": 25.0, "dur": 100, "mode": "driving", "cat": "culture", "indoor": False},
+        {"slot": "evening", "time": "06:00 PM", "title": "Nirvana Beach Peaceful Twilight & Bioluminescent Glow", "desc": "Serene, undisturbed white sands across Aghanashini river known for occasional sparkling nighttime plankton.", "loc": "Nirvana Beach, Kumta", "lat": 14.4620, "lng": 74.3540, "cost": 0.0, "dur": 100, "mode": "driving", "cat": "relaxation", "indoor": False}
+    ],
+    "coorg": [
+        {"slot": "morning", "time": "08:30 AM", "title": "Abbey Falls & Aromatic Spice Plantation Trail", "desc": "Walk through cardamom, pepper, and coffee groves leading to the roar of cascading waterfalls nestled in the Western Ghats.", "loc": "Madikeri, Coorg", "lat": 12.4534, "lng": 75.7176, "cost": 50.0, "dur": 100, "mode": "driving", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Madikeri Fort & Kodava Heritage Museum", "desc": "17th-century palace fort originally founded by Mudduraja with life-size stone elephants and colonial museum quarters.", "loc": "Madikeri Town", "lat": 12.4244, "lng": 75.7382, "cost": 25.0, "dur": 90, "mode": "walking", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:30 PM", "title": "Raja's Seat Twilight Garden Panorama", "desc": "Historic seasonal garden terrace where the Kings of Kodagu watched sunsets framed by rolling purple mountain ridges.", "loc": "Stuart Hill, Madikeri", "lat": 12.4172, "lng": 75.7360, "cost": 20.0, "dur": 90, "mode": "walking", "cat": "photo", "indoor": False},
+        {"slot": "morning", "time": "08:30 AM", "title": "Dubare Elephant Camp & Kaveri River Crossing", "desc": "Cross the river by boat to observe gentle giant elephants during their morning river bathing and feeding routines.", "loc": "Nanjarayapatna, Coorg", "lat": 12.3683, "lng": 75.9056, "cost": 100.0, "dur": 130, "mode": "transit", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Namdroling Monastery (Golden Temple Bylakuppe)", "desc": "Enormous Tibetan settlement featuring 40-foot gilded Buddha statues, intricate Buddhist murals, and serene prayer halls.", "loc": "Bylakuppe, Coorg", "lat": 12.4504, "lng": 75.9678, "cost": 0.0, "dur": 110, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:30 PM", "title": "Nisargadhama Bamboo Island & Hanging Rope Bridge", "desc": "64-acre ecological island carved by the Kaveri River, filled with lush bamboo groves, deer herds, and teak trees.", "loc": "Kushalnagar, Coorg", "lat": 12.4431, "lng": 75.9288, "cost": 50.0, "dur": 90, "mode": "walking", "cat": "relaxation", "indoor": False}
+    ],
+    "hampi": [
+        {"slot": "morning", "time": "08:00 AM", "title": "Virupaksha Temple & Sacred Hampi Bazaar", "desc": "Functioning 7th-century temple complex dedicated to Lord Shiva with a 160-foot gopuram fronting the ancient monolithic stone market.", "loc": "Hampi Bazaar", "lat": 15.3353, "lng": 76.4600, "cost": 25.0, "dur": 110, "mode": "walking", "cat": "culture", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Vijaya Vittala Temple & The Monolithic Stone Chariot", "desc": "The architectural pinnacle of the Vijayanagara Empire featuring 56 resonant musical pillars and the iconic stone shrine.", "loc": "Vittala Complex, Hampi", "lat": 15.3392, "lng": 76.4764, "cost": 50.0, "dur": 130, "mode": "transit", "cat": "photo", "indoor": False},
+        {"slot": "evening", "time": "05:30 PM", "title": "Hemakuta Hill Sunset & Sasivekalu Ganesha", "desc": "Perch atop pre-Vijayanagara granite boulder temples watching sunset colors ignite the Tungabhadra river valley.", "loc": "Hemakuta Hill", "lat": 15.3340, "lng": 76.4590, "cost": 0.0, "dur": 90, "mode": "walking", "cat": "photo", "indoor": False},
+        {"slot": "morning", "time": "06:00 AM", "title": "Matanga Hill Sunrise 360-Degree Panorama", "desc": "Climb the highest elevation in Hampi to witness morning mist rolling over miles of boulder ruins and banana groves.", "loc": "Matanga Hill", "lat": 15.3325, "lng": 76.4678, "cost": 0.0, "dur": 120, "mode": "walking", "cat": "adventure", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Lotus Mahal & Royal Elephant Stables (Zenana Enclosure)", "desc": "Symmetrical Indo-Islamic pavilions, arched vaulted domes, and manicured royal lawns.", "loc": "Zenana Enclosure", "lat": 15.3204, "lng": 76.4716, "cost": 50.0, "dur": 100, "mode": "walking", "cat": "culture", "indoor": False},
+        {"slot": "evening", "time": "05:30 PM", "title": "Tungabhadra River Coracle Ride to Sanapur Lake", "desc": "Float on traditional round wicker coracle boats across gentle river rapids followed by cliff sunsets at Sanapur reservoir.", "loc": "Anegundi / Sanapur", "lat": 15.3520, "lng": 76.4620, "cost": 250.0, "dur": 110, "mode": "transit", "cat": "relaxation", "indoor": False}
     ]
 }
 
@@ -313,9 +371,15 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
         f"Return ONLY the raw JSON array. Do not include markdown backticks or commentary."
     )
 
-    models_to_try = [settings.GEMINI_MODEL, "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]
+    models_to_try = [
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        settings.GEMINI_MODEL,
+        "gemini-3.5-flash",
+        "gemini-3.8-flash"
+    ]
     seen = set()
-    candidate_models = [m for m in models_to_try if not (m in seen or seen.add(m))]
+    candidate_models = [m for m in models_to_try if m and not (m in seen or seen.add(m))]
 
     for model_name in candidate_models:
         try:
@@ -323,7 +387,7 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
             from google.genai import types
             client = genai.Client(
                 api_key=api_key,
-                http_options=types.HttpOptions(timeout=15000)
+                http_options=types.HttpOptions(timeout=12000)
             )
             resp = client.models.generate_content(
                 model=model_name,
@@ -331,10 +395,16 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
             )
             if resp and resp.text:
                 text = resp.text.strip()
-                if text.startswith("```"):
-                    text = re.sub(r"^```(?:json)?\s*", "", text)
-                    text = re.sub(r"\s*```$", "", text)
-                parsed = json.loads(text)
+                # Robust extraction: find JSON array [...] inside any conversational markdown wrapper
+                json_match = re.search(r'\[\s*\{.*\}\s*\]', text, re.DOTALL)
+                if json_match:
+                    parsed = json.loads(json_match.group(0))
+                else:
+                    if text.startswith("```"):
+                        text = re.sub(r"^```(?:json)?\s*", "", text)
+                        text = re.sub(r"\s*```$", "", text)
+                    parsed = json.loads(text)
+
                 if isinstance(parsed, list) and len(parsed) > 0:
                     print(f"✅ Gemini ({model_name}) synthesized authentic {len(parsed)}-day itinerary for {destination}!")
                     return parsed[:num_days]
@@ -342,6 +412,55 @@ def _try_generate_with_gemini(destination: str, num_days: int) -> Optional[List[
             print(f"Gemini {model_name} itinerary note: {type(e).__name__}: {str(e)[:100]}")
 
     return None
+
+def _synthesize_destination_itinerary(dest_clean: str, base_lat: float, base_lng: float) -> List[Dict[str, Any]]:
+    """
+    Intelligent Archetype Synthesizer:
+    When an uncatalogued destination is requested and Gemini is offline,
+    synthesizes a distinctive, geographically calibrated set of authentic activities
+    tailored to the destination's natural archetype (Coastal, Mountain, Heritage, or Town).
+    """
+    name_lower = dest_clean.lower()
+    is_coastal = any(w in name_lower for w in ["beach", "island", "sea", "coast", "port", "bay", "reef", "harbor", "ocean", "kovalam", "varkala", "dhanushkodi", "malpe", "kaup", "puri", "digha", "goa", "alibaug"])
+    is_mountain = any(w in name_lower for w in ["hill", "valley", "peak", "mount", "pass", "ghat", "ridge", "meadow", "falls", "snow", "spiti", "kaza", "kasol", "jibhi", "chopta", "auli", "leh", "ladakh", "tirthan", "darjeeling", "gangtok", "shillong", "mussoorie", "nainital", "shimla", "manali", "munnar", "ooty", "kodaikanal", "coorg", "wayanad"])
+    is_heritage = any(w in name_lower for w in ["temple", "shrine", "matha", "fort", "palace", "mahal", "heritage", "kashi", "puri", "tirupati", "madurai", "hampi", "badami", "pattadakal", "khajuraho", "ajanta", "ellora", "fatehpur", "sarnath", "bodh", "ayodhya", "varanasi", "amritsar", "mysore", "mysuru", "jaipur", "udaipur", "jodhpur"])
+
+    if is_coastal:
+        return [
+            {"slot": "morning", "time": "08:30 AM", "title": f"{dest_clean} Golden Coast & Fishermen's Wharf Walk", "desc": f"Early morning coastal stroll watching traditional fishing boats return to shore against the glittering ocean.", "loc": f"Coastline Pier, {dest_clean}", "lat": base_lat + 0.006, "lng": base_lng - 0.004, "cost": 0.0, "dur": 100, "mode": "walking", "cat": "nature", "indoor": False},
+            {"slot": "afternoon", "time": "01:30 PM", "title": f"{dest_clean} Coastal Karavali Seafood / Veg Lunch", "desc": f"Savor authentic coastal coconut curries, crisp flatbreads, and fresh seasonal harvest at a local favorite.", "loc": f"Seaside Promenade, {dest_clean}", "lat": base_lat - 0.002, "lng": base_lng + 0.003, "cost": 450.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": True},
+            {"slot": "evening", "time": "05:30 PM", "title": f"{dest_clean} Clifftop Sunset & Sea Breeze Viewpoint", "desc": f"Watch the sun sink into the horizon with 360-degree views of the breaking waves and coastal headlands.", "loc": f"Sunset Cliff Overlook, {dest_clean}", "lat": base_lat + 0.008, "lng": base_lng - 0.007, "cost": 0.0, "dur": 110, "mode": "walking", "cat": "photo", "indoor": False},
+            {"slot": "morning", "time": "08:30 AM", "title": f"{dest_clean} Hidden Cove & Mangrove Kayak Trail", "desc": f"Peaceful excursion into secluded backwaters and mangrove estuaries bordered by dense coconut groves.", "loc": f"Backwater Estuary, {dest_clean}", "lat": base_lat - 0.005, "lng": base_lng - 0.005, "cost": 350.0, "dur": 120, "mode": "transit", "cat": "adventure", "indoor": False},
+            {"slot": "afternoon", "time": "02:00 PM", "title": f"{dest_clean} Maritime Heritage & Coastal Lighthouse", "desc": f"Visit the historic coastal beacon and learn about centuries of regional seafaring and trade history.", "loc": f"Lighthouse Hill, {dest_clean}", "lat": base_lat + 0.003, "lng": base_lng + 0.005, "cost": 50.0, "dur": 80, "mode": "driving", "cat": "culture", "indoor": True},
+            {"slot": "evening", "time": "06:30 PM", "title": f"{dest_clean} Starlit Shoreline Promenade & Beach Shacks", "desc": f"Unwind to the rhythmic sound of crashing waves while enjoying tropical refreshments and acoustic breezes.", "loc": f"Main Beach Boardwalk, {dest_clean}", "lat": base_lat + 0.001, "lng": base_lng - 0.002, "cost": 600.0, "dur": 100, "mode": "walking", "cat": "relaxation", "indoor": False}
+        ]
+    elif is_mountain:
+        return [
+            {"slot": "morning", "time": "08:00 AM", "title": f"{dest_clean} Misty Valley Ridge & Sunrise Trail", "desc": f"Brisk mountain morning walk through pine-clad trails with views of sunbeams filtering through mountain mist.", "loc": f"Valley View Ridge, {dest_clean}", "lat": base_lat + 0.007, "lng": base_lng + 0.005, "cost": 0.0, "dur": 120, "mode": "walking", "cat": "nature", "indoor": False},
+            {"slot": "afternoon", "time": "01:30 PM", "title": f"{dest_clean} Mountain Terrace Plantation & Cafe", "desc": f"Sample freshly roasted high-altitude brews, artisanal pastries, and hearty regional mountain specialties.", "loc": f"Hillside Estate, {dest_clean}", "lat": base_lat - 0.003, "lng": base_lng + 0.002, "cost": 400.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": True},
+            {"slot": "evening", "time": "05:15 PM", "title": f"{dest_clean} Panoramic Sunset Overlook & Valley Glow", "desc": f"Golden hour vista point capturing the peaks bathed in purple and orange dusk gradients.", "loc": f"Highest Panorama Point, {dest_clean}", "lat": base_lat + 0.009, "lng": base_lng - 0.004, "cost": 20.0, "dur": 100, "mode": "driving", "cat": "photo", "indoor": False},
+            {"slot": "morning", "time": "08:30 AM", "title": f"{dest_clean} Cascading Forest Falls & Hanging Bridge", "desc": f"Scenic nature hike down to crystalline mountain cascades nestled within dense forest canopies.", "loc": f"Upper Waterfalls, {dest_clean}", "lat": base_lat - 0.006, "lng": base_lng - 0.006, "cost": 50.0, "dur": 120, "mode": "driving", "cat": "adventure", "indoor": False},
+            {"slot": "afternoon", "time": "02:00 PM", "title": f"{dest_clean} Alpine Village Heritage & Wooden Crafts", "desc": f"Discover generational cedar-and-stone architecture and shop for hand-knitted woolens and forest honey.", "loc": f"Old Village Quarter, {dest_clean}", "lat": base_lat + 0.002, "lng": base_lng + 0.006, "cost": 200.0, "dur": 90, "mode": "walking", "cat": "culture", "indoor": True},
+            {"slot": "evening", "time": "06:30 PM", "title": f"{dest_clean} Fireside Mountain Dining & Local Music", "desc": f"Savor warming local soups, wood-fired dishes, and traditional acoustic melodies under crystal clear starry skies.", "loc": f"Central Pine Square, {dest_clean}", "lat": base_lat - 0.001, "lng": base_lng - 0.002, "cost": 750.0, "dur": 110, "mode": "walking", "cat": "food", "indoor": True}
+        ]
+    elif is_heritage:
+        return [
+            {"slot": "morning", "time": "08:00 AM", "title": f"{dest_clean} Ancient Heritage Shrine & Stone Carvings", "desc": f"Marvel at intricate historical stone architecture, sculpted pillars, and sanctified sacred courtyards.", "loc": f"Heritage Complex, {dest_clean}", "lat": base_lat + 0.004, "lng": base_lng + 0.003, "cost": 50.0, "dur": 120, "mode": "walking", "cat": "culture", "indoor": True},
+            {"slot": "afternoon", "time": "01:00 PM", "title": f"{dest_clean} Traditional Heritage Canteen & Local Feast", "desc": f"Experience authentic local recipes prepared using centuries-old culinary traditions and fragrant native spices.", "loc": f"Temple Bazaar, {dest_clean}", "lat": base_lat - 0.002, "lng": base_lng + 0.002, "cost": 250.0, "dur": 80, "mode": "walking", "cat": "food", "indoor": True},
+            {"slot": "evening", "time": "05:30 PM", "title": f"{dest_clean} Royal Fortress Bastions & Sunset View", "desc": f"Climb the ancient fortress ramparts for magnificent sweeping panoramic views across the historic town.", "loc": f"Fortress Ridge, {dest_clean}", "lat": base_lat + 0.007, "lng": base_lng - 0.005, "cost": 50.0, "dur": 100, "mode": "walking", "cat": "photo", "indoor": False},
+            {"slot": "morning", "time": "08:30 AM", "title": f"{dest_clean} Archaeological Museum & Royal Artifacts", "desc": f"Curated galleries displaying ancient inscriptions, copper plates, bronze idols, and historical armory.", "loc": f"Museum Grounds, {dest_clean}", "lat": base_lat - 0.005, "lng": base_lng - 0.004, "cost": 75.0, "dur": 100, "mode": "driving", "cat": "culture", "indoor": True},
+            {"slot": "afternoon", "time": "02:00 PM", "title": f"{dest_clean} Traditional Handloom & Artisan Workshop Trail", "desc": f"Observe master artisans weaving indigenous silk fabrics and hand-carving traditional wooden souvenirs.", "loc": f"Artisans Alley, {dest_clean}", "lat": base_lat + 0.002, "lng": base_lng + 0.006, "cost": 150.0, "dur": 90, "mode": "walking", "cat": "shopping", "indoor": True},
+            {"slot": "evening", "time": "06:30 PM", "title": f"{dest_clean} Sacred Water Tank & Twilight Chants", "desc": f"Atmospheric dusk ritual with illuminated stone lamps reflecting peacefully across the historic holy reservoir.", "loc": f"Holy Tank Steps, {dest_clean}", "lat": base_lat - 0.001, "lng": base_lng - 0.002, "cost": 0.0, "dur": 90, "mode": "walking", "cat": "relaxation", "indoor": False}
+        ]
+    else:
+        return [
+            {"slot": "morning", "time": "08:30 AM", "title": f"{dest_clean} Historic Old Town & Heritage Architecture Walk", "desc": f"Explore the foundational architecture, civic monuments, and morning vibrant energy of {dest_clean}.", "loc": f"Historic Center, {dest_clean}", "lat": base_lat + 0.005, "lng": base_lng + 0.004, "cost": 50.0, "dur": 110, "mode": "walking", "cat": "culture", "indoor": False},
+            {"slot": "afternoon", "time": "01:30 PM", "title": f"{dest_clean} Local Culinary Tasting & Central Market", "desc": f"Sample authentic regional delicacies and discover traditional produce and spices unique to {dest_clean}.", "loc": f"Main Market Quarter, {dest_clean}", "lat": base_lat - 0.003, "lng": base_lng + 0.002, "cost": 350.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": True},
+            {"slot": "evening", "time": "05:30 PM", "title": f"{dest_clean} Panoramic Sunset Vista Point", "desc": f"Take in sweeping golden-hour vistas as dusk settles across the rooftops and natural surroundings of {dest_clean}.", "loc": f"Skyline Vista Point, {dest_clean}", "lat": base_lat + 0.008, "lng": base_lng - 0.006, "cost": 0.0, "dur": 100, "mode": "walking", "cat": "photo", "indoor": False},
+            {"slot": "morning", "time": "09:00 AM", "title": f"{dest_clean} Regional Cultural Museum & Heritage Hall", "desc": f"Curated exhibits celebrating the history, folklore, and founding traditions of the {dest_clean} region.", "loc": f"Museum Complex, {dest_clean}", "lat": base_lat - 0.004, "lng": base_lng - 0.005, "cost": 75.0, "dur": 100, "mode": "transit", "cat": "culture", "indoor": True},
+            {"slot": "afternoon", "time": "02:00 PM", "title": f"{dest_clean} Scenic Botanical Park & Waterfront Promenade", "desc": f"Relax beside tranquil gardens, ancient shady trees, and scenic waterfront paths in {dest_clean}.", "loc": f"Botanical Grounds, {dest_clean}", "lat": base_lat + 0.002, "lng": base_lng + 0.007, "cost": 30.0, "dur": 90, "mode": "walking", "cat": "nature", "indoor": False},
+            {"slot": "evening", "time": "06:30 PM", "title": f"{dest_clean} Atmospheric Evening Dining & Acoustic Vibes", "desc": f"Unwind with signature regional dishes and refreshing beverages accompanied by local hospitality.", "loc": f"Lantern Quarter, {dest_clean}", "lat": base_lat + 0.001, "lng": base_lng - 0.003, "cost": 650.0, "dur": 110, "mode": "walking", "cat": "food", "indoor": True}
+        ]
 
 def generate_trip_itinerary(
     destination_name: str,
@@ -390,14 +509,7 @@ def generate_trip_itinerary(
     if bank_key:
         bank = REGIONAL_LANDMARK_BANKS[bank_key]
     else:
-        bank = [
-            {"slot": "morning", "time": "09:00 AM", "title": f"Historic Old Quarter & Architectural Heritage", "desc": f"Explore the foundational architecture, heritage squares, and morning vibrant energy of {dest_clean}.", "loc": f"Old Quarter, {dest_clean}", "lat": base_lat + 0.005, "lng": base_lng + 0.004, "cost": 500.0, "dur": 120, "mode": "walking", "cat": "culture", "indoor": False},
-            {"slot": "afternoon", "time": "01:30 PM", "title": f"Local Gastronomy & Artisanal Market", "desc": f"Sample authentic regional delicacies and shop for traditional handcrafted goods in {dest_clean}.", "loc": f"Central Market Hall, {dest_clean}", "lat": base_lat - 0.003, "lng": base_lng + 0.002, "cost": 800.0, "dur": 100, "mode": "walking", "cat": "food", "indoor": True},
-            {"slot": "evening", "time": "05:30 PM", "title": f"Panoramic Sunset Overlook & Evening Promenade", "desc": f"Take in sweeping golden-hour vistas as dusk settles across the scenic rooftops of {dest_clean}.", "loc": f"Skyline Vista Point, {dest_clean}", "lat": base_lat + 0.008, "lng": base_lng - 0.006, "cost": 250.0, "dur": 90, "mode": "walking", "cat": "photo", "indoor": False},
-            {"slot": "morning", "time": "09:30 AM", "title": f"National Heritage Museum & Galleries", "desc": f"Discover curated historic artifacts, fine art, and archaeological treasures celebrating {dest_clean}.", "loc": f"National Museum Complex, {dest_clean}", "lat": base_lat - 0.004, "lng": base_lng - 0.005, "cost": 650.0, "dur": 110, "mode": "transit", "cat": "culture", "indoor": True},
-            {"slot": "afternoon", "time": "02:00 PM", "title": f"Scenic Botanical Gardens & Waterfront Walk", "desc": "Relax by tranquil botanical groves and scenic waterfront bridges surrounded by lush greenery.", "loc": f"Botanical Gardens, {dest_clean}", "lat": base_lat + 0.002, "lng": base_lng + 0.007, "cost": 300.0, "dur": 90, "mode": "walking", "cat": "nature", "indoor": False},
-            {"slot": "evening", "time": "06:30 PM", "title": f"Atmospheric Evening Dining & Acoustic Melodies", "desc": f"Unwind with signature local refreshments and dinner accompanied by regional acoustic music.", "loc": f"Lantern Quarter, {dest_clean}", "lat": base_lat + 0.001, "lng": base_lng - 0.003, "cost": 1200.0, "dur": 110, "mode": "walking", "cat": "food", "indoor": True}
-        ]
+        bank = _synthesize_destination_itinerary(dest_clean, base_lat, base_lng)
 
     try:
         start_date = datetime.date.fromisoformat(start_date_str)
