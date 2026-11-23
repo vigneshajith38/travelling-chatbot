@@ -538,10 +538,10 @@ def extract_and_update_memory(
     # 3. Natural language destination extraction patterns
     if not found_dest:
         dest_patterns = [
-            r'\b(?:hotels?|resorts?|hostels?|places? to stay|where to stay|stay(?:ing)?|accommodation)\s+(?:in|at|near|around)\s+([A-Za-z\s]{3,24}?)(?:\s+(?:for|with|under|in|from|at|on|\d+|$|[?!.,]))',
-            r'\b(?:trip to|visit|explore|travel to|going to|holiday in|vacation in|guide for|flying to)\s+([A-Za-z\s]{3,24}?)(?:\s+(?:for|with|under|in|from|at|on|\d+|$|[?!.,]))',
-            r'\b(?:tell me about|guide to|overview of)\s+([A-Za-z\s]{3,24}?)(?:\s+(?:like|for|$|[?!.,]))',
-            r'\b(?:itinerary for|plan for|plan a)\s+([A-Za-z\s]{3,24}?)(?:\s+(?:for|with|under|in|from|at|on|\d+|$|[?!.,]))'
+            r'\b(?:plan a (?:(?:\d+|[a-z]+)[- ]?day )?trip to|plan trip to|plan a tour to|trip to|travel to|flying to|going to|visit|explore|vacation in|holiday in|guide to|guide for|guide about)\s+([A-Za-z\s,]{2,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+)|$|[?!.])',
+            r'\b(?:hotels?|resorts?|hostels?|places? to stay|where to stay|stay(?:ing)?|accommodation)\s+(?:in|at|near|around)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:for|with|under|in|from|at|on|\d+)|$|[?!.])',
+            r'\b(?:tell me about|overview of|info about|information on)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:like|for)|$|[?!.])',
+            r'\b(?:itinerary for|plan for|plan a)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:for|with|under|in|from|at|on|\d+)|$|[?!.])'
         ]
         non_dest_words = {
             "a trip", "an itinerary", "peaceful", "budget", "friends", "couple", "family", "days", "food",
@@ -598,11 +598,32 @@ def extract_and_update_memory(
         a_total = memory["expenses"]["activities"]
         memory["budget"] = round(h_total + f_total + t_total + a_total, 2)
 
-    # 6. Duration Extraction (Universal engine)
+    # 6. Duration Extraction (Universal engine + Relative Adjustments)
     extracted_days = extract_duration_days(user_message)
     if extracted_days:
         memory["days"] = extracted_days
         memory["duration_days"] = extracted_days
+    else:
+        # Relative adjustments: 'include one more day', 'add 1 day', 'extend by 2 days', 'reduce by 1 day'
+        more_days_m = re.search(r'\b(?:include|add|extend by|plus)\s+(\d+|one|two|three|a|another)?\s*(?:more\s+)?days?\b', text_lower)
+        if not more_days_m:
+            more_days_m = re.search(r'\b(?:one|two|three|\d+|another)\s+more\s+days?\b', text_lower)
+        if more_days_m:
+            val_str = (more_days_m.group(1) or "1").lower().strip()
+            word_to_num = {"one": 1, "two": 2, "three": 3, "a": 1, "another": 1}
+            delta = word_to_num.get(val_str, int(val_str) if val_str.isdigit() else 1)
+            new_days = max(1, min(14, memory.get("days", 3) + delta))
+            memory["days"] = new_days
+            memory["duration_days"] = new_days
+        else:
+            less_days_m = re.search(r'\b(?:reduce|decrease|minus|less)\s+(?:by\s+)?(\d+|one|two)?\s*days?\b', text_lower)
+            if less_days_m:
+                val_str = (less_days_m.group(1) or "1").lower().strip()
+                word_to_num = {"one": 1, "two": 2}
+                delta = word_to_num.get(val_str, int(val_str) if val_str.isdigit() else 1)
+                new_days = max(1, min(14, memory.get("days", 3) - delta))
+                memory["days"] = new_days
+                memory["duration_days"] = new_days
 
     # 7. Travellers Extraction
     if "solo" in text_lower:
@@ -911,6 +932,43 @@ def generate_conversational_response(
     extra_context = context_summary
     if realtime_weather_info:
         extra_context += f"\n\n{realtime_weather_info}"
+
+    # =========================================================================
+    # INTENT 0: AMBIGUOUS DESTINATION RESOLUTION (Section 1)
+    # =========================================================================
+    if current_dest:
+        dest_base = current_dest.split(",")[0].strip().lower()
+        ambig_options = check_destination_ambiguity(dest_base)
+        if ambig_options:
+            has_explicit_context = any(
+                part.strip().lower() in text_lower
+                for opt in ambig_options
+                for part in opt.split(" - ")[0].split(",")[1:]
+            )
+            # Only trigger clarification if user typed the bare ambiguous name without state/country
+            if not has_explicit_context and any(dest_base == w.strip("?,.!") for w in text_lower.split()):
+                bullet_opts = "\n".join([f"{idx+1}. **{opt.split(' - ')[0]}**: {opt.split(' - ')[1] if ' - ' in opt else ''}" for idx, opt in enumerate(ambig_options)])
+                clarify_text = (
+                    f"### 📍 Destination Clarification Needed\n\n"
+                    f"**'{current_dest.split(',')[0].title()}'** can refer to multiple destinations across the world:\n\n"
+                    f"{bullet_opts}\n\n"
+                    f"Which of these locations are you planning to visit? Select an option below or specify your destination:"
+                )
+                suggested = []
+                for opt in ambig_options:
+                    place_name = opt.split(" - ")[0].strip()
+                    suggested.append({
+                        "label": place_name,
+                        "action": "prompt",
+                        "text": f"Plan a trip to {place_name}"
+                    })
+                return {
+                    "role": "assistant",
+                    "content": clarify_text,
+                    "structured_type": None,
+                    "memory": memory,
+                    "suggested_actions": suggested
+                }
 
     # =========================================================================
     # INTENT 1: ITEMISED EXPENSE OR BUDGET UPDATE (Section 11 C, E)

@@ -35,6 +35,26 @@ AMBIGUOUS_DESTINATIONS = {
     "cordoba": [
         "Córdoba, Andalusia (Spain) - Famed for the breathtaking Mezquita-Cathedral and floral patios",
         "Córdoba, Argentina - Colonial university and Jesuit cultural capital in the Sierras de Córdoba"
+    ],
+    "portland": [
+        "Portland, Oregon (USA) - Pacific Northwest cultural hub known for microbreweries, coffee, and Mount Hood",
+        "Portland, Maine (USA) - Historic coastal seaport famous for Casco Bay lighthouses and fresh Maine lobster"
+    ],
+    "tripoli": [
+        "Tripoli, Libya - North African capital on the Mediterranean Sea featuring ancient Roman arches and the Red Castle",
+        "Tripoli, Lebanon - Historic northern Lebanese coastal city famed for its Crusader citadel and traditional soap souks"
+    ],
+    "la paz": [
+        "La Paz, Bolivia - World's highest administrative capital (3,640m) surrounded by the rugged Altiplano",
+        "La Paz, Baja California Sur (Mexico) - Tranquil Sea of Cortez coastal retreat known for whale shark snorkeling"
+    ],
+    "birmingham": [
+        "Birmingham, England (UK) - Major West Midlands cultural and industrial heritage metropolis with historic canals",
+        "Birmingham, Alabama (USA) - Historic southern US city pivotal to the Civil Rights movement"
+    ],
+    "manchester": [
+        "Manchester, England (UK) - World-renowned northern English cultural hub celebrated for football, music, and science",
+        "Manchester, New Hampshire (USA) - Largest city in northern New England along the Merrimack River"
     ]
 }
 
