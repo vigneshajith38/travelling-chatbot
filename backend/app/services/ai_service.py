@@ -38,13 +38,11 @@ You possess encyclopedic, authentic, and nuanced knowledge across the entire wor
 - **Structured Formatting:** Use clean Markdown with headers, bullet points, itemized cost tables, and bold highlights.
 """
 
-# Supported candidate models in priority order
+# Supported candidate models in priority order: gemini-3.5-flash first for stability, followed by flash-lite
 CANDIDATE_MODELS = [
-    "gemini-3.5-flash-lite",
     "gemini-3.5-flash",
-    "gemini-3.1-flash-lite",
-    "gemini-2.5-flash",
-    "gemini-1.5-flash"
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite"
 ]
 
 # Destination Intelligence cache for deep enrichment
@@ -306,7 +304,7 @@ def try_gemini_multiturn_chat(
 
         client = genai.Client(
             api_key=api_key,
-            http_options=types.HttpOptions(timeout=15.0)
+            http_options=types.HttpOptions(timeout=6000)
         )
 
         config = types.GenerateContentConfig(
