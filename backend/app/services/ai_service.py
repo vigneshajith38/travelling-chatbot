@@ -1051,10 +1051,18 @@ def generate_conversational_response(
     # =========================================================================
     # INTENT 2: COMPLETE DESTINATION GUIDE (Section 4 - 16 Standard Sections)
     # =========================================================================
-    is_guide_request = any(k in text_lower for k in [
-        "complete guide", "comprehensive guide", "tell me about", "overview of", "guide to",
-        "everything about", "guide for", "travel guide"
-    ]) and current_dest
+    is_guide_request = (
+        any(k in text_lower for k in [
+            "complete guide", "comprehensive guide", "tell me about", "overview of", "guide to",
+            "everything about", "guide for", "travel guide", "and all", "details of", "about ",
+            "explore ", "visit ", "information on", "info about", "what to see"
+        ]) or (
+            current_dest and len(text_lower.split()) <= 4 and not any(w in text_lower for w in [
+                "hotel", "bus", "flight", "food", "budget", "safe", "pack", "reach", "trip", "plan",
+                "itinerary", "cost", "price", "fee", "ticket", "day", "days", "more day", "less day"
+            ])
+        )
+    ) and current_dest
 
     if is_guide_request:
         clean_d = current_dest.split(',')[0]
@@ -1104,8 +1112,8 @@ def generate_conversational_response(
         "change to", "update to", "itinerary for", "trip for", "days in", "day in", "show me days",
         "custom plan", "itinerary"
     ]) or (
-        ("itinerary" in text_lower or "travel plan" in text_lower)
-        and not any(k in text_lower for k in ["safe", "pack", "clothes", "visa"])
+        ("itinerary" in text_lower or "travel plan" in text_lower or "trip" in text_lower or "plan" in text_lower)
+        and not any(k in text_lower for k in ["safe", "pack", "clothes", "visa", "hotel", "food", "bus", "flight", "budget"])
     ) or (
         has_duration_query and any(w in text_lower for w in ["trip", "tour", "visit", "go", "travel", "in ", "for ", "plan", "days", "stay"])
     )
