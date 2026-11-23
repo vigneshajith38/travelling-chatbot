@@ -148,17 +148,21 @@ DESTINATION_INTELLIGENCE: Dict[str, Dict[str, Any]] = {
     }
 }
 
-# Extensive worldwide destination lookup list
+# Extensive worldwide and Indian destination lookup list
 POPULAR_GLOBAL_DESTINATIONS = [
+    "India", "Goa, India", "Delhi, India", "New Delhi, India", "Mumbai, Maharashtra",
+    "Jaipur, Rajasthan", "Udaipur, Rajasthan", "Jodhpur, Rajasthan", "Jaisalmer, Rajasthan",
+    "Kerala, India", "Munnar, Kerala", "Kochi, Kerala", "Alleppey, Kerala", "Varkala, Kerala",
+    "Manali, Himachal Pradesh", "Shimla, Himachal Pradesh", "Spiti Valley, Himachal Pradesh", "Kasol, Himachal Pradesh",
+    "Ladakh, India", "Leh Ladakh, India", "Kashmir, India", "Srinagar, Kashmir", "Gulmarg, Kashmir",
+    "Rishikesh, Uttarakhand", "Agra, Uttar Pradesh", "Varanasi, Uttar Pradesh", "Amritsar, Punjab",
+    "Bengaluru, Karnataka", "Gokarna, Karnataka", "Coorg, Karnataka", "Hampi, Karnataka",
+    "Kolkata, West Bengal", "Darjeeling, West Bengal", "Chennai, Tamil Nadu", "Ooty, Tamil Nadu",
+    "Pondicherry, India", "Andaman Islands, India", "Shillong, Meghalaya", "Meghalaya, India",
     "Paris, France", "Tokyo, Japan", "Bali, Indonesia", "Rome, Italy", "London, UK",
     "New York, USA", "Dubai, UAE", "Singapore", "Bangkok, Thailand", "Switzerland",
     "Zurich, Switzerland", "Barcelona, Spain", "Amsterdam, Netherlands", "Venice, Italy",
-    "Kyoto, Japan", "Goa, India", "Jaipur, Rajasthan", "Ladakh, India", "Leh Ladakh, India",
-    "Kashmir, India", "Srinagar, Kashmir", "Manali, Himachal Pradesh", "Munnar, Kerala",
-    "Gokarna, Karnataka", "Spiti Valley, Himachal Pradesh", "Udaipur, Rajasthan",
-    "Rishikesh, Uttarakhand", "Varkala, Kerala", "Coorg, Karnataka", "Hampi, Karnataka",
-    "Ooty, Tamil Nadu", "Darjeeling, West Bengal", "Pondicherry, India", "Andaman Islands, India",
-    "Shillong, Meghalaya", "Maldives", "Santorini, Greece", "Phuket, Thailand", "Seoul, South Korea",
+    "Kyoto, Japan", "Maldives", "Santorini, Greece", "Phuket, Thailand", "Seoul, South Korea",
     "San Francisco, USA", "Los Angeles, USA", "Berlin, Germany", "Prague, Czech Republic",
     "Vienna, Austria", "Florence, Italy", "Hawaii, USA", "Madrid, Spain", "Sydney, Australia",
     "Vietnam", "Hanoi, Vietnam", "Da Nang, Vietnam", "Iceland", "Reykjavik, Iceland",
@@ -235,6 +239,65 @@ def try_gemini_multiturn_chat(
 
     return None
 
+def extract_duration_days(text: str) -> Optional[int]:
+    """
+    Extracts explicit trip duration from user queries across all natural variations:
+    - Digits with hyphens, spaces, or merged: '5 days', '5-day', '5days', '5d', '10-day trip'
+    - Word numbers: 'one day', 'two days', 'three days', 'four days', 'five days', ... 'fourteen days'
+    - Conversational adjustments: 'make it 5 days', 'change to 7 days', 'plan for 4 days', 'for 5 days'
+    - Weeks: '1 week' (7), '2 weeks' (14), 'weekend' (2), 'long weekend' (3)
+    - Combined formats: '4n/5d', '5d/4n'
+    """
+    t = text.lower().strip()
+
+    # 1. Weeks
+    if re.search(r'\b(?:2|two)\s*weeks?\b', t):
+        return 14
+    if re.search(r'\b(?:1|one|a)\s*week\b', t):
+        return 7
+
+    # 2. Weekends
+    if re.search(r'\blong\s+weekend\b', t):
+        return 3
+    if re.search(r'\bweekend\b', t):
+        return 2
+
+    # 3. Merged formats: 5d/4n or 4n/5d
+    m_dn = re.search(r'(\d{1,2})\s*d\s*/\s*\d{1,2}\s*n', t)
+    if m_dn:
+        return max(1, min(14, int(m_dn.group(1))))
+    m_nd = re.search(r'\d{1,2}\s*n\s*/\s*(\d{1,2})\s*d', t)
+    if m_nd:
+        return max(1, min(14, int(m_nd.group(1))))
+
+    # 4. Explicit conversational adjustments: 'make it 5 days', 'change to 5 days', 'plan for 5 days', 'do 5 days'
+    conv_match = re.search(r'\b(?:make it|change to|update to|plan for|give me|do|want|need)\s+(\d{1,2})\s*(?:days?|nights?|d\b)?', t)
+    if conv_match:
+        val = int(conv_match.group(1))
+        if 1 <= val <= 30:
+            return max(1, min(14, val))
+
+    # 5. Digits with hyphen, space, or attached: '5-day', '5 days', '5day', '5d'
+    digit_match = re.search(r'\b(\d{1,2})\s*[-]?\s*(?:days?|nights?|d\b)', t)
+    if digit_match:
+        val = int(digit_match.group(1))
+        if 1 <= val <= 30:
+            return max(1, min(14, val))
+
+    # 6. Word numbers (e.g. 'five days', 'five-day trip', 'four days', 'seven days')
+    WORD_MAP = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+        "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+        "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14
+    }
+    for word, num in WORD_MAP.items():
+        if re.search(rf'\b{word}\s*[-]?\s*(?:days?|nights?|d\b)', t):
+            return num
+        if re.search(rf'\b(?:make it|change to|plan for|give me|for)\s+{word}\s+days?\b', t):
+            return num
+
+    return None
+
 def extract_and_update_memory(
     user_message: str,
     existing_memory: Optional[Dict[str, Any]] = None
@@ -264,12 +327,16 @@ def extract_and_update_memory(
     text_lower = user_message.lower().strip()
     found_dest = None
 
+    # 0. Check for "India" standalone
+    if re.search(r'\b(india)\b', text_lower) and not any(k in text_lower for k in ["indian railways", "air india"]):
+        found_dest = "India"
+
     # 1. Match destination from curated or global lists FIRST (e.g. Bali, Paris, Tokyo, Munnar, Goa)
     all_dest_list = CURATED_DESTINATIONS + [{"name": d} for d in POPULAR_GLOBAL_DESTINATIONS]
     for d in all_dest_list:
         dest_clean = d["name"].split(",")[0].lower().strip()
         # Word boundary match to avoid false positives (e.g. "go" matching "Goa")
-        if re.search(rf'\b{re.escape(dest_clean)}\b', text_lower):
+        if dest_clean != "india" and re.search(rf'\b{re.escape(dest_clean)}\b', text_lower):
             found_dest = d["name"]
             break
 
@@ -346,15 +413,10 @@ def extract_and_update_memory(
             except Exception:
                 pass
 
-    # 5. Duration Extraction (e.g. 4 days, 3 nights, 5d, 1 week)
-    if "1 week" in text_lower or "a week" in text_lower:
-        memory["days"] = 7
-    elif "2 weeks" in text_lower:
-        memory["days"] = 14
-    else:
-        days_match = re.search(r'(\d+)\s*(?:days?|nights?|d\b)', text_lower)
-        if days_match:
-            memory["days"] = max(1, min(14, int(days_match.group(1))))
+    # 5. Duration Extraction (e.g. 5 days, 5-day, 4 nights, 5d, 1 week, weekend, five days)
+    extracted_days = extract_duration_days(user_message)
+    if extracted_days:
+        memory["days"] = extracted_days
 
     # 6. Travellers Extraction
     if "solo" in text_lower:
@@ -493,24 +555,33 @@ def generate_conversational_response(
     # =========================================================================
     # INTENT A: EXPLICIT ITINERARY GENERATION (User specifically asks for a plan)
     # =========================================================================
+    has_duration_query = bool(extract_duration_days(user_message))
     is_plan_request = any(k in text_lower for k in [
-        "plan a", "create an itinerary", "generate itinerary", "build a plan", "make an itinerary",
-        "day itinerary", "plan my trip", "start planning", "let's do that", "build itinerary",
-        "day trip to", "3 day trip", "3 days trip", "full itinerary"
+        "plan a", "plan my", "plan for", "plan trip", "planning a", "create an itinerary", "generate itinerary",
+        "build a plan", "make an itinerary", "day itinerary", "days itinerary", "day trip", "days trip",
+        "days plan", "day plan", "full itinerary", "travel plan", "day-by-day", "schedule", "make it",
+        "change to", "update to", "itinerary for", "trip for", "days in", "day in", "show me days",
+        "custom plan", "itinerary"
     ]) or (
         ("itinerary" in text_lower or "travel plan" in text_lower)
-        and not any(k in text_lower for k in ["food", "weather", "safe", "pack", "clothes", "cost", "budget", "expensive", "visa", "flight"])
+        and not any(k in text_lower for k in ["safe", "pack", "clothes", "visa"])
+    ) or (
+        has_duration_query and any(w in text_lower for w in ["trip", "tour", "visit", "go", "travel", "in ", "for ", "plan", "days", "stay"])
     )
 
-    if is_plan_request and current_dest:
-        # User wants a full itinerary for current_dest
+    if is_plan_request:
+        if not current_dest:
+            current_dest = "India"
+            memory["destination"] = "India"
+
+        # User wants a full itinerary for current_dest with customer-requested duration
         itinerary_data = generate_trip_itinerary(current_dest, "2026-11-20", num_days=days)
         memory["current_itinerary"] = itinerary_data
         per_person = round(budget / max(1, travellers), 2)
 
         plan_prompt = (
-            f"The user wants a {days}-day itinerary for {current_dest} for {travellers} travellers (budget ₹{int(budget):,}). "
-            f"Write an inspiring, vivid conversational overview introducing this day-by-day journey. "
+            f"The user wants an authentic {days}-day itinerary for {current_dest} for {travellers} travellers (budget ₹{int(budget):,}). "
+            f"Write an inspiring, vivid conversational overview introducing this {days}-day journey. "
             f"Highlight unique morning viewpoints, authentic local experiences, and scenic routes. Keep it engaging and formatted in clean markdown."
         )
         gemini_plan_intro = try_gemini_multiturn_chat(plan_prompt, conversation_history, extra_context=extra_context)
@@ -518,6 +589,7 @@ def generate_conversational_response(
         reply_content = gemini_plan_intro or (
             f"Here is your personalized **{days}-Day {current_dest} Itinerary** "
             f"crafted for **{travellers} travellers** within your **₹{int(budget):,}** budget (approx. **₹{int(per_person):,}/person**)! 🗺️\n\n"
+            f"• **Customer-Calibrated Duration:** Exactly **{days} full days** tailored to your request.\n"
             f"• **Optimized Routing:** Activities are clustered geographically to eliminate backtracking.\n"
             f"• **Balanced Pace:** Includes morning viewpoints, relaxed dining breaks, and scenic sunset spots.\n"
             f"• Switch between **Day Schedule**, **Interactive Route Map**, and **Budget** using the interactive tabs below."
@@ -536,7 +608,8 @@ def generate_conversational_response(
             },
             "memory": memory,
             "suggested_actions": [
-                {"label": "Make Day 2 Less Hectic", "action": "prompt", "text": f"Make day 2 of {current_dest} less hectic with relaxed cafes."},
+                {"label": f"✈️ How to Reach {current_dest.split(',')[0]}", "action": "prompt", "text": f"How do I travel to {current_dest} and what are the flight/train costs?"},
+                {"label": f"🏨 Where to Stay in {current_dest.split(',')[0]}", "action": "prompt", "text": f"Where should I stay in {current_dest}?"},
                 {"label": f"Local Food in {current_dest.split(',')[0]}", "action": "prompt", "text": f"What authentic local food should I eat in {current_dest}?"},
                 {"label": f"DeepSearch {current_dest.split(',')[0]} ⚡", "action": "deep_search", "destination": current_dest}
             ]

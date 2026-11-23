@@ -92,15 +92,20 @@ export default function ChatbotDrawer() {
     if (actionItem.action === 'prompt') {
       handleSendMessage(actionItem.text);
     } else if (actionItem.action === 'generate_itinerary') {
-      handleSendMessage(`Create a 3-day itinerary for ${actionItem.destination}`);
+      handleSendMessage(`Create a full ${actionItem.days || 5}-day itinerary for ${actionItem.destination}`);
     } else if (actionItem.action === 'save_itinerary' && actionItem.itinerary) {
       setLoading(true);
       try {
+        const daysLen = actionItem.itinerary?.length || 5;
+        const now = new Date();
+        const startStr = now.toISOString().split('T')[0];
+        const endD = new Date(now.getTime() + daysLen * 86400000);
+        const endStr = endD.toISOString().split('T')[0];
         const newTrip = await api.createTrip({
-          title: `Trip to ${activeTrip?.destination || 'Munnar, Kerala'}`,
-          destination: activeTrip?.destination || 'Munnar, Kerala',
-          start_date: '2026-11-20',
-          end_date: '2026-11-23',
+          title: `Trip to ${activeTrip?.destination || 'India'}`,
+          destination: activeTrip?.destination || 'India',
+          start_date: startStr,
+          end_date: endStr,
           travellers_count: 2,
           total_budget: 20000.0,
           travel_style: 'Scenic Exploration'
@@ -221,8 +226,8 @@ export default function ChatbotDrawer() {
                       {msg.structured_data.days_count} Days
                     </span>
                   </div>
-                  <div className="space-y-1.5 text-[11px]">
-                    {msg.structured_data.itinerary.slice(0, 3).map((day) => (
+                  <div className="space-y-1.5 text-[11px] max-h-72 overflow-y-auto pr-1">
+                    {msg.structured_data.itinerary.map((day) => (
                       <div key={day.day_number} className="p-2 rounded-lg bg-forest-800/80 border border-forest-700/60">
                         <span className="font-semibold text-sand-300 block">{day.title}</span>
                         <span className="text-[10px] text-cream-300/80">{day.theme}</span>

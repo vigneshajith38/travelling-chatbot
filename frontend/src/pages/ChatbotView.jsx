@@ -20,33 +20,39 @@ const PRESET_STARTER_CARDS = [
     prompt: "Tell me about Bali. What are the best areas to stay, cultural highlights, and secret beaches away from crowds?"
   },
   {
+    icon: "🇮🇳",
+    title: "5 Days Golden Triangle & India",
+    subtitle: "Delhi, Agra Taj Mahal & Jaipur forts",
+    prompt: "Plan a 5-day trip to India covering historic Delhi, sunrise at the Taj Mahal in Agra, and royal Jaipur palaces under ₹30,000 for 2."
+  },
+  {
+    icon: "🏖️",
+    title: "4 Days in Goa",
+    subtitle: "Heritage quarters & beach sunsets",
+    prompt: "Plan a 4-day coastal trip to Goa with Portuguese Fontainhas walks, Dudhsagar falls, and sunset cafes under ₹20,000 for 2."
+  },
+  {
     icon: "⚡",
     title: "DeepSearch Hidden Gems",
     subtitle: "Offbeat trails, terrain & golden hours",
-    prompt: "Run DeepSearch on Tokyo: uncover secret artisan alleyways, best golden-hour photo spots, and authentic food secrets.",
+    prompt: "Run DeepSearch on Manali: uncover secret cedar trails, golden-hour photo spots, and authentic Himachali food secrets.",
     isDeepSearch: true
   },
   {
     icon: "🗼",
-    title: "3 Days in Paris",
-    subtitle: "Art, architecture & iconic landmarks",
-    prompt: "Plan a 3-day trip to Paris with iconic monuments, charming Latin Quarter bistros, and an evening Seine cruise."
-  },
-  {
-    icon: "🏖️",
-    title: "Relaxed Goa Coastal Trip",
-    subtitle: "Heritage quarters & beach cafes",
-    prompt: "Plan a relaxed 3-day coastal trip to Goa with Portuguese heritage walks in Fontainhas, beach sunsets, and seafood spots under ₹20,000 for 2."
+    title: "Paris Highlights",
+    subtitle: "Art, architecture & Seine cruises",
+    prompt: "Plan a 5-day trip to Paris with iconic monuments, Latin Quarter bistros, and an evening Seine cruise."
   }
 ];
 
 const QUICK_MOOD_PROMPTS = [
-  "🌴 Tell me about Bali",
-  "🏨 Where to stay in Bali",
-  "🗼 Plan 3 days in Paris",
-  "🌸 Must-see in Tokyo",
-  "✈️ Flights & trains Paris to Amsterdam",
-  "⚡ DeepSearch offbeat spots",
+  "🇮🇳 5 Days in India",
+  "🏖️ 4 Days in Goa",
+  "🏔️ 5 Days in Manali",
+  "🌴 6 Days in Kerala",
+  "🏨 Hotels in Delhi & Goa",
+  "✈️ Trains & Flights Mumbai to Goa",
   "💰 Budget trip under ₹20k"
 ];
 
