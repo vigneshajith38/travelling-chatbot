@@ -352,6 +352,17 @@ export default function InteractiveMap({
                     <span>Navigate in Google Maps</span>
                     <ExternalLink className="w-2.5 h-2.5 text-forest-700" />
                   </a>
+
+                  {/* TripAdvisor Reviews & Ratings Button */}
+                  <a
+                    href={act.tripadvisor_url || `https://www.tripadvisor.com/Search?q=${encodeURIComponent(act.title + ' ' + (act.location_name || ''))}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full mt-1 py-1 px-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 text-[10px] font-bold flex items-center justify-center gap-1 border border-emerald-300 transition-colors"
+                  >
+                    <span>🦉 TripAdvisor Reviews</span>
+                    <ExternalLink className="w-2.5 h-2.5 text-emerald-700" />
+                  </a>
                 </div>
               </Popup>
             </Marker>

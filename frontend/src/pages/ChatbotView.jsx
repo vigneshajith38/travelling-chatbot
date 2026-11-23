@@ -665,9 +665,20 @@ export default function ChatbotView() {
                                 <div className="space-y-1.5 text-xs text-slate-700">
                                   {day.activities?.map((act, i) => (
                                     <div key={i} className="flex items-start justify-between gap-2 p-2 rounded-xl bg-white border border-sand-200">
-                                      <div>
+                                      <div className="flex-1">
                                         <span className="font-semibold text-slate-900 block">{act.time_str} • {act.title}</span>
-                                        <span className="text-[11px] text-slate-500">{act.location_name}</span>
+                                        <div className="flex items-center gap-2 mt-0.5">
+                                          <span className="text-[11px] text-slate-500">{act.location_name}</span>
+                                          <a
+                                            href={act.tripadvisor_url || `https://www.tripadvisor.com/Search?q=${encodeURIComponent(act.title)}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-[10px] font-semibold text-emerald-700 hover:text-emerald-900 hover:underline flex items-center gap-0.5"
+                                            title="Read verified traveler reviews on TripAdvisor"
+                                          >
+                                            <span>🦉 Reviews ↗</span>
+                                          </a>
+                                        </div>
                                       </div>
                                       <span className="font-bold text-forest-800 shrink-0">₹{act.estimated_cost}</span>
                                     </div>
@@ -955,9 +966,23 @@ export default function ChatbotView() {
 
                               {/* Booking Link Action */}
                               <div className="flex items-center justify-between pt-1.5 border-t border-sand-200/80">
-                                <span className="text-[10px] text-slate-500 italic">
-                                  Free cancellation available on selected rooms
-                                </span>
+                                <div className="flex items-center gap-2">
+                                  {h.tripadvisor_url ? (
+                                    <a
+                                      href={h.tripadvisor_url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 hover:underline"
+                                    >
+                                      <span>🦉</span>
+                                      <span>TripAdvisor Reviews ↗</span>
+                                    </a>
+                                  ) : (
+                                    <span className="text-[10px] text-slate-500 italic">
+                                      Free cancellation available on selected rooms
+                                    </span>
+                                  )}
+                                </div>
                                 <a
                                   href={h.booking_url || (msg.structured_data.live_booking_links && msg.structured_data.live_booking_links.booking_com)}
                                   target="_blank"
@@ -1011,6 +1036,15 @@ export default function ChatbotView() {
                                 className="text-rose-600 hover:text-rose-800 font-bold underline"
                               >
                                 Airbnb ↗
+                              </a>
+                              <span>•</span>
+                              <a
+                                href={msg.structured_data.live_booking_links.tripadvisor || `https://www.tripadvisor.com/Search?q=Hotels%20in%20${encodeURIComponent(msg.structured_data.destination || 'India')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-emerald-700 hover:text-emerald-900 font-bold underline"
+                              >
+                                🦉 TripAdvisor ↗
                               </a>
                             </div>
                           </div>

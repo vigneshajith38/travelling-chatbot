@@ -1,6 +1,7 @@
 import datetime
 import json
 import re
+import urllib.parse
 from typing import List, Dict, Any, Optional, Tuple
 from app.core.config import settings
 
@@ -513,6 +514,9 @@ def generate_trip_itinerary(
                 act["order_index"] = order_idx
                 if "booking_url" not in act:
                     act["booking_url"] = None
+                if "tripadvisor_url" not in act or not act["tripadvisor_url"]:
+                    q = urllib.parse.quote_plus(f"{act.get('title', '')} {destination_name}")
+                    act["tripadvisor_url"] = f"https://www.tripadvisor.com/Search?q={q}"
         return ai_itinerary
 
     # 2. Offline Fallback: match region or generic landmark bank
@@ -575,6 +579,7 @@ def generate_trip_itinerary(
                 "category": raw_act["cat"],
                 "is_indoor": raw_act["indoor"],
                 "booking_url": None,
+                "tripadvisor_url": f"https://www.tripadvisor.com/Search?q={urllib.parse.quote_plus(raw_act['title'] + ' ' + dest_clean)}",
                 "order_index": order_idx
             })
 

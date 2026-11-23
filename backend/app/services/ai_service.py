@@ -38,11 +38,13 @@ You possess encyclopedic, authentic, and nuanced knowledge across the entire wor
 - **Structured Formatting:** Use clean Markdown with headers, bullet points, itemized cost tables, and bold highlights.
 """
 
-# Supported candidate models in priority order: gemini-3.5-flash first for stability, followed by flash-lite
+# Supported candidate models in priority order
 CANDIDATE_MODELS = [
-    "gemini-3.5-flash",
     "gemini-3.5-flash-lite",
-    "gemini-3.1-flash-lite"
+    "gemini-3.5-flash",
+    "gemini-3.1-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-1.5-flash"
 ]
 
 # Destination Intelligence cache for deep enrichment
@@ -304,7 +306,7 @@ def try_gemini_multiturn_chat(
 
         client = genai.Client(
             api_key=api_key,
-            http_options=types.HttpOptions(timeout=6000)
+            http_options=types.HttpOptions(timeout=15.0)
         )
 
         config = types.GenerateContentConfig(
@@ -696,6 +698,12 @@ def generate_fallback_destination_guide(destination: str) -> str:
             f"• **Twilight / Blue Hour (05:45 PM - 06:45 PM):** High panoramic vantage points capturing colorful sunset horizons."
         )
 
+    # 5. TripAdvisor Intelligence & Traveler Review Consensus
+    from app.services.tripadvisor_service import get_tripadvisor_destination_intelligence
+    ta_data = get_tripadvisor_destination_intelligence(destination)
+    ta_attractions = "\n".join([f"• **{item['rank']}: {item['name']}** (⭐ {item['rating']}/5.0 • {item['reviews']} reviews): {item['tip']}" for item in ta_data.get("top_ranked_attractions", [])[:3]])
+    ta_tips = "\n".join([f"• {tip}" for tip in ta_data.get("top_traveler_tips", [])[:2]])
+
     road_notes = intel.get("safety_road_notes", "Use registered ride apps, prepaid transit counters, and licensed guides.")
 
     return (
@@ -749,7 +757,19 @@ def generate_fallback_destination_guide(destination: str) -> str:
         f"### 15. 📸 Photography & Scenic Locations\n"
         f"{photo_text}\n\n"
         f"### 16. 🚗 Nearby Destinations Worth Exploring (Day Trips)\n"
-        f"• Picturesque hill stations, cascading waterfalls, and historic forts located within a 40-90 km scenic drive."
+        f"• Picturesque hill stations, cascading waterfalls, and historic forts located within a 40-90 km scenic drive.\n\n"
+        f"---\n"
+        f"### 🦉 TripAdvisor Verified Traveler Insights & Consensus\n"
+        f"• **Award Badge:** {ta_data.get('travelers_choice_badge', 'Travelers Choice 2026')}\n"
+        f"• **Traveler Rating:** ⭐ **{ta_data.get('overall_rating', 4.8)} / 5.0** ({ta_data.get('review_consensus_count', 'Verified Reviews')})\n"
+        f"• **Top Ranked Things to Do on TripAdvisor:**\n"
+        f"{ta_attractions}\n"
+        f"• **Key Traveler Review Tips:**\n"
+        f"{ta_tips}\n\n"
+        f"🔗 **TripAdvisor Portals:** "
+        f"[Top Attractions ↗]({ta_data['tripadvisor_attractions_url']}) • "
+        f"[Best Restaurants ↗]({ta_data['tripadvisor_restaurants_url']}) • "
+        f"[Hotels & Stays Reviews ↗]({ta_data['tripadvisor_hotels_url']})"
     )
 
 def build_contextual_fallback(user_message: str, current_dest: str, days: int, travellers: int) -> str:

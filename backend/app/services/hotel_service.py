@@ -357,20 +357,22 @@ def get_worldwide_hotel_suggestions(destination_name: str) -> Dict[str, Any]:
     if not matched_hotels:
         matched_hotels = generate_dynamic_hotel_tiers(destination_name)
 
-    # Attach live booking deep links for each tier and overall
+    # Attach live booking and TripAdvisor deep links for each tier and overall
     booking_links = {
         "booking_com": f"https://www.booking.com/searchresults.html?ss={encoded_dest}",
+        "tripadvisor": f"https://www.tripadvisor.com/Search?q=Hotels%20in%20{encoded_dest}",
         "google_hotels": f"https://www.google.com/travel/hotels?q=Hotels%20in%20{encoded_dest}",
         "agoda": f"https://www.agoda.com/search?text={encoded_dest}",
         "airbnb": f"https://www.airbnb.com/s/{encoded_dest}/homes"
     }
 
-    # Add specific booking links to each hotel card
+    # Add specific booking and TripAdvisor review links to each hotel card
     enriched_hotels = []
     for h in matched_hotels:
         hotel_query = urllib.parse.quote(f"{h['name']} {destination_name}")
         h_copy = h.copy()
         h_copy["booking_url"] = f"https://www.booking.com/searchresults.html?ss={hotel_query}"
+        h_copy["tripadvisor_url"] = f"https://www.tripadvisor.com/Search?q={hotel_query}"
         enriched_hotels.append(h_copy)
 
     return {
