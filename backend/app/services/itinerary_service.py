@@ -201,39 +201,90 @@ def check_destination_ambiguity(dest_name: str) -> Optional[List[str]]:
 def resolve_destination_coordinates(dest_name: str) -> tuple:
     """
     Returns accurate (lat, lng) for ANY global or Indian destination,
-    utilizing cached coordinates or real-time OpenStreetMap Nominatim Geocoding.
+    utilizing verified destination registry, Nominatim geocoding, and cached coordinates.
     """
     if not dest_name:
         return (28.6139, 77.2090)
+
+    # 1. Check verified destination registry
+    try:
+        from app.services.destination_verifier import get_destination_identity
+        ident = get_destination_identity(dest_name)
+        if ident and ident.get("lat") and ident.get("lng"):
+            return (float(ident["lat"]), float(ident["lng"]))
+    except Exception:
+        pass
+
     clean = dest_name.split(",")[0].lower().strip()
     for k, coords in GLOBAL_DESTINATION_COORDINATES.items():
         if k in clean or clean in k:
             return coords
 
-    # Dynamic OpenStreetMap Nominatim Geocoding API lookup
+    # 2. Dynamic OpenStreetMap Nominatim Geocoding API lookup
     try:
         import httpx
-        with httpx.Client(timeout=3.0) as client:
+        with httpx.Client(timeout=3.5) as client:
             resp = client.get(
                 "https://nominatim.openstreetmap.org/search",
                 params={"q": dest_name, "format": "json", "limit": 1},
-                headers={"User-Agent": "WanderWise-AI-Travel-Planner/2.0"}
+                headers={"User-Agent": "WanderWise-AI-Travel/2.0 (travel@wanderwise.com)"}
             )
             if resp.status_code == 200:
                 results = resp.json()
                 if results and len(results) > 0:
                     lat = float(results[0]["lat"])
                     lng = float(results[0]["lon"])
-                    # Cache dynamically
                     GLOBAL_DESTINATION_COORDINATES[clean] = (lat, lng)
                     return (lat, lng)
     except Exception:
         pass
 
-    return (28.6139, 77.2090)
+    return (12.9716, 77.5946)
 
 # Regional landmark template banks for offline fallback (up to 7+ days each)
 REGIONAL_LANDMARK_BANKS = {
+    "trivandrum": [
+        # Day 1: Historic Temples & Royal Travancore Art
+        {"slot": "morning", "time": "08:00 AM", "title": "Sree Padmanabhaswamy Temple & Kuthira Malika", "desc": "16th-century architectural masterpiece of Lord Vishnu in Anantha Shayana posture and the 2-century-old wooden palace of 122 horses.", "loc": "East Fort, Thiruvananthapuram", "lat": 8.4827, "lng": 76.9439, "cost": 50.0, "dur": 120, "mode": "walking", "cat": "culture", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Napier Museum & Sri Chitra Art Gallery", "desc": "Ornamental Gothic wood-and-stone museum housing bronze idols, temple chariots, and Raja Ravi Varma oil canvases.", "loc": "Museum Grounds, Vellayambalam", "lat": 8.5089, "lng": 76.9551, "cost": 30.0, "dur": 110, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:45 PM", "title": "Shangumugham Beach & Mermaid Sculpture Sunset", "desc": "Breezy coastal sunset promenade facing the giant Jalakanyaka sculpture with fresh coastal tapioca snacks.", "loc": "Shankumugham, Thiruvananthapuram", "lat": 8.4800, "lng": 76.9100, "cost": 0.0, "dur": 90, "mode": "walking", "cat": "photo", "indoor": False},
+        # Day 2: Iconic Crescent Beaches & Lighthouse
+        {"slot": "morning", "time": "08:30 AM", "title": "Kovalam Lighthouse Beach & 1972 Red-White Tower", "desc": "Climb the 118-ft cliff lighthouse for 360-degree Arabian Sea panoramas and beach cove walks.", "loc": "Lighthouse Beach, Kovalam", "lat": 8.3988, "lng": 76.9785, "cost": 20.0, "dur": 120, "mode": "walking", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Vizhinjam Marine Aquarium & Rock-Cut Cave Temple", "desc": "Historic 8th-century monolithic rock-cut cave relief and interactive coastal marine research tanks.", "loc": "Vizhinjam Harbor, Kovalam", "lat": 8.3790, "lng": 77.0010, "cost": 40.0, "dur": 90, "mode": "driving", "cat": "culture", "indoor": True},
+        {"slot": "evening", "time": "05:30 PM", "title": "Hawa Beach Promenade & Seafood Dining", "desc": "Watch traditional catamarans return with evening catch while savoring fresh Karimeen Pollichathu.", "loc": "Hawa Beach, Kovalam", "lat": 8.4020, "lng": 76.9770, "cost": 450.0, "dur": 110, "mode": "walking", "cat": "food", "indoor": False},
+        # Day 3: Misty Western Ghats Foothills
+        {"slot": "morning", "time": "06:30 AM", "title": "Ponmudi Golden Valley & 22 Hairpin Bends", "desc": "Misty mountain road drive climbing to the Western Ghats ridge past Kallar river rapids and tea hills.", "loc": "Ponmudi Hills (55 km northeast)", "lat": 8.7600, "lng": 77.1167, "cost": 100.0, "dur": 180, "mode": "driving", "cat": "adventure", "indoor": False},
+        {"slot": "afternoon", "time": "02:00 PM", "title": "Kallar Stream Trek & Forest Trail", "desc": "Crystal-clear mountain stream boulder hopping under shaded tropical canopies.", "loc": "Kallar, Nedumangad Road", "lat": 8.7400, "lng": 77.1000, "cost": 30.0, "dur": 90, "mode": "walking", "cat": "nature", "indoor": False},
+        {"slot": "evening", "time": "06:30 PM", "title": "Chalai Heritage Spice Bazaar & Evening Walk", "desc": "Century-old trading street bustling with aroma of whole Malabar spices, brassware, and hot banana fritters.", "loc": "Chalai, Thiruvananthapuram", "lat": 8.4850, "lng": 76.9480, "cost": 150.0, "dur": 90, "mode": "walking", "cat": "shopping", "indoor": True}
+    ],
+    "vagamon": [
+        # Day 1: Misty Pines & Cantilever Skywalk
+        {"slot": "morning", "time": "08:30 AM", "title": "Vagamon Pine Forest Needle Trail", "desc": "Towering British-era pine woodland sloping down into misty valley floors, perfect for quiet nature strolls.", "loc": "Kolahalamedu, Vagamon", "lat": 9.6544, "lng": 76.9349, "cost": 20.0, "dur": 120, "mode": "walking", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Vagamon Glass Bridge & Adventure Park", "desc": "India's longest cantilever glass skybridge suspended 3,600 ft above a dramatic rocky ravine.", "loc": "DTPC Kolahalamedu, Vagamon", "lat": 9.6560, "lng": 76.9310, "cost": 250.0, "dur": 110, "mode": "walking", "cat": "adventure", "indoor": False},
+        {"slot": "evening", "time": "05:30 PM", "title": "Barren Hills (Motta Kundu) Sunset Panorama", "desc": "Undulating velvet-green hills with endless horizon views of paragliding gliders and golden mountain twilight.", "loc": "Elappara Road, Vagamon", "lat": 9.6950, "lng": 76.9120, "cost": 20.0, "dur": 100, "mode": "walking", "cat": "photo", "indoor": False},
+        # Day 2: Spiritual Hills & Lake Serenity
+        {"slot": "morning", "time": "08:00 AM", "title": "Kurisumala Ashram & Hilltop Dairy Farm", "desc": "Cistercian monastery sanctuary blending Indian Christian spirituality with serene walking trails and dairy herds.", "loc": "Kurisumala, Vagamon", "lat": 9.6750, "lng": 76.8920, "cost": 0.0, "dur": 130, "mode": "walking", "cat": "culture", "indoor": False},
+        {"slot": "afternoon", "time": "02:00 PM", "title": "Vagamon Lake Pedal Boating & Garden Walk", "desc": "Calm hillside lake enclosed by green knolls and flowering gardens offering peaceful boat glides.", "loc": "Central Vagamon Town", "lat": 9.6870, "lng": 76.9080, "cost": 150.0, "dur": 90, "mode": "walking", "cat": "relaxation", "indoor": False},
+        {"slot": "evening", "time": "06:00 PM", "title": "Vagamon Tea Plantation Walk & Organic Tea Tasting", "desc": "Sunset walk across terraced tea rows followed by warm cardamom and ginger tea in local estate cafes.", "loc": "Pullikkanam Road, Vagamon", "lat": 9.6900, "lng": 76.9150, "cost": 50.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": False},
+        # Day 3: Forest Waterfalls & High Mountain Ridges
+        {"slot": "morning", "time": "08:30 AM", "title": "Marmala Waterfalls 4x4 Jeep Descent", "desc": "Spectacular 60-meter jungle waterfall cascading into a deep emerald rock basin inside rubber forests.", "loc": "Near Erattupetta (24 km downhill)", "lat": 9.7120, "lng": 76.8200, "cost": 250.0, "dur": 150, "mode": "driving", "cat": "adventure", "indoor": False},
+        {"slot": "afternoon", "time": "02:00 PM", "title": "Illikkal Kallu Mountain Peak & Hell's Bridge", "desc": "One of the highest peaks in Kottayam (4,000 ft) featuring the dramatic razor-edge Narakapalam rock ridge.", "loc": "Moonnilavu Ridge (22 km)", "lat": 9.7340, "lng": 76.8050, "cost": 50.0, "dur": 120, "mode": "transit", "cat": "photo", "indoor": False},
+        {"slot": "evening", "time": "06:30 PM", "title": "Vagamon Twilight Campfire & Local Kerala Thali", "desc": "Cool mountain night around an open campfire enjoying hot Malabar parottas and vegetable stew.", "loc": "Vagamon Valley Stays", "lat": 9.6800, "lng": 76.9100, "cost": 400.0, "dur": 100, "mode": "walking", "cat": "food", "indoor": True}
+    ],
+    "gokarna": [
+        # Day 1: Spiritual Temples & Cliff Beaches
+        {"slot": "morning", "time": "07:30 AM", "title": "Mahabaleshwar Temple & Kotitirtha Sacred Dip", "desc": "Ancient 4th-century CE shrine housing the revered Atmalinga of Shiva, followed by holy Kotitirtha reservoir steps.", "loc": "Car Street, Gokarna", "lat": 14.5425, "lng": 74.3169, "cost": 0.0, "dur": 110, "mode": "walking", "cat": "culture", "indoor": False},
+        {"slot": "afternoon", "time": "01:00 PM", "title": "Gokarna Main Beach & Traditional Brahmin Meals", "desc": "Wide sandy pilgrims' shore followed by authentic South Indian plantain leaf meals near the temple car street.", "loc": "Main Beach, Gokarna", "lat": 14.5450, "lng": 74.3120, "cost": 150.0, "dur": 90, "mode": "walking", "cat": "food", "indoor": True},
+        {"slot": "evening", "time": "05:00 PM", "title": "Kudle Beach Sunset Yoga & Acoustic Shacks", "desc": "Scenic downhill cliff path to a relaxed bohemian beach cove with acoustic sunset cafes.", "loc": "Kudle Beach, Gokarna", "lat": 14.5300, "lng": 74.3150, "cost": 0.0, "dur": 120, "mode": "walking", "cat": "relaxation", "indoor": False},
+        # Day 2: Signature 5-Beach Cliff Trek
+        {"slot": "morning", "time": "08:00 AM", "title": "Om Beach Crescent Walk & Namaste Cafe Breakfast", "desc": "Iconic beach naturally contoured like the spiritual ॐ symbol with rock outcrops and breakfast shacks.", "loc": "Om Beach, Gokarna", "lat": 14.5186, "lng": 74.3164, "cost": 250.0, "dur": 120, "mode": "walking", "cat": "nature", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Half Moon Beach Coastal Cliff Trek", "desc": "Rugged cliff-edge path through maritime scrub overlooking turquoise Arabian sea waves.", "loc": "Half Moon Beach, Gokarna", "lat": 14.5120, "lng": 74.3210, "cost": 0.0, "dur": 100, "mode": "walking", "cat": "adventure", "indoor": False},
+        {"slot": "evening", "time": "05:00 PM", "title": "Paradise Beach Secluded Cove Boat Ride", "desc": "Remote white-sand haven accessible only by foot or local fishing boat; dolphin sightings at dusk.", "loc": "Paradise Beach, Gokarna", "lat": 14.5050, "lng": 74.3280, "cost": 300.0, "dur": 120, "mode": "driving", "cat": "photo", "indoor": False},
+        # Day 3: Laterite Fortresses & Karst Wonders
+        {"slot": "morning", "time": "08:30 AM", "title": "Mirjan Fort Laterite Citadel Exploration", "desc": "16th-century fortress of Queen Chennabhairadevi (the Pepper Queen) wrapped in lush moss and moats.", "loc": "Mirjan (22 km southeast)", "lat": 14.4920, "lng": 74.4180, "cost": 0.0, "dur": 110, "mode": "driving", "cat": "culture", "indoor": False},
+        {"slot": "afternoon", "time": "01:30 PM", "title": "Yana Rocks Karst Monolith Caves", "desc": "Two giant crystalline black limestone monoliths rising 120m out of dense Western Ghats rainforest.", "loc": "Yana, Western Ghats (48 km)", "lat": 14.5900, "lng": 74.5600, "cost": 20.0, "dur": 150, "mode": "driving", "cat": "nature", "indoor": False},
+        {"slot": "evening", "time": "06:30 PM", "title": "Gokarna Town Car Street Handloom & Brass Souvenirs", "desc": "Evening bazaar browsing handmade musical instruments, seashell jewelry, and pure sandalwood items.", "loc": "Car Street Bazaar, Gokarna", "lat": 14.5430, "lng": 74.3170, "cost": 200.0, "dur": 90, "mode": "walking", "cat": "shopping", "indoor": True}
+    ],
     "bangalore": [
         # Day 1: Royal & Botanical Heritage
         {"slot": "morning", "time": "08:30 AM", "title": "Lalbagh Botanical Garden & Victorian Glass House", "desc": "240-acre botanical haven founded by Hyder Ali featuring centuries-old bonsai and serene lotus pools.", "loc": "Mavalli, Bengaluru", "lat": 12.9507, "lng": 77.5848, "cost": 30.0, "dur": 120, "mode": "walking", "cat": "nature", "indoor": False},
@@ -498,7 +549,98 @@ def generate_trip_itinerary(
     dest_clean = destination_name.split(",")[0].strip() if destination_name else "India"
     dest_lower = dest_clean.lower()
 
-    # 1. Try Gemini AI Generation
+    # 1. Check if multi-destination circuit
+    from app.services.destination_verifier import parse_destination_query, normalize_destination_key
+    dest_query = parse_destination_query(destination_name)
+    is_multi = (dest_query.get("query_type") == "multi_destination_circuit" or "->" in destination_name) and len(dest_query.get("destinations", [])) >= 2
+
+    if is_multi:
+        sub_dests = dest_query.get("destinations", [])
+        num_sub = len(sub_dests)
+        base_days = num_days // num_sub
+        rem = num_days % num_sub
+        day_alloc = []
+        for i in range(num_sub):
+            extra = 1 if i < rem else 0
+            day_alloc.extend([sub_dests[i]] * (base_days + extra))
+
+        try:
+            start_date = datetime.date.fromisoformat(start_date_str)
+        except Exception:
+            start_date = datetime.date.today() + datetime.timedelta(days=7)
+
+        multi_itinerary = []
+        dest_bank_indices = {d["key"]: 0 for d in sub_dests}
+
+        for day_idx in range(1, num_days + 1):
+            cur_dest_info = day_alloc[day_idx - 1]
+            dest_k = cur_dest_info["key"]
+            canon_name = cur_dest_info["canonical_name"].split(",")[0].strip()
+            cur_date = start_date + datetime.timedelta(days=day_idx - 1)
+
+            # Check if tomorrow transitions to a new destination
+            transition_note = ""
+            if day_idx < num_days:
+                next_dest_info = day_alloc[day_idx]
+                if next_dest_info["key"] != dest_k:
+                    next_name = next_dest_info["canonical_name"].split(",")[0].strip()
+                    transition_note = f" Evening transit: Drive from {canon_name} to {next_name} to check into accommodation for tomorrow."
+
+            # Fetch destination bank
+            norm_k = normalize_destination_key(dest_k)
+            if norm_k in REGIONAL_LANDMARK_BANKS:
+                dest_bank = REGIONAL_LANDMARK_BANKS[norm_k]
+            elif dest_k in REGIONAL_LANDMARK_BANKS:
+                dest_bank = REGIONAL_LANDMARK_BANKS[dest_k]
+            elif "trivandrum" in dest_k or "thiruvananthapuram" in dest_k:
+                dest_bank = REGIONAL_LANDMARK_BANKS["trivandrum"]
+            else:
+                dest_lat = cur_dest_info.get("lat", 12.9716)
+                dest_lng = cur_dest_info.get("lng", 77.5946)
+                dest_bank = _synthesize_destination_itinerary(canon_name, dest_lat, dest_lng)
+
+            b_idx = dest_bank_indices[dest_k]
+            day_activities = []
+            slots = ["morning", "afternoon", "evening"]
+
+            for order_idx, slot in enumerate(slots):
+                raw_act = dest_bank[b_idx % len(dest_bank)]
+                b_idx += 1
+                travel_time = "15 mins" if order_idx > 0 else "0 mins"
+
+                day_activities.append({
+                    "time_slot": slot,
+                    "time_str": raw_act["time"],
+                    "title": raw_act["title"],
+                    "description": raw_act["desc"],
+                    "location_name": raw_act["loc"],
+                    "lat": raw_act["lat"],
+                    "lng": raw_act["lng"],
+                    "estimated_cost": raw_act["cost"],
+                    "duration_mins": raw_act["dur"],
+                    "travel_time_from_prev": travel_time,
+                    "transport_mode": raw_act["mode"],
+                    "category": raw_act["cat"],
+                    "is_indoor": raw_act["indoor"],
+                    "booking_url": None,
+                    "tripadvisor_url": f"https://www.tripadvisor.com/Search?q={urllib.parse.quote_plus(raw_act['title'] + ' ' + canon_name)}",
+                    "order_index": order_idx
+                })
+
+            dest_bank_indices[dest_k] = b_idx
+
+            multi_itinerary.append({
+                "day_number": day_idx,
+                "date": cur_date.strftime("%b %d, %Y"),
+                "title": f"Day {day_idx}: Exploring {canon_name}",
+                "theme": f"Scenic Highlights & Authentic Atmosphere of {canon_name}",
+                "notes": f"Stay hydrated and comfortable while discovering {canon_name}.{transition_note}",
+                "activities": day_activities
+            })
+
+        return multi_itinerary
+
+    # 2. Try Gemini AI Generation for single destination
     ai_itinerary = _try_generate_with_gemini(destination_name, num_days)
     if ai_itinerary and len(ai_itinerary) >= 1:
         try:

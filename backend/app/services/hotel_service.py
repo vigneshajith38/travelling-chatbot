@@ -117,6 +117,120 @@ BENCHMARK_HOTELS: Dict[str, List[Dict[str, Any]]] = {
             "why_stay": "Occupying the top six floors of the Otemachi Tower; soaring washi paper architectural atrium and serene Japanese minimalism."
         }
     ],
+    "trivandrum": [
+        {
+            "name": "Zostel Trivandrum (Kovalam Road)",
+            "tier": "Budget & Backpacker",
+            "badge": "🎒 Traveler Community Hub",
+            "neighborhood": "Kovalam Coastal Corridor, Thiruvananthapuram",
+            "rating": 4.6,
+            "reviews_count": "1,420+",
+            "price_inr_range": "₹900 - ₹2,200/night",
+            "price_usd_range": "$11 - $27/night",
+            "amenities": ["Air-Conditioned Dorms & Private Rooms", "Rooftop Common Room", "Free Wi-Fi", "Scooter Rentals"],
+            "why_stay": "Vibrant budget property convenient for both Trivandrum city heritage (East Fort) and Kovalam beach sunsets."
+        },
+        {
+            "name": "Hycinth Urban Resort",
+            "tier": "Mid-Range Premium & City Central",
+            "badge": "✨ Rooftop Pool & Spa",
+            "neighborhood": "Manorama Road, Thampanoor, Thiruvananthapuram",
+            "rating": 4.7,
+            "reviews_count": "3,150+",
+            "price_inr_range": "₹4,800 - ₹8,500/night",
+            "price_usd_range": "$58 - $103/night",
+            "amenities": ["Rooftop Glass Infinity Pool", "Ayurvedic Spa", "Fine Dining Restaurants", "Valet Parking"],
+            "why_stay": "Centrally positioned near Central Railway Station and Padmanabhaswamy Temple with upscale modern amenities."
+        },
+        {
+            "name": "The Leela Kovalam, a Raviz Hotel",
+            "tier": "5-Star Clifftop Luxury",
+            "badge": "👑 Clifftop Ocean Panorama",
+            "neighborhood": "Kovalam Beachfront Cliff",
+            "rating": 4.9,
+            "reviews_count": "4,800+",
+            "price_inr_range": "₹18,500 - ₹42,000/night",
+            "price_usd_range": "$220 - $510/night",
+            "amenities": ["Private Beach Cove", "Clifftop Infinity Pool", "The Club Butler Service", "Ayurvedic Wellness Sanctuary"],
+            "why_stay": "India's only clifftop beach resort perched over the Arabian Sea, featuring panoramic private sun-decks and world-class Kerala hospitality."
+        }
+    ],
+    "vagamon": [
+        {
+            "name": "Zostel Vagamon",
+            "tier": "Budget & Backpacker",
+            "badge": "🌲 Pine Valley View",
+            "neighborhood": "Kolahalamedu, Vagamon",
+            "rating": 4.7,
+            "reviews_count": "1,850+",
+            "price_inr_range": "₹950 - ₹2,400/night",
+            "price_usd_range": "$12 - $29/night",
+            "amenities": ["Valley View Dorms", "Private Cottages", "Bonfire Nights", "Cafe with Mountain Vistas"],
+            "why_stay": "Overlooking misty pine forest hills; the ideal social base for hiking to Kurisumala and the Glass Bridge."
+        },
+        {
+            "name": "Vanilla County Heritage Plantation Estate",
+            "tier": "Mid-Range Heritage Homestay",
+            "badge": "🍃 Organic Spice Plantation",
+            "neighborhood": "Mavady Estate, Near Vagamon foothills",
+            "rating": 4.8,
+            "reviews_count": "940+",
+            "price_inr_range": "₹5,200 - ₹9,500/night",
+            "price_usd_range": "$63 - $115/night",
+            "amenities": ["Natural Spring-Fed Rock Pool", "Spice Plantation Tours", "Traditional Syrian-Christian Dining", "Bird Watching"],
+            "why_stay": "75-year-old Dutch-style heritage bungalow set on a 150-acre rubber, vanilla, and pepper estate with natural freshwater stream dips."
+        },
+        {
+            "name": "Foggy Knolls Resort Vagamon",
+            "tier": "Luxury Mountain Chalets",
+            "badge": "☁️ Cloud Valley Chalets",
+            "neighborhood": "Kolahalamedu, Vagamon",
+            "rating": 4.8,
+            "reviews_count": "1,620+",
+            "price_inr_range": "₹8,500 - ₹17,000/night",
+            "price_usd_range": "$103 - $205/night",
+            "amenities": ["Independent Valley Chalets", "Mist-Edge Lawn", "Multi-Cuisine Restaurant", "Trekking Guides"],
+            "why_stay": "Surrounded by floating cloud beds and mist; offers private wooden balconies with sweeping views over Vagamon's emerald green knolls."
+        }
+    ],
+    "gokarna": [
+        {
+            "name": "Zostel Gokarna",
+            "tier": "Budget & Backpacker",
+            "badge": "🌊 Kudle Beach Cliff Overlook",
+            "neighborhood": "Kudle Beach Hilltop, Gokarna",
+            "rating": 4.7,
+            "reviews_count": "3,400+",
+            "price_inr_range": "₹1,100 - ₹2,800/night",
+            "price_usd_range": "$13 - $34/night",
+            "amenities": ["Ocean-View Dorms & Privates", "Clifftop Cafe", "Direct Walking Trail to Kudle Beach", "Communal Games"],
+            "why_stay": "Unrivalled clifftop sunset vantage point right above Kudle Beach with a thriving global community of backpackers."
+        },
+        {
+            "name": "Namaste Sanjeevini / Om Beach Stay",
+            "tier": "Mid-Range Coastal Cottages",
+            "badge": "🌴 Palm Grove Retreat",
+            "neighborhood": "Om Beach Road, Gokarna",
+            "rating": 4.6,
+            "reviews_count": "2,100+",
+            "price_inr_range": "₹3,800 - ₹7,200/night",
+            "price_usd_range": "$46 - $87/night",
+            "amenities": ["Traditional Terracotta Cottages", "Ayurvedic Center", "Garden Dining", "Walk to Om Beach"],
+            "why_stay": "Tranquil terracotta-roofed cottages nestled in a dense tropical garden just minutes from Om Beach."
+        },
+        {
+            "name": "SwaSwara - CGH Earth Wellness Retreat",
+            "tier": "5-Star Holistic Wellness Sanctuary",
+            "badge": "👑 Om Beach Cliff Sanctuary",
+            "neighborhood": "Om Beach Clifftop, Gokarna",
+            "rating": 4.9,
+            "reviews_count": "1,180+",
+            "price_inr_range": "₹24,000 - ₹48,000/night",
+            "price_usd_range": "$290 - $580/night",
+            "amenities": ["Konkan Villa Suites with Private Open-Air Courtyards", "Daily Yoga & Meditation", "Naturopathic Dining", "Private Trail to Om Beach"],
+            "why_stay": "Renowned CGH Earth luxury wellness retreat celebrating inner calm, holistic healing, and raw natural coastal beauty."
+        }
+    ],
     "munnar": [
         {
             "name": "Zostel Munnar",
