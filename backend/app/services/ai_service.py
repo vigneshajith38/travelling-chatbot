@@ -1091,6 +1091,42 @@ def append_brave_sources_to_actions(suggested_actions: List[Dict[str, Any]], bra
             })
     return res
 
+def is_travel_related_question(user_message: str, has_travel_context: bool = False) -> bool:
+    """Reject clearly off-topic messages while allowing travel follow-ups."""
+    text = user_message.lower().strip()
+    if not text:
+        return False
+
+    greetings = {"hi", "hello", "hey", "thanks", "thank you", "good morning", "good evening", "bye", "goodbye"}
+    if text.strip("!.,? ") in greetings:
+        return True
+
+    if parse_destination_query(user_message).get("destinations"):
+        return True
+
+    travel_terms = (
+        "travel", "trip", "vacation", "holiday", "itinerary", "destination", "tourism", "tourist",
+        "explore", "visit", "places to see", "things to do", "attraction", "sightseeing",
+        "flight", "airport", "airline", "train", "railway", "bus", "transport", "taxi", "cab",
+        "ferry", "road trip", "hotel", "accommodation", "hostel", "resort", "where to stay",
+        "budget", "cost", "price", "expense", "cheap", "affordable", "weather", "forecast",
+        "season", "climate", "visa", "passport", "safety", "scam", "insurance", "emergency",
+        "pack", "luggage", "food", "cuisine", "cafe", "restaurant", "eat", "beach", "mountain",
+        "trek", "hike", "nature", "peaceful", "quiet", "scenic", "museum", "culture", "heritage",
+        "temple"
+    )
+    if any(re.search(r"\b" + re.escape(term) + r"\b", text) for term in travel_terms):
+        return True
+
+    contextual_follow_ups = (
+        "what about", "how about", "there", "it", "that", "those", "them", "nearby", "more",
+        "less", "cheaper", "same", "worth", "first one", "second one", "make it", "add",
+        "remove", "extend", "shorten", "which", "when", "how much"
+    )
+    return has_travel_context and any(
+        re.search(r"\b" + re.escape(term) + r"\b", text) for term in contextual_follow_ups
+    )
+
 def generate_conversational_response(
     user_message: str,
     trip_context: Optional[Dict[str, Any]] = None,
@@ -1105,6 +1141,28 @@ def generate_conversational_response(
     3. Fetches real-time telemetry (Open-Meteo weather, Nominatim coordinates).
     4. Delivers comprehensive guides, itemized budgets, and geographically clustered itineraries.
     """
+    memory = session_memory or {}
+    existing_destination = memory.get("destination")
+    trip_destination = (trip_context or {}).get("destination")
+    has_travel_context = bool(
+        existing_destination
+        or trip_destination
+        or memory.get("preferences")
+        or memory.get("current_planning_objective")
+        or memory.get("current_itinerary")
+    )
+    if not is_travel_related_question(user_message, has_travel_context):
+        return {
+            "role": "assistant",
+            "content": (
+                "Error: I can only help with travel-related questions. Please ask about destinations, "
+                "itineraries, transport, places to stay, budgets, weather, or travel safety."
+            ),
+            "structured_type": None,
+            "memory": memory,
+            "suggested_actions": []
+        }
+
     memory = extract_and_update_memory(user_message, session_memory)
     text_lower = user_message.lower().strip()
 

@@ -1,8 +1,27 @@
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
+from app.services.ai_service import generate_conversational_response, is_travel_related_question
 
 client = TestClient(app)
+
+def test_off_topic_chat_question_returns_error():
+    response = generate_conversational_response("Can you solve this algebra equation?")
+
+    assert response["content"].startswith("Error:")
+    assert response["suggested_actions"] == []
+
+def test_off_topic_question_is_rejected_with_active_trip_context():
+    response = generate_conversational_response(
+        "Explain photosynthesis.",
+        trip_context={"destination": "Goa"}
+    )
+
+    assert response["content"].startswith("Error:")
+
+def test_travel_follow_up_is_allowed_with_active_context():
+    assert is_travel_related_question("What about nearby?", has_travel_context=True)
+    assert is_travel_related_question("Tell me about Bali.")
 
 def test_health_check():
     response = client.get("/health")
