@@ -38,7 +38,17 @@
   scrollbar-width: none;
 }
 
-/* Leaflet map popup overrides */
+/* Leaflet map popup & container overrides */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 320px;
+  border-radius: inherit;
+  z-index: 10;
+  background-color: #f8fafc;
+  font-family: inherit;
+}
+
 .leaflet-popup-content-wrapper {
   border-radius: 16px !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
@@ -48,4 +58,11 @@
 .leaflet-popup-tip {
   background: #ffffff !important;
 }
+
+/* Ensure Leaflet controls don't clip */
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 990 !important;
+}
+
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapPin, Navigation, Clock, ExternalLink, Layers, Crosshair, Calendar } from 'lucide-react';
+import { MapPin, Navigation, Clock, ExternalLink, Layers, Crosshair, Calendar, Compass } from 'lucide-react';
 
 // Fix Leaflet's default icon path issues in React / Vite
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// Vibrant, accessible day-wise marker color palette
+// Day-wise marker color palette
 const DAY_COLORS = [
   '#1b4332', // Day 1: Deep Forest Green
   '#0284c7', // Day 2: Sky Azure Blue
@@ -24,12 +24,20 @@ const DAY_COLORS = [
   '#475569'  // Fallback
 ];
 
-// Custom colored SVG pin markers with sequence numbers
-const createCustomIcon = (number, color = '#1b4332', isSelected = false) => {
-  const size = isSelected ? 38 : 32;
-  const anchorY = isSelected ? 38 : 32;
+// Custom colored SVG pin markers with sequence numbers and start/destination distinction
+const createCustomIcon = (number, color = '#1b4332', isSelected = false, isStart = false, isEnd = false) => {
+  const size = isSelected ? 40 : (isStart || isEnd ? 36 : 32);
+  const anchorY = size;
   const anchorX = size / 2;
-  
+
+  // Distinct border badges for Start, Destination, and Selected
+  const borderColor = isSelected 
+    ? '#fde047' // Vivid Yellow for selected
+    : (isStart ? '#4ade80' : (isEnd ? '#f87171' : 'white'));
+
+  const badgeText = isStart && number === 1 ? 'START' : (isEnd ? 'END' : number);
+  const fontSize = (isStart && number === 1) || isEnd ? '9px' : (isSelected ? '13px' : '11px');
+
   return L.divIcon({
     html: `
       <div style="
@@ -42,12 +50,12 @@ const createCustomIcon = (number, color = '#1b4332', isSelected = false) => {
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-        border: ${isSelected ? '3px solid #fef08a' : '2px solid white'};
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+        border: ${isSelected ? '3px solid ' + borderColor : '2.5px solid ' + borderColor};
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       ">
-        <span style="transform: rotate(45deg); font-size: ${isSelected ? '13px' : '11px'}; font-weight: 800; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
-          ${number}
+        <span style="transform: rotate(45deg); font-size: ${fontSize}; font-weight: 800; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: -0.5px;">
+          ${badgeText}
         </span>
       </div>
     `,
@@ -58,17 +66,44 @@ const createCustomIcon = (number, color = '#1b4332', isSelected = false) => {
   });
 };
 
-// Auto-resizes and fits bounds cleanly when markers update or map tab is opened
+// Resizes and fits bounds cleanly when markers update or map tab is opened
 function AutoFitAndResizeView({ validActivities, triggerFit }) {
   const map = useMap();
 
   useEffect(() => {
-    // Invalidate size immediately and after short delay to fix blank/gray tiles in tabs
-    map.invalidateSize();
-    const timer = setTimeout(() => {
-      map.invalidateSize();
-    }, 150);
-    return () => clearTimeout(timer);
+    // Staged resize invalidation to handle tab transitions and container flex rendering
+    const handleResize = () => {
+      try {
+        map.invalidateSize();
+      } catch (e) {
+        // Safe ignore if map unmounted
+      }
+    };
+
+    handleResize();
+    const t1 = setTimeout(handleResize, 100);
+    const t2 = setTimeout(handleResize, 300);
+    const t3 = setTimeout(handleResize, 700);
+
+    // Watch container size mutations to prevent grey/blank tiles
+    let resizeObserver = null;
+    const container = map.getContainer();
+    if (typeof ResizeObserver !== 'undefined' && container) {
+      resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+      resizeObserver.observe(container);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener('resize', handleResize);
+      if (resizeObserver) resizeObserver.disconnect();
+    };
   }, [map]);
 
   useEffect(() => {
@@ -89,22 +124,19 @@ function AutoFitAndResizeView({ validActivities, triggerFit }) {
   return null;
 }
 
-// Available map tile styles
+// Available map tile styles — strictly 100% free with OpenStreetMap default
 const TILE_PROVIDERS = {
-  voyager: {
-    name: 'Street (Voyager)',
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  osm: {
+    name: 'OpenStreetMap',
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+    maxZoom: 19
   },
   satellite: {
     name: 'Satellite View',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-  },
-  osm: {
-    name: 'OpenStreetMap',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    maxZoom: 19
   }
 };
 
@@ -114,7 +146,7 @@ export default function InteractiveMap({
   height = '420px',
   onSelectActivity
 }) {
-  const [activeTileKey, setActiveTileKey] = useState('voyager');
+  const [activeTileKey, setActiveTileKey] = useState('osm'); // OpenStreetMap by default
   const [selectedDayFilter, setSelectedDayFilter] = useState('all');
   const [fitTrigger, setFitTrigger] = useState(0);
   const [selectedActId, setSelectedActId] = useState(null);
@@ -151,10 +183,13 @@ export default function InteractiveMap({
     ? [allValidActivities[0].lat, allValidActivities[0].lng] 
     : defaultCenter;
 
-  const currentTile = TILE_PROVIDERS[activeTileKey] || TILE_PROVIDERS.voyager;
+  const currentTile = TILE_PROVIDERS[activeTileKey] || TILE_PROVIDERS.osm;
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-sand-300 shadow-soft-md bg-cream-100 flex flex-col" style={{ height }}>
+    <div 
+      className="relative rounded-2xl overflow-hidden border border-sand-300 shadow-soft-md bg-slate-100 flex flex-col w-full" 
+      style={{ height: height || '420px', minHeight: '340px' }}
+    >
       {/* Top Floating Control Bar */}
       <div className="absolute top-2.5 left-2.5 right-2.5 z-[1000] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         {/* Left: Waypoint Counter & Recenter Button */}
@@ -176,17 +211,18 @@ export default function InteractiveMap({
           </button>
         </div>
 
-        {/* Right: Map Style Switcher (Street vs Satellite) */}
+        {/* Right: Map Style Switcher (OpenStreetMap vs Satellite) */}
         <div className="flex items-center bg-white/95 backdrop-blur-md p-1 rounded-xl shadow-soft-md border border-sand-200 text-[11px] font-medium pointer-events-auto">
           <button
-            onClick={() => setActiveTileKey('voyager')}
+            onClick={() => setActiveTileKey('osm')}
             className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 ${
-              activeTileKey === 'voyager'
+              activeTileKey === 'osm'
                 ? 'bg-forest-800 text-white font-bold shadow-sm'
                 : 'text-slate-600 hover:text-forest-900'
             }`}
           >
-            <span>Street</span>
+            <Compass className="w-3 h-3" />
+            <span>OpenStreetMap</span>
           </button>
           <button
             onClick={() => setActiveTileKey('satellite')}
@@ -253,12 +289,13 @@ export default function InteractiveMap({
         </div>
       )}
 
-      {/* Main Map Container */}
+      {/* Main Map Container with Leaflet + OpenStreetMap */}
       <MapContainer
         center={initialCenter}
         zoom={12}
         scrollWheelZoom={true}
         className="w-full h-full z-10"
+        style={{ width: '100%', height: '100%' }}
       >
         <AutoFitAndResizeView 
           validActivities={filteredActivities} 
@@ -269,7 +306,7 @@ export default function InteractiveMap({
           key={activeTileKey}
           attribution={currentTile.attribution}
           url={currentTile.url}
-          maxZoom={19}
+          maxZoom={currentTile.maxZoom || 19}
         />
 
         {/* High-visibility connecting route line */}
@@ -288,10 +325,19 @@ export default function InteractiveMap({
           const dayIndex = (act.day_number || 1) - 1;
           const markerColor = DAY_COLORS[dayIndex % DAY_COLORS.length];
           const isSelected = selectedActId === (act.id || index);
-          const icon = createCustomIcon(index + 1, markerColor, isSelected);
+          const isStart = index === 0;
+          const isEnd = index === filteredActivities.length - 1 && filteredActivities.length > 1;
+          const icon = createCustomIcon(index + 1, markerColor, isSelected, isStart, isEnd);
 
-          // Google Maps Turn-by-Turn directions URL
-          const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${act.lat},${act.lng}`;
+          const prevAct = index > 0 ? filteredActivities[index - 1] : null;
+
+          // Google Maps Directions URLs
+          const gmapsUrl = prevAct
+            ? `https://www.google.com/maps/dir/?api=1&origin=${prevAct.lat},${prevAct.lng}&destination=${act.lat},${act.lng}`
+            : `https://www.google.com/maps/dir/?api=1&destination=${act.lat},${act.lng}`;
+
+          // OpenStreetMap Direct Location URL
+          const osmUrl = `https://www.openstreetmap.org/?mlat=${act.lat}&mlon=${act.lng}#map=16/${act.lat}/${act.lng}`;
 
           return (
             <Marker
@@ -306,14 +352,16 @@ export default function InteractiveMap({
               }}
             >
               <Popup className="wanderwise-map-popup">
-                <div className="p-1 min-w-[210px] max-w-[250px] space-y-1.5 font-sans">
+                <div className="p-1 min-w-[210px] max-w-[260px] space-y-1.5 font-sans">
                   {/* Badge Header: Day, Slot & Time */}
                   <div className="flex items-center justify-between gap-1">
                     <span 
-                      className="px-2 py-0.5 rounded-full text-[9px] font-bold text-white uppercase tracking-wider"
+                      className="px-2 py-0.5 rounded-full text-[9px] font-bold text-white uppercase tracking-wider flex items-center gap-1"
                       style={{ backgroundColor: markerColor }}
                     >
-                      {act.day_number ? `Day ${act.day_number} • ` : ''}{act.time_slot || 'Activity'}
+                      {isStart && <span>🚩 Start • </span>}
+                      {isEnd && <span>🏁 End • </span>}
+                      {act.day_number ? `Day ${act.day_number} • ` : ''}{act.time_slot || 'Stop'}
                     </span>
                     <span className="text-[10px] text-slate-500 font-semibold flex items-center gap-1">
                       <Clock className="w-2.5 h-2.5" />
@@ -342,15 +390,26 @@ export default function InteractiveMap({
                     </span>
                   </div>
 
-                  {/* Google Maps Directions Button */}
+                  {/* Turn-by-Turn Directions Button */}
                   <a
                     href={gmapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full mt-1.5 py-1 px-2 rounded-lg bg-forest-50 hover:bg-forest-100 text-forest-900 text-[10px] font-bold flex items-center justify-center gap-1 border border-forest-200 transition-colors"
                   >
-                    <span>Navigate in Google Maps</span>
+                    <span>{prevAct ? 'Directions from Prev Stop' : 'Navigate in Google Maps'}</span>
                     <ExternalLink className="w-2.5 h-2.5 text-forest-700" />
+                  </a>
+
+                  {/* OpenStreetMap Direct Inspection */}
+                  <a
+                    href={osmUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full mt-1 py-1 px-2 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-800 text-[10px] font-bold flex items-center justify-center gap-1 border border-slate-200 transition-colors"
+                  >
+                    <span>🗺️ View on OpenStreetMap</span>
+                    <ExternalLink className="w-2.5 h-2.5 text-slate-600" />
                   </a>
 
                   {/* TripAdvisor Reviews & Ratings Button */}
