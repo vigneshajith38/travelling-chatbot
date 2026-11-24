@@ -38,25 +38,59 @@ from app.services.geo_search_router import (
 # =====================================================================
 # MASTER TRAVEL-TECHNOLOGY ARCHITECT SYSTEM PROMPT
 # =====================================================================
-MASTER_TRAVEL_SYSTEM_PROMPT = """You are WanderWise AI, a world-class travel technology architect, senior trip planner, and AI travel copilot.
-You possess encyclopedic, authentic, and nuanced knowledge across the entire world of travel.
+MASTER_TRAVEL_SYSTEM_PROMPT = """You are WanderWise AI, a world-class travel intelligence copilot and senior trip planner with encyclopedic, authentic knowledge across all 195 countries.
 
-### YOUR SCOPE OF TRAVEL EXPERTISE:
-1. **Universal Destination Understanding:** Any country, state, city, town, village, tourist attraction, beach, hill station, pilgrimage site, or remote location worldwide across all 195 nations.
-2. **Geographical & Route Precision:** Geographically cluster sights to eliminate backtracking. Calculate realistic transit times (walking, transit, driving).
-3. **Authentic Local Gastronomy & Culture:** Traditional dishes, street food crawls, dining etiquette, signature cafes, regional traditions, and cultural courtesies.
-4. **Seasons, Climate & Live Weather:** Seasonal climate patterns, best months to visit, monsoons, and live weather considerations.
-5. **Budgets, Fares & Itemized Expenses:** Realistic itemized cost breakdowns (hotel per night, meals per day, transport, entry tickets).
-6. **Safety, Scams & Logistics:** Neighborhood safety, solo traveler tips, known scams, emergency numbers, and official ticketing advice.
+### NATURAL LANGUAGE UNDERSTANDING (Critical — Read Carefully)
+You MUST interpret every user message in full context of the ongoing conversation. Never treat messages in isolation.
 
-### CONVERSATIONAL INTELLIGENCE & CONTEXT RULES (Critical):
-- **Remember & Adapt:** Always resolve incomplete sentences (e.g., "What about hidden places?", "Entry fee?", "What if I have only ₹3000?", "Is it worth visiting?") using the active destination and previous conversation memory.
-- **Understand Prices Shared Later:** When the user provides numbers like "Hotel 1500 per night", "Food 500 per day", or "Bus 800", interpret them as trip expense updates, integrate them into the budget, and compute the new estimated total.
-- **Contextual Modifications:** When the user says "Actually make it 2 days" or "Add one more day", adjust the existing plan rather than wiping it out.
-- **Context Switching:** If the user switches destinations (e.g. from Trivandrum to Vagamon), cleanly shift to the new destination. Never cross-contaminate attractions from the previous place into the new destination.
-- **Strict Anti-Hallucination & Verification:** Every recommended attraction must physically exist in the requested destination. Never invent non-existent waterfalls, viewpoints, or cafes. When a destination's verified attractions list is provided in context, strictly adhere to it. If a detail cannot be verified, state: 'Information could not be reliably verified at the moment.'
-- **Multi-Destination Segregation:** When multiple destinations are queried (e.g. 'Trivandrum, Vagamon and Munnar'), research and present each destination in its own distinct section or phase. Never merge them into a single generic blur.
-- **Structured Formatting:** Use clean Markdown with headers, bullet points, itemized cost tables, and bold highlights.
+**Implicit context resolution — ALWAYS resolve these from memory:**
+- "What about food?" → "What food options are available in [active destination]?"
+- "Anything less crowded?" → "Suggest less crowded alternatives in [active destination]"
+- "Entry fee?" → "What is the entry fee for the last-mentioned attraction?"
+- "The first one" / "that place" → Refer to the specific attraction mentioned in context
+- "Make it cheaper" → "How can we reduce the budget for [active trip plan]?"
+- "Add this to my itinerary" → Append the last-mentioned place to the existing trip plan
+- "Is it worth it?" → Evaluate the last-mentioned attraction or destination
+- "What about nearby?" → "What day trips or nearby places are accessible from [active destination]?"
+- "Show me more" → Extend the previous list with additional options
+
+**Preference signals — detect and honor these throughout the conversation:**
+- "peaceful", "quiet", "serene", "less crowded" → Prioritize calm, non-touristy spots
+- "adventure", "trekking", "thrilling" → Prioritize outdoor, adrenaline experiences
+- "photography", "scenic", "viewpoints" → Prioritize visual landmarks and golden-hour spots
+- "history", "heritage", "culture" → Prioritize museums, forts, temples, traditional quarters
+- "food lover", "foodie", "street food" → Prioritize restaurants, cafes, food trails
+- "luxury", "5-star", "premium" → Prioritize upscale experiences and properties
+- "budget", "cheap", "affordable" → Prioritize wallet-friendly options
+
+### YOUR TRAVEL EXPERTISE
+1. **Universal Destination Intelligence:** Any country, state, city, town, village, tourist attraction, beach, hill station, pilgrimage site, or remote location worldwide.
+2. **Geographical & Route Precision:** Geographically cluster sights to eliminate backtracking. Give realistic transit times (walking, transit, driving).
+3. **Authentic Local Gastronomy:** Traditional dishes, street food, dining etiquette, signature cafes, local breakfast spots.
+4. **Seasons, Climate & Weather:** Seasonal patterns, monsoon alerts, best months, packing advice.
+5. **Budgets & Itemized Expenses:** Realistic itemized cost breakdowns (hotel per night, food per day, transport, entry fees).
+6. **Safety, Scams & Logistics:** Neighborhood safety, solo traveler tips, known scams, emergency numbers.
+
+### RESPONSE LENGTH & FORMAT RULES (Critical)
+- **Simple question → Short, direct answer.** E.g., "How far is Munnar from Kochi?" → Give distance + travel time. Do NOT generate a 16-section guide.
+- **Specific category request → Focused list.** E.g., "Best cafes in Bangalore" → List cafes only, not hotels or temples.
+- **Full guide request → Comprehensive structured guide** with all sections.
+- **Follow-up → Extend or refine** without repeating everything already said.
+- **Feasibility question → Evaluate and explain** time, distance, and practical constraints.
+- **Comparison → Compare fairly** using key criteria the user cares about.
+- Always use clean Markdown: headers, bullet points, bold highlights, tables where useful.
+
+### ANTI-HALLUCINATION RULES (Zero Tolerance)
+- Never fabricate attraction names, coordinates, distances, prices, or opening hours.
+- If a verified attractions list is provided in context, ONLY recommend places from that list.
+- If asked about a place you cannot verify, say: "I could not reliably verify this — please check the official tourism website."
+- Never blend attractions from different destinations even if they are geographically close.
+- Never invent cafes, hotels, or restaurants. Only recommend real, named establishments.
+
+### DESTINATION CONTAMINATION PREVENTION
+- When the active destination changes, NEVER carry over attractions from the previous destination.
+- Each destination's attractions must remain strictly within that destination's geographic boundary.
+- If the user switches from "Delhi" to "Madurai", everything about Delhi must be dropped from new answers.
 """
 
 # Supported candidate models in priority order
@@ -439,43 +473,61 @@ def extract_duration_days(text: str) -> Optional[int]:
 
 def extract_itemized_expenses(text: str, current_expenses: Dict[str, float]) -> Tuple[Dict[str, float], Optional[str]]:
     """
-    Extracts individual expense items shared across conversation turns (Section 11 C, E):
-    - 'Hotel 1500 per night', 'hotel 1500', 'stay 2000'
-    - 'Food 500 per day', 'food 500', 'meals 400'
-    - 'Bus 800', 'train 600', 'flight 4000', 'transport 800', 'cab 1000'
-    - 'Entry fee 250', 'tickets 500', 'activities 1000'
+    Extracts individual expense items shared across conversation turns.
+    Handles: hotel, food, transport, activities, petrol, miscellaneous, shopping.
+    Also supports per-person splits via 'split between N people'.
     """
     t = text.lower().strip()
     updated = current_expenses.copy()
     notes = []
 
     # 1. Hotel / Stay
-    hotel_m = re.search(r'\b(?:hotel|room|stay|accommodation|resort)\s*(?:budget|is|costs?|was|rate)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{3,6})(?:\s*(?:per\s*night|/\s*night|a\s*night|daily))?\b', t)
+    hotel_m = re.search(
+        r'\b(?:hotel|room|stay|accommodation|resort)\s*(?:budget|is|costs?|was|rate)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{3,6})(?:\s*(?:per\s*night|/\s*night|a\s*night|daily))?\b', t)
     if hotel_m:
         val = float(hotel_m.group(1))
         updated["hotel_per_night"] = val
         notes.append(f"Hotel rate updated to ₹{int(val):,}/night")
 
     # 2. Food / Dining
-    food_m = re.search(r'\b(?:food|meals?|dining|eating)\s*(?:budget|is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,5})(?:\s*(?:per\s*day|/\s*day|a\s*day|daily))?\b', t)
+    food_m = re.search(
+        r'\b(?:food|meals?|dining|eating|lunch|dinner|breakfast)\s*(?:budget|is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,5})(?:\s*(?:per\s*day|/\s*day|a\s*day|daily))?\b', t)
     if food_m:
         val = float(food_m.group(1))
         updated["food_per_day"] = val
         notes.append(f"Food budget updated to ₹{int(val):,}/day")
 
-    # 3. Transport (Bus, Train, Flight, Cab)
-    trans_m = re.search(r'\b(?:bus|train|flight|transit|transport|travel|cab|taxi)\s*(?:fare|ticket|cost|is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,6})\b', t)
-    if trans_m:
+    # 3. Petrol / Fuel (separate from general transport)
+    petrol_m = re.search(
+        r'\b(?:petrol|fuel|diesel|gas)\s*(?:budget|is|costs?|was|charge)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,6})\b', t)
+    if petrol_m:
+        val = float(petrol_m.group(1))
+        updated["petrol"] = val
+        notes.append(f"Petrol cost updated to ₹{int(val):,}")
+
+    # 4. Transport (Bus, Train, Flight, Cab — but not petrol)
+    trans_m = re.search(
+        r'\b(?:bus|train|flight|transit|transport|travel|cab|taxi|auto|rickshaw|ferry|boat)\s*(?:fare|ticket|cost|is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,6})\b', t)
+    if trans_m and not petrol_m:
         val = float(trans_m.group(1))
         updated["transport"] = val
         notes.append(f"Transportation cost updated to ₹{int(val):,}")
 
-    # 4. Sightseeing / Activities
-    act_m = re.search(r'\b(?:activities|activity|tickets?|entry\s*fees?|sightseeing)\s*(?:is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,5})\b', t)
+    # 5. Sightseeing / Activities / Entry fees
+    act_m = re.search(
+        r'\b(?:activities|activity|tickets?|entry\s*fees?|sightseeing|entrance)\s*(?:is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,5})\b', t)
     if act_m:
         val = float(act_m.group(1))
         updated["activities"] = val
         notes.append(f"Sightseeing/activities cost updated to ₹{int(val):,}")
+
+    # 6. Shopping / Miscellaneous
+    misc_m = re.search(
+        r'\b(?:shopping|souvenirs?|miscellaneous|misc|other|extras?)\s*(?:budget|is|costs?|was)?\s*(?:₹|rs\.?|inr|\$)?\s*([0-9]{2,5})\b', t)
+    if misc_m:
+        val = float(misc_m.group(1))
+        updated["other"] = val
+        notes.append(f"Miscellaneous/shopping updated to ₹{int(val):,}")
 
     note_str = " | ".join(notes) if notes else None
     return updated, note_str
@@ -502,14 +554,21 @@ def extract_and_update_memory(
         "budget": 20000.0,
         "is_user_set_budget": False,
         "travellers": 2,
+        "traveller_type": None,       # solo / couple / family / friends
         "travel_style": "Scenic Exploration",
         "origin": None,
         "interests": [],
+        "preferences": [],            # peaceful, adventure, photography, food, history, luxury, budget
+        "trip_dates": None,           # e.g. "December", "next month", "3rd week of January"
+        "selected_places": [],        # places the user explicitly selected or liked
+        "excluded_places": [],        # places the user said to skip or disliked
+        "current_planning_objective": None,  # itinerary / budget / attractions / hotels / transit
         "expenses": {
             "hotel_per_night": 2000.0,
             "food_per_day": 600.0,
             "transport": 1200.0,
             "activities": 800.0,
+            "petrol": 0.0,
             "other": 400.0
         },
         "current_itinerary": None,
@@ -605,7 +664,9 @@ def extract_and_update_memory(
         f_total = memory["expenses"]["food_per_day"] * duration * travellers
         t_total = memory["expenses"]["transport"]
         a_total = memory["expenses"]["activities"]
-        memory["budget"] = round(h_total + f_total + t_total + a_total, 2)
+        p_total = memory["expenses"].get("petrol", 0.0)
+        o_total = memory["expenses"].get("other", 400.0)
+        memory["budget"] = round(h_total + f_total + t_total + a_total + p_total + o_total, 2)
 
     # 6. Duration Extraction (Universal engine + Relative Adjustments)
     extracted_days = extract_duration_days(user_message)
@@ -637,19 +698,83 @@ def extract_and_update_memory(
     # 7. Travellers Extraction
     if "solo" in text_lower:
         memory["travellers"] = 1
+        memory["traveller_type"] = "solo"
         memory["travel_style"] = "Solo Exploration"
     elif any(k in text_lower for k in ["couple", "partner", "honeymoon", "girlfriend", "boyfriend", "wife", "husband"]):
         memory["travellers"] = 2
+        memory["traveller_type"] = "couple"
         memory["travel_style"] = "Romantic Getaway"
-    elif "family" in text_lower or "kids" in text_lower:
+    elif "family" in text_lower or "kids" in text_lower or "children" in text_lower:
         memory["travellers"] = 4
+        memory["traveller_type"] = "family"
         memory["travel_style"] = "Family Vacation"
     else:
         friends_match = re.search(r'(\d+)\s*(?:friends?|people|persons?|travellers?|members?)', text_lower)
         if friends_match:
-            memory["travellers"] = int(friends_match.group(1))
+            count = int(friends_match.group(1))
+            memory["travellers"] = count
+            if count >= 3:
+                memory["traveller_type"] = "friends"
+                memory["travel_style"] = "Group Adventure"
 
-    # 8. Track topics and specific attractions
+    # 8. Preference Extraction (cumulative — append, never overwrite)
+    existing_prefs = memory.get("preferences", [])
+    pref_map = {
+        "peaceful": ["peaceful", "quiet", "serene", "calm", "less crowded", "not crowded", "tranquil"],
+        "adventure": ["adventure", "trekking", "trek", "hiking", "hike", "thrilling", "adrenaline", "extreme"],
+        "photography": ["photography", "photo", "scenic", "viewpoint", "landscape", "golden hour"],
+        "food": ["food", "foodie", "eat", "cafes", "restaurant", "street food", "cuisine", "culinary"],
+        "history": ["history", "heritage", "historical", "culture", "museum", "fort", "temple", "monument"],
+        "luxury": ["luxury", "5-star", "premium", "upscale", "spa", "fine dining"],
+        "budget": ["budget", "cheap", "affordable", "economical", "low cost", "inexpensive", "backpacker"],
+        "nature": ["nature", "wildlife", "forest", "waterfall", "lake", "river", "beach", "mountains"],
+    }
+    for pref_key, keywords in pref_map.items():
+        if any(kw in text_lower for kw in keywords) and pref_key not in existing_prefs:
+            existing_prefs.append(pref_key)
+    memory["preferences"] = existing_prefs
+
+    # 9. Trip Dates Extraction
+    date_patterns = [
+        r'\bin\s+(january|february|march|april|may|june|july|august|september|october|november|december)\b',
+        r'\b(next\s+month|this\s+month|next\s+week|this\s+weekend|next\s+weekend)\b',
+        r'\b(\d+(?:st|nd|rd|th)\s+week\s+of\s+(?:january|february|march|april|may|june|july|august|september|october|november|december))\b',
+        r'\b(christmas|new year|diwali|holi|easter|thanksgiving)\b',
+    ]
+    for dp in date_patterns:
+        date_m = re.search(dp, text_lower)
+        if date_m:
+            memory["trip_dates"] = date_m.group(1).strip().title()
+            break
+
+    # 10. Selected / Excluded places from explicit user signals
+    # "I like the first one" / "add X" → selected_places
+    add_match = re.search(r'\b(?:add|include|keep|select|i like|i love|that one|the first|the second|the last)\b.*?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)', user_message)
+    if add_match:
+        place_candidate = add_match.group(1).strip()
+        if len(place_candidate) > 3 and place_candidate not in memory.get("selected_places", []):
+            memory.setdefault("selected_places", []).append(place_candidate)
+
+    # "skip that" / "don't want X" / "remove X" → excluded_places
+    skip_match = re.search(r'\b(?:skip|remove|exclude|don\'t want|not interested in|avoid)\b.*?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)', user_message)
+    if skip_match:
+        place_candidate = skip_match.group(1).strip()
+        if len(place_candidate) > 3 and place_candidate not in memory.get("excluded_places", []):
+            memory.setdefault("excluded_places", []).append(place_candidate)
+
+    # 11. Detect current planning objective
+    if any(k in text_lower for k in ["itinerary", "schedule", "plan", "day by day", "day-by-day"]):
+        memory["current_planning_objective"] = "itinerary"
+    elif any(k in text_lower for k in ["budget", "cost", "expense", "spend", "price"]):
+        memory["current_planning_objective"] = "budget"
+    elif any(k in text_lower for k in ["hotel", "stay", "accommodation", "resort"]):
+        memory["current_planning_objective"] = "hotels"
+    elif any(k in text_lower for k in ["flight", "train", "bus", "how to reach", "transit"]):
+        memory["current_planning_objective"] = "transit"
+    elif any(k in text_lower for k in ["attraction", "places", "things to do", "what to see", "sights"]):
+        memory["current_planning_objective"] = "attractions"
+
+    # 12. Track topics and specific attractions
     for topic_kw in ["weather", "food", "cafes", "hotels", "transit", "itinerary", "hidden", "photography", "safety"]:
         if topic_kw in text_lower:
             memory["last_topic"] = topic_kw
@@ -977,17 +1102,25 @@ def generate_conversational_response(
     interests = memory.get("interests", [])
 
     # Format context state injection for Gemini
+    pref_str = ", ".join(memory.get("preferences", [])) or "Not specified"
+    selected_str = ", ".join(memory.get("selected_places", [])) or "None yet"
+    excluded_str = ", ".join(memory.get("excluded_places", [])) or "None"
     context_summary = (
         f"[CURRENT CONVERSATION MEMORY & TRIP PROFILE:\n"
         f"• Active Destination: '{current_dest or 'Not yet specified'}'\n"
         f"• Duration: {days} Days ({max(1, days - 1)} Nights)\n"
-        f"• Travellers: {travellers} people\n"
+        f"• Travellers: {travellers} {memory.get('traveller_type', 'people')} ({memory.get('travel_style', 'General')})\n"
+        f"• Trip Dates: {memory.get('trip_dates') or 'Not specified'}\n"
+        f"• User Preferences: {pref_str}\n"
         f"• Current Total Budget: ₹{int(budget):,} (approx ₹{int(budget / max(1, travellers)):,}/person)\n"
         f"• Itemized Expenses on File: Hotel=₹{int(expenses.get('hotel_per_night', 2000)):,}/night, "
         f"Food=₹{int(expenses.get('food_per_day', 600)):,}/day/person, Transport=₹{int(expenses.get('transport', 1200)):,}, "
-        f"Activities=₹{int(expenses.get('activities', 800)):,}\n"
+        f"Activities=₹{int(expenses.get('activities', 800)):,}, Petrol=₹{int(expenses.get('petrol', 0)):,}, Other=₹{int(expenses.get('other', 400)):,}\n"
+        f"• Selected Places: {selected_str}\n"
+        f"• Excluded Places: {excluded_str}\n"
         f"• Previously Discussed Locations: {memory.get('previously_discussed_destinations', [])}\n"
-        f"• Last Discussed Attraction/Topic: {memory.get('last_discussed_attraction') or memory.get('last_topic')}]"
+        f"• Current Planning Objective: {memory.get('current_planning_objective') or 'general'}\n"
+        f"• Last Topic: {memory.get('last_discussed_attraction') or memory.get('last_topic')}]"
     )
 
     # Real-Time Live Weather Check
@@ -1118,10 +1251,12 @@ def generate_conversational_response(
         f_per_day = expenses.get("food_per_day", 600.0)
         trans = expenses.get("transport", 1200.0)
         acts = expenses.get("activities", 800.0)
+        petrol = expenses.get("petrol", 0.0)
+        other = expenses.get("other", 400.0)
 
         hotel_total = h_per_night * nights
         food_total = f_per_day * days * travellers
-        grand_total = round(hotel_total + food_total + trans + acts, 2)
+        grand_total = round(hotel_total + food_total + trans + acts + petrol + other, 2)
         per_person = round(grand_total / max(1, travellers), 2)
         memory["budget"] = grand_total
 
@@ -1129,12 +1264,15 @@ def generate_conversational_response(
             f"The user is discussing travel costs or shared an updated expense item for their {days}-day trip to {clean_d} for {travellers} travellers. "
             f"Current expense state: Hotel ₹{int(h_per_night):,}/night ({nights} nights = ₹{int(hotel_total):,}), "
             f"Food ₹{int(f_per_day):,}/day/person ({days} days x {travellers} people = ₹{int(food_total):,}), "
-            f"Transportation ₹{int(trans):,}, Sightseeing/Activities ₹{int(acts):,}. "
-            f"Grand Total: ₹{int(grand_total):,} (approx ₹{int(per_person):,}/person). "
-            f"Respond warmly and acknowledge the update. Provide an itemized Markdown cost breakdown table and 2-3 practical tips to optimize expenses."
+            f"Transportation ₹{int(trans):,}, Sightseeing/Activities ₹{int(acts):,}"
+            + (f", Petrol ₹{int(petrol):,}" if petrol > 0 else "")
+            + (f", Miscellaneous ₹{int(other):,}" if other > 0 else "")
+            + f". Grand Total: ₹{int(grand_total):,} (approx ₹{int(per_person):,}/person for {travellers} travellers). "
+            f"Acknowledge the update warmly. Provide an itemized Markdown cost breakdown table and 2-3 practical tips to optimize expenses."
         )
         gemini_budget_reply = try_gemini_multiturn_chat(budget_prompt, conversation_history, extra_context=extra_context)
 
+        petrol_row = f"| ⛽ **Petrol / Fuel** | Road trip fuel cost | **₹{int(petrol):,}** |\n" if petrol > 0 else ""
         fallback_budget_reply = (
             f"### 💰 Trip Budget Breakdown for **{clean_d}**\n\n"
             f"I have recalculated your estimated expenses for **{travellers} travellers** across **{days} days ({nights} nights)** based on your shared details:\n\n"
@@ -1143,6 +1281,7 @@ def generate_conversational_response(
             f"| 🏨 **Accommodation** | ₹{int(h_per_night):,} / night × {nights} nights | **₹{int(hotel_total):,}** |\n"
             f"| 🍲 **Food & Dining** | ₹{int(f_per_day):,} / day × {travellers} persons × {days} days | **₹{int(food_total):,}** |\n"
             f"| 🚆 **Transportation** | Local transit / bus / cab fare | **₹{int(trans):,}** |\n"
+            f"{petrol_row}"
             f"| 🎟️ **Activities & Sightseeing** | Monument entry tickets & activities | **₹{int(acts):,}** |\n"
             f"| 📊 **Estimated Grand Total** | **All Categories Combined** | **₹{int(grand_total):,}** |\n"
             f"| 👤 **Per Person Cost** | Total divided by {travellers} travellers | **₹{int(per_person):,} / person** |\n\n"
@@ -1167,7 +1306,9 @@ def generate_conversational_response(
                     "accommodation": hotel_total,
                     "food": food_total,
                     "transportation": trans,
-                    "activities": acts
+                    "petrol": petrol,
+                    "activities": acts,
+                    "other": other
                 }
             },
             "memory": memory,
@@ -1427,17 +1568,182 @@ def generate_conversational_response(
         }
 
     # =========================================================================
+    # INTENT 5A: FEASIBILITY EVALUATION ("Can I visit 5 places in one day?")
+    # =========================================================================
+    is_feasibility_query = any(k in text_lower for k in [
+        "can i visit", "can we visit", "can we cover", "can i cover", "is it possible to",
+        "in one day", "in a day", "enough time", "fit in", "is it feasible", "doable",
+        "will we have time", "can we do all", "how long does it take to visit"
+    ])
+
+    if is_feasibility_query and current_dest:
+        clean_d = current_dest.split(',')[0]
+        feasibility_prompt = (
+            f"The user is asking a feasibility question: '{user_message}'\n"
+            f"Active destination: {current_dest}. Trip duration: {days} days for {travellers} travellers.\n"
+            f"Evaluate this honestly using realistic travel times, distances, and opening hours.\n"
+            f"If it's not feasible, explain why and suggest a realistic adjusted plan.\n"
+            f"Include approximate distances between sites and time needed at each.\n"
+            f"Be direct, specific, and practical. Do not invent timings — use commonly known estimates."
+        )
+        gemini_feasibility = try_gemini_multiturn_chat(feasibility_prompt, conversation_history, extra_context=extra_context)
+        feasibility_fallback = (
+            f"### ⏱️ Feasibility Check for **{clean_d}**\n\n"
+            f"Realistically, covering multiple major attractions in a single day depends on the distances between them and your travel pace.\n\n"
+            f"**Key Constraints:**\n"
+            f"• Most major landmarks require 1.5–3 hours including travel + visiting time.\n"
+            f"• If sites are clustered within 5 km, 4–5 attractions in one day is feasible.\n"
+            f"• If spread across 20–50 km, 2–3 attractions per day is more realistic.\n\n"
+            f"I recommend building a **geographically clustered** itinerary — want me to plan one for {days} days?"
+        )
+        return {
+            "role": "assistant",
+            "content": gemini_feasibility or feasibility_fallback,
+            "structured_type": None,
+            "memory": memory,
+            "suggested_actions": [
+                {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day itinerary for {clean_d}"},
+                {"label": f"Top Attractions in {clean_d}", "action": "prompt", "text": f"What are the top attractions in {clean_d}?"},
+            ]
+        }
+
+    # =========================================================================
+    # INTENT 5B: PREFERENCE FILTER ("Anything more peaceful?", "Less crowded?")
+    # =========================================================================
+    is_preference_filter = any(k in text_lower for k in [
+        "more peaceful", "less crowded", "quieter", "more quiet", "more serene",
+        "something calmer", "something peaceful", "not too crowded", "off the beaten",
+        "hidden", "offbeat", "secret spots", "less touristy", "peaceful alternative",
+        "any alternatives", "other options", "something different"
+    ])
+
+    if is_preference_filter and current_dest:
+        clean_d = current_dest.split(',')[0]
+        user_prefs = memory.get("preferences", [])
+        pref_text = ", ".join(user_prefs) if user_prefs else "peaceful and less touristy"
+        filter_prompt = (
+            f"The user wants alternatives matching their preference: '{user_message}'\n"
+            f"Active destination: {current_dest}. User preferences so far: {pref_text}.\n"
+            f"Suggest 3–5 specific, real places in {current_dest} that match the requested preference ({pref_text}).\n"
+            f"Focus on less crowded, off-the-beaten-path options if the preference is peaceful/quiet.\n"
+            f"Do NOT repeat attractions already mentioned in the conversation.\n"
+            f"Do NOT fabricate place names. Only suggest real, verifiable locations."
+        )
+        gemini_pref = try_gemini_multiturn_chat(filter_prompt, conversation_history, extra_context=extra_context)
+        pref_fallback = build_contextual_fallback(user_message, current_dest, days, travellers)
+        return {
+            "role": "assistant",
+            "content": gemini_pref or pref_fallback,
+            "structured_type": None,
+            "memory": memory,
+            "suggested_actions": [
+                {"label": f"Full Guide to {clean_d}", "action": "prompt", "text": f"Give me a complete guide to {clean_d}"},
+                {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"},
+            ]
+        }
+
+    # =========================================================================
+    # INTENT 5C: CATEGORY-FOCUSED INQUIRY ("Best cafes?", "Any waterfalls?", "Restaurants?")
+    # =========================================================================
+    CATEGORY_TRIGGERS = {
+        "cafes": ["cafe", "cafes", "coffee", "tea house", "bakery", "patisserie"],
+        "restaurants": ["restaurant", "restaurants", "dine", "dining", "eat", "where to eat", "food places"],
+        "waterfalls": ["waterfall", "waterfalls", "falls", "cascade"],
+        "beaches": ["beach", "beaches", "shoreline", "coast", "seashore"],
+        "temples": ["temple", "temples", "shrine", "pilgrimage", "mandir", "kovil"],
+        "museums": ["museum", "museums", "gallery", "art gallery", "exhibition"],
+        "trekking": ["trek", "trekking", "hike", "hiking", "trail", "trails"],
+        "viewpoints": ["viewpoint", "viewpoints", "lookout", "overlook", "panorama", "scenic point"],
+        "nightlife": ["nightlife", "night life", "pub", "bar", "club", "nightclub", "night out"],
+        "shopping": ["shopping", "market", "bazaar", "mall", "boutique", "souvenirs"],
+    }
+
+    detected_category = None
+    for cat, keywords in CATEGORY_TRIGGERS.items():
+        if any(kw in text_lower for kw in keywords):
+            detected_category = cat
+            break
+
+    if detected_category and current_dest:
+        clean_d = current_dest.split(',')[0]
+        # Attempt geo discovery first
+        try:
+            geo_places = route_and_discover_places(current_dest, user_message)
+            if geo_places.get("total_found", 0) > 0:
+                geo_evidence = format_geo_evidence_for_gemini(geo_places)
+                extra_context += f"\n\n{geo_evidence}"
+        except Exception:
+            pass
+
+        cat_prompt = (
+            f"The user is asking specifically about '{detected_category}' in {current_dest}: '{user_message}'\n"
+            f"Provide a focused, specific list of the best {detected_category} in {current_dest}.\n"
+            f"Give real names, brief descriptions, what makes each one special, approximate price range if relevant.\n"
+            f"Do NOT recommend places from other cities. Do NOT pad the answer with unrelated sections.\n"
+            f"If geo/place data is provided in context, prioritize those verified results."
+        )
+        gemini_cat = try_gemini_multiturn_chat(cat_prompt, conversation_history, extra_context=extra_context)
+        cat_fallback = build_contextual_fallback(user_message, current_dest, days, travellers)
+        return {
+            "role": "assistant",
+            "content": gemini_cat or cat_fallback,
+            "structured_type": None,
+            "memory": memory,
+            "suggested_actions": append_brave_sources_to_actions([
+                {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"},
+                {"label": f"Where to Stay in {clean_d}", "action": "prompt", "text": f"Where should I stay in {clean_d}?"},
+            ], brave_sources)
+        }
+
+    # =========================================================================
+    # INTENT 5D: COMPARISON ("Is Munnar or Coorg better for December?")
+    # =========================================================================
+    is_comparison = (
+        any(k in text_lower for k in ["vs", "versus", "or", "better than", "compare", "which is better", "which one"]) and
+        memory.get("compared_to") is not None
+    ) or any(k in text_lower for k in ["which is better", "compare these", "is X better than Y"])
+
+    if is_comparison and current_dest:
+        compared_to = memory.get("compared_to")
+        clean_d = current_dest.split(',')[0]
+        comparison_prompt = (
+            f"The user wants to compare destinations: '{user_message}'\n"
+            f"Primary destination: {current_dest}. Compared destination: {compared_to or 'as mentioned'}.\n"
+            f"Compare both destinations across key travel criteria: scenery, accessibility, weather, budget, crowd levels, unique experiences.\n"
+            f"Give a clear verdict at the end based on typical traveller preferences.\n"
+            f"Format as a Markdown comparison table followed by a recommendation paragraph."
+        )
+        gemini_cmp = try_gemini_multiturn_chat(comparison_prompt, conversation_history, extra_context=extra_context)
+        return {
+            "role": "assistant",
+            "content": gemini_cmp or f"Let me compare **{clean_d}** and **{compared_to}** for you! Both have unique strengths — the best choice depends on your preferences for scenery, budget, and travel style.",
+            "structured_type": None,
+            "memory": memory,
+            "suggested_actions": [
+                {"label": f"Plan Trip to {clean_d}", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"},
+                {"label": f"Plan Trip to {compared_to or 'alternative'}", "action": "prompt", "text": f"Plan a {days}-day trip to {compared_to or clean_d}"},
+            ]
+        }
+
+    # =========================================================================
     # INTENT 6: SMART FOLLOW-UP INQUIRIES & CONVERSATIONAL QUESTIONS (Section 8 & 11 B)
     # =========================================================================
     # Handles: 'What about hidden places?', 'Entry fee?', 'Is it worth visiting?',
     # 'What else is nearby?', 'Can I visit everything in one day?', 'What should I avoid?'
     if current_dest:
         clean_d = current_dest.split(',')[0]
+        user_prefs = memory.get("preferences", [])
+        pref_ctx = f" User preferences: {', '.join(user_prefs)}." if user_prefs else ""
+        selected_ctx = f" Already selected: {', '.join(memory.get('selected_places', []))}." if memory.get("selected_places") else ""
+        excluded_ctx = f" Exclude these: {', '.join(memory.get('excluded_places', []))}." if memory.get("excluded_places") else ""
+
         contextual_inquiry_prompt = (
             f"The user asks: '{user_message}'\n"
-            f"Conversation Context: Active destination is '{current_dest}'. Duration is {days} days for {travellers} travellers. "
-            f"Answer this specific question directly, factually, and thoroughly in the context of {current_dest}. "
-            f"Do not invent information. Distinguish verified facts vs general tips. End with 2 natural follow-up recommendations."
+            f"Conversation Context: Active destination is '{current_dest}'. Duration: {days} days for {travellers} travellers.{pref_ctx}{selected_ctx}{excluded_ctx}\n"
+            f"Answer this specific question directly, factually, and concisely in the context of {current_dest}.\n"
+            f"Adapt response length to complexity — simple questions get short answers, complex ones get structured answers.\n"
+            f"Do not invent information. If you cannot verify something, say so explicitly.\n"
+            f"End with 1–2 natural follow-up suggestions."
         )
         gemini_inquiry = try_gemini_multiturn_chat(contextual_inquiry_prompt, conversation_history, extra_context=extra_context)
         inquiry_reply = gemini_inquiry or build_contextual_fallback(user_message, current_dest, days, travellers)
