@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     
     # External APIs
     BRAVE_API_KEY: str = os.getenv("BRAVE_API_KEY", "")
+    OPENTRIPMAP_API_KEY: str = os.getenv("OPENTRIPMAP_API_KEY", "")
+    OVERPASS_API_URL: str = os.getenv("OVERPASS_API_URL", "https://overpass-api.de/api/interpreter")
     OPEN_METEO_URL: str = "https://api.open-meteo.com/v1/forecast"
     OSRM_ROUTING_URL: str = "https://router.project-osrm.org/route/v1/driving"
     

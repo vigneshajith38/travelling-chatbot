@@ -270,6 +270,136 @@ VERIFIED_DESTINATION_REGISTRY: Dict[str, Dict[str, Any]] = {
         "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/destinations/ooty",
         "boundary_radius_km": 25.0
     },
+    "madurai": {
+        "canonical_name": "Madurai, Tamil Nadu",
+        "destination_type": "Ancient Temple Metropolis & Cultural Capital",
+        "district": "Madurai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "lat": 9.9252,
+        "lng": 78.1198,
+        "elevation_m": 101,
+        "terrain": "Fertile Vaigai River plains framed by historic Dravidian temple gopurams and concentric square streets",
+        "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/destinations/madurai",
+        "boundary_radius_km": 25.0
+    },
+    "kodaikanal": {
+        "canonical_name": "Kodaikanal, Tamil Nadu",
+        "destination_type": "Princess of Hill Stations",
+        "district": "Dindigul",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "lat": 10.2381,
+        "lng": 77.4892,
+        "elevation_m": 2133,
+        "terrain": "Palani Hills granite cliffs, forested slopes, Kurunji flower valleys, and star-shaped mountain lake",
+        "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/destinations/kodaikanal",
+        "boundary_radius_km": 25.0
+    },
+    "chikkamagaluru": {
+        "canonical_name": "Chikkamagaluru (Chikmagalur), Karnataka",
+        "destination_type": "Highland Coffee & Mountain Trekking Capital",
+        "district": "Chikkamagaluru",
+        "state": "Karnataka",
+        "country": "India",
+        "lat": 13.3161,
+        "lng": 75.7720,
+        "elevation_m": 1090,
+        "terrain": "Chandra Drona Western Ghats mountain amphitheater, sprawling shade-grown coffee estates, and Karnataka's highest peaks",
+        "official_tourism_url": "https://karnatakatourism.org/tour-item/chikkamagaluru/",
+        "boundary_radius_km": 35.0
+    },
+    "chikmagalur": {
+        "canonical_name": "Chikkamagaluru (Chikmagalur), Karnataka",
+        "destination_type": "Highland Coffee & Mountain Trekking Capital",
+        "district": "Chikkamagaluru",
+        "state": "Karnataka",
+        "country": "India",
+        "lat": 13.3161,
+        "lng": 75.7720,
+        "elevation_m": 1090,
+        "terrain": "Chandra Drona Western Ghats mountain amphitheater, sprawling shade-grown coffee estates, and Karnataka's highest peaks",
+        "official_tourism_url": "https://karnatakatourism.org/tour-item/chikkamagaluru/",
+        "boundary_radius_km": 35.0
+    },
+    "chickmagalur": {
+        "canonical_name": "Chikkamagaluru (Chikmagalur), Karnataka",
+        "destination_type": "Highland Coffee & Mountain Trekking Capital",
+        "district": "Chikkamagaluru",
+        "state": "Karnataka",
+        "country": "India",
+        "lat": 13.3161,
+        "lng": 75.7720,
+        "elevation_m": 1090,
+        "terrain": "Chandra Drona Western Ghats mountain amphitheater, sprawling shade-grown coffee estates, and Karnataka's highest peaks",
+        "official_tourism_url": "https://karnatakatourism.org/tour-item/chikkamagaluru/",
+        "boundary_radius_km": 35.0
+    },
+    "pondicherry": {
+        "canonical_name": "Puducherry (Pondicherry)",
+        "destination_type": "French Colonial Heritage & Coastal Town",
+        "district": "Puducherry",
+        "state": "Puducherry",
+        "country": "India",
+        "lat": 11.9416,
+        "lng": 79.8083,
+        "elevation_m": 3,
+        "terrain": "French Quarter boulevard grid fronting Coromandel coast with Promenade Beach and Auroville biosphere",
+        "official_tourism_url": "https://pondytourism.in/",
+        "boundary_radius_km": 20.0
+    },
+    "puducherry": {
+        "canonical_name": "Puducherry (Pondicherry)",
+        "destination_type": "French Colonial Heritage & Coastal Town",
+        "district": "Puducherry",
+        "state": "Puducherry",
+        "country": "India",
+        "lat": 11.9416,
+        "lng": 79.8083,
+        "elevation_m": 3,
+        "terrain": "French Quarter boulevard grid fronting Coromandel coast with Promenade Beach and Auroville biosphere",
+        "official_tourism_url": "https://pondytourism.in/",
+        "boundary_radius_km": 20.0
+    },
+    "varanasi": {
+        "canonical_name": "Varanasi (Kashi), Uttar Pradesh",
+        "destination_type": "Sacred Ganga Ghats Spiritual Capital",
+        "district": "Varanasi",
+        "state": "Uttar Pradesh",
+        "country": "India",
+        "lat": 25.3176,
+        "lng": 82.9739,
+        "elevation_m": 80,
+        "terrain": "Crescent-shaped banks of sacred river Ganga lined with 84 historic stone ghats and ancient labyrinthine alleys",
+        "official_tourism_url": "https://uptourism.gov.in/en/post/varanasi",
+        "boundary_radius_km": 20.0
+    },
+    "jaipur": {
+        "canonical_name": "Jaipur (Pink City), Rajasthan",
+        "destination_type": "UNESCO World Heritage Royal Capital",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "country": "India",
+        "lat": 26.9124,
+        "lng": 75.7873,
+        "elevation_m": 431,
+        "terrain": "Aravalli range foothills framing pink terracotta walled royal grid city, hill forts, and palace lakes",
+        "official_tourism_url": "https://www.tourism.rajasthan.gov.in/jaipur.html",
+        "boundary_radius_km": 30.0
+    },
+    "agra": {
+        "canonical_name": "Agra, Uttar Pradesh",
+        "destination_type": "Mughal Empire Heritage City",
+        "district": "Agra",
+        "state": "Uttar Pradesh",
+        "country": "India",
+        "lat": 27.1767,
+        "lng": 78.0081,
+        "elevation_m": 171,
+        "terrain": "Yamuna River basin hosting the white marble Taj Mahal, red sandstone Agra Fort, and Mughal gardens",
+        "official_tourism_url": "https://uptourism.gov.in/en/post/agra",
+        "boundary_radius_km": 20.0
+    },
 
     # Global Hubs
     "paris": {
@@ -317,7 +447,17 @@ def normalize_destination_key(name: str) -> str:
         "alappuzha": "alleppey",
         "madikeri": "coorg",
         "kodagu": "coorg",
-        "udhagamandalam": "ooty"
+        "udhagamandalam": "ooty",
+        "chikmagalur": "chikkamagaluru",
+        "chickmagalur": "chikkamagaluru",
+        "chikmagaluru": "chikkamagaluru",
+        "chikkamagalur": "chikkamagaluru",
+        "puducherry": "pondicherry",
+        "kashi": "varanasi",
+        "banaras": "varanasi",
+        "calcutta": "kolkata",
+        "bombay": "mumbai",
+        "madras": "chennai"
     }
     return alias_map.get(clean, clean)
 
@@ -362,40 +502,42 @@ def parse_destination_query(user_message: str) -> Dict[str, Any]:
     if not recognized_destinations:
         dest_patterns = [
             r'\b(?:plan\s+(?:a\s+)?(?:\d+[- ]?day\s+)?trip\s+to|trip\s+to|travel\s+to|visit|explore|vacation\s+in|holiday\s+in|guide\s+(?:to|for)|itinerary\s+for|about)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
+            r'\b(?:places\s+(?:to\s+visit\s+)?(?:in|around|near)|sights\s+in|attractions\s+in|what\s+to\s+see\s+in|things\s+to\s+do\s+in|cafes?\s+in|restaurants?\s+in|waterfalls?\s+in|food\s+in)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
             r'\b(?:hotels?|resorts?|stay|accommodation)\s+(?:in|at|near)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:for|with|under|in|from|at|on|\d+)|$|[?!.])',
             r'\b(?:tell me about|overview of|info about|information on)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:like|for)|$|[?!.])'
         ]
         non_dest_words = {
             "a trip", "an itinerary", "peaceful", "budget", "friends", "couple", "family", "days", "food",
-            "weather", "safety", "cheap", "expensive", "hotel", "flight", "there", "that place", "it"
+            "weather", "safety", "cheap", "expensive", "hotel", "flight", "there", "that place", "it",
+            "places", "attractions", "things", "sights", "activities", "cafes", "waterfalls", "best"
         }
         for pat in dest_patterns:
             m = re.search(pat, text_lower)
             if m:
-                cand = m.group(1).strip().title()
-                if cand.lower() not in non_dest_words and len(cand) >= 3:
-                    cand_info = get_destination_identity(cand)
+                raw_cand = m.group(1).strip()
+                # Strip leading/trailing prepositions (e.g. 'In Chickmagalur' -> 'Chickmagalur')
+                clean_cand = re.sub(r'^(?:in|at|to|near|around|about|for|from)\s+', '', raw_cand, flags=re.I).strip().title()
+                if clean_cand.lower() not in non_dest_words and len(clean_cand) >= 3:
+                    cand_info = get_destination_identity(clean_cand)
                     if cand_info and cand_info.get("canonical_name"):
                         rec = cand_info.copy()
-                        rec["key"] = normalize_destination_key(cand)
+                        rec["key"] = normalize_destination_key(clean_cand)
                         recognized_destinations.append(rec)
                         break
 
-    # Determine query classification
-    if len(recognized_destinations) >= 2:
-        query_type = "comparison" if is_comparison else "multi_destination_circuit"
-    elif len(recognized_destinations) == 1:
-        query_type = "single_destination"
-    else:
-        query_type = "general_travel"
-
-    return {
-        "query_type": query_type,
-        "is_comparison": is_comparison,
-        "destinations": recognized_destinations,
-        "destination_count": len(recognized_destinations),
-        "primary_destination": recognized_destinations[0]["canonical_name"] if recognized_destinations else None
-    }
+    # 3. Third Pass: Bare destination or short inquiry (e.g. 'Madurai', 'Chikkamagaluru', 'Udupi')
+    if not recognized_destinations:
+        words = [w for w in re.sub(r'[^\w\s]', '', text_lower).split() if w not in non_dest_words and len(w) >= 3]
+        if 1 <= len(words) <= 3:
+            candidate_phrase = " ".join(words).title()
+            # Avoid single common action verbs or nouns
+            action_words = {"plan", "show", "tell", "need", "find", "give", "make", "help", "book", "cost", "safe"}
+            if not any(w in action_words for w in words):
+                cand_info = get_destination_identity(candidate_phrase)
+                if cand_info and cand_info.get("canonical_name"):
+                    rec = cand_info.copy()
+                    rec["key"] = normalize_destination_key(candidate_phrase)
+                    recognized_destinations.append(rec)
 
     # Determine query classification
     if len(recognized_destinations) >= 2:
@@ -416,15 +558,19 @@ def parse_destination_query(user_message: str) -> Dict[str, Any]:
 def get_destination_identity(dest_name: str) -> Dict[str, Any]:
     """
     Resolves full geographical identity (type, district, state, country, coordinates).
-    Uses curated database first, then cached Nominatim, and avoids ever defaulting to New Delhi for unrelated places.
+    Uses curated database first, dynamic geocaching, then Nominatim, and avoids fake fallback coordinates.
     """
     if not dest_name:
         return {}
 
-    key = normalize_destination_key(dest_name)
+    # Strip any leading prepositions
+    clean_dest = re.sub(r'^(?:in|at|to|near|around|about|for|from)\s+', '', dest_name.strip(), flags=re.I).strip()
+    key = normalize_destination_key(clean_dest)
+
     if key in VERIFIED_DESTINATION_REGISTRY:
         data = VERIFIED_DESTINATION_REGISTRY[key].copy()
         data["key"] = key
+        data["coordinates_verified"] = True
         return data
 
     # Check dynamic cache
@@ -437,7 +583,7 @@ def get_destination_identity(dest_name: str) -> Dict[str, Any]:
         with httpx.Client(timeout=4.0) as client:
             resp = client.get(
                 "https://nominatim.openstreetmap.org/search",
-                params={"q": dest_name, "format": "json", "addressdetails": 1, "limit": 1},
+                params={"q": clean_dest, "format": "json", "addressdetails": 1, "limit": 1},
                 headers={"User-Agent": "WanderWise-AI-Travel/2.0 (travel@wanderwise.com)"}
             )
             if resp.status_code == 200:
@@ -448,7 +594,7 @@ def get_destination_identity(dest_name: str) -> Dict[str, Any]:
                     lng = float(r0["lon"])
                     addr = r0.get("address", {})
                     
-                    city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or dest_name.title()
+                    city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or clean_dest.title()
                     district = addr.get("state_district") or addr.get("county") or ""
                     state = addr.get("state") or ""
                     country = addr.get("country") or "India"
@@ -466,25 +612,33 @@ def get_destination_identity(dest_name: str) -> Dict[str, Any]:
                         "terrain": f"Regional landscape in {district or state}, {country}",
                         "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city + ' tourism official website')}",
                         "boundary_radius_km": 25.0,
+                        "coordinates_verified": True,
                         "key": key
                     }
                     _DYNAMIC_GEOCODE_CACHE[key] = resolved
                     return resolved
     except Exception as e:
-        print(f"Nominatim lookup exception for '{dest_name}': {e}")
+        print(f"Nominatim lookup exception for '{clean_dest}': {e}")
 
-    # Fallback without giving fake New Delhi coordinates if name indicates south/coastal/mountain
+    # Parse state / country if comma-separated (e.g. 'Interlaken, Switzerland' or 'Kumbakonam, Tamil Nadu')
+    parts = [p.strip().title() for p in clean_dest.split(",")]
+    city_name = parts[0]
+    inferred_state = parts[1] if len(parts) > 1 else ""
+    inferred_country = parts[2] if len(parts) > 2 else ("India" if inferred_state in ["Tamil Nadu", "Karnataka", "Kerala", "Maharashtra", "Goa", "Rajasthan"] else "")
+
+    # Zero-fabrication fallback: coordinates marked None if unverified rather than injecting fake Bangalore coords
     return {
-        "canonical_name": dest_name.title(),
+        "canonical_name": f"{city_name}, {inferred_state}" if inferred_state else city_name,
         "destination_type": "Travel Destination",
         "district": "",
-        "state": "",
-        "country": "India",
-        "lat": 12.9716, # default to Bangalore regional centroid rather than Delhi if ambiguous
-        "lng": 77.5946,
+        "state": inferred_state,
+        "country": inferred_country or "World Destination",
+        "lat": None,
+        "lng": None,
         "elevation_m": None,
-        "terrain": "Local regional topography",
-        "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(dest_name + ' tourism')}",
+        "terrain": f"Regional terrain in {city_name}",
+        "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city_name + ' tourism')}",
         "boundary_radius_km": 25.0,
+        "coordinates_verified": False,
         "key": key
     }

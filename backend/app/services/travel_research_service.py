@@ -547,6 +547,200 @@ VERIFIED_ATTRACTIONS_REGISTRY: Dict[str, List[Dict[str, Any]]] = {
             "entry_fee_note": "Highway bus / Fuji Excursion train ticket approx. ¥2,000 - ¥4,000 each way.",
             "visiting_tips": "Requires a dedicated day trip (approx. 2 hours each way via expressway bus from Shinjuku). Clear morning weather offers best visibility."
         }
+    ],
+
+    # 9. MADURAI (TAMIL NADU)
+    "madurai": [
+        {
+            "name": "Arulmigu Meenakshi Sundareswarar Temple",
+            "category": "Ancient Dravidian Temple & Heritage Architecture",
+            "location": "Madurai City Center",
+            "lat": 9.9195,
+            "lng": 78.1193,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Tamil Nadu Tourism & HR&CE Department",
+            "description": "Ancient 2,500-year-old architectural marvel dedicated to Goddess Meenakshi and Lord Sundareswarar; renowned for its 14 monumental gopurams and the Hall of Thousand Pillars.",
+            "entry_fee_note": "Free general darshan; special darshan passes ₹50 - ₹100.",
+            "visiting_tips": "Strict traditional dress code: Dhotis/formal pants for men, Sarees/Salwars for women. Mobile phones and electronics prohibited inside temple sanctum."
+        },
+        {
+            "name": "Thirumalai Nayakkar Mahal",
+            "category": "17th-Century Indo-Saracenic Royal Palace",
+            "location": "Near Meenakshi Temple, Madurai",
+            "lat": 9.9150,
+            "lng": 78.1230,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Archaeological Survey of Tamil Nadu",
+            "description": "Classical 1636 CE royal palace built by King Tirumala Nayaka, celebrated for colossal 82-foot-tall pillars, majestic domed celestial pavilion, and evening sound-and-light show.",
+            "entry_fee_note": "₹10 for Indians, ₹50 for foreign tourists.",
+            "visiting_tips": "Attend the evening sound-and-light show recounting the historic saga of King Tirumala Nayaka."
+        },
+        {
+            "name": "Gandhi Memorial Museum (Tamukkam Palace)",
+            "category": "Freedom Struggle Heritage & Memorial",
+            "location": "Tamukkam, Madurai",
+            "lat": 9.9318,
+            "lng": 78.1396,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Gandhi Memorial Museum Trust",
+            "description": "Established in the 17th-century Nayak palace where Mahatma Gandhi first adopted the loincloth in Madurai; houses Gandhi's preserved blood-stained garment.",
+            "entry_fee_note": "Free entry; photography ticket ₹50.",
+            "visiting_tips": "Open 10:00 AM to 1:00 PM and 2:00 PM to 5:45 PM. Peaceful green campus."
+        },
+        {
+            "name": "Vandiyur Mariamman Teppakulam",
+            "category": "Sacred Reservoir & Maiya Mandapam Island",
+            "location": "Anuppanadi, East Madurai",
+            "lat": 9.9110,
+            "lng": 78.1510,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Madurai City Corporation",
+            "description": "Colossal 16-acre square temple reservoir with an ornate central island pavilion; site of the world-famous annual Float Festival (Teppam) in Thai month.",
+            "entry_fee_note": "Free public promenade viewing.",
+            "visiting_tips": "Best viewed in the late evening when cooling breezes sweep across the reservoir."
+        },
+        {
+            "name": "Alagar Koyil (Kallazhagar Temple & Noopura Gangai)",
+            "category": "Forested Mountain Shrine & Sacred Springs",
+            "location": "Alagar Hills (21 km north of Madurai)",
+            "lat": 10.0760,
+            "lng": 78.2140,
+            "boundary_status": "NEARBY_EXCURSION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Tamil Nadu Tourism Development Corporation (TTDC)",
+            "description": "Ancient hillside temple dedicated to Lord Vishnu set in lush forested hills, surrounded by historic fort ruins and the perennial Noopura Gangai natural stream.",
+            "entry_fee_note": "Free general darshan; hill vehicle toll ₹30.",
+            "visiting_tips": "Located 21 km from Madurai (approx. 45-minute drive). Combine with a visit to the Pazhamudircholai Murugan temple nearby."
+        }
+    ],
+
+    # 10. CHIKKAMAGALURU (KARNATAKA)
+    "chikkamagaluru": [
+        {
+            "name": "Mullayanagiri Peak",
+            "category": "Highest Mountain Summit & Trekking",
+            "location": "Chandra Drona Range, Chikkamagaluru (20 km from town)",
+            "lat": 13.3910,
+            "lng": 75.7210,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Karnataka Tourism & Forest Department",
+            "description": "Highest mountain peak in Karnataka at 1,930 meters (6,330 feet); offers breathtaking 360-degree vistas above cloud line and a small summit shrine.",
+            "entry_fee_note": "Free mountain access; parking toll ₹50.",
+            "visiting_tips": "Arrive early morning (06:30 AM - 08:30 AM) to experience floating above the clouds before mountain mist covers the trails."
+        },
+        {
+            "name": "Baba Budangiri (Dattatreya Peetha)",
+            "category": "Sacred Mountain Ridge & Coffee Heritage",
+            "location": "Western Ghats (28 km north of Chikkamagaluru)",
+            "lat": 13.4244,
+            "lng": 75.7667,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Karnataka Tourism Development Corporation (KSTDC)",
+            "description": "Historic crescent-shaped mountain ridge where Sufi saint Baba Budan first cultivated coffee in India; revered pilgrimage cave shrine.",
+            "entry_fee_note": "Free entry.",
+            "visiting_tips": "Winding mountain ghat road; drive carefully during monsoons due to sudden mist."
+        },
+        {
+            "name": "Jhari (Buttermilk) Falls",
+            "category": "Forest Cascade & Natural Pool",
+            "location": "Near Attigundi, Chikkamagaluru",
+            "lat": 13.4005,
+            "lng": 75.7502,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Chikkamagaluru District Administration",
+            "description": "Frothy white natural waterfall plunging over terraced rocks surrounded by private coffee and spice plantations.",
+            "entry_fee_note": "Private 4x4 jeep transit ₹400 - ₹500 per jeep from the main road.",
+            "visiting_tips": "Private vehicles cannot access the final muddy trail; hire local authorized 4x4 jeeps."
+        },
+        {
+            "name": "Hirekolale Lake",
+            "category": "Scenic Mountain Reservoir & Sunset Vista",
+            "location": "Hirekolale (10 km from Chikkamagaluru)",
+            "lat": 13.3440,
+            "lng": 75.7250,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Karnataka State Tourism",
+            "description": "Peaceful freshwater reservoir framed by the imposing backdrop of the Mullayanagiri mountain range; ideal for quiet evening strolls.",
+            "entry_fee_note": "Free public access.",
+            "visiting_tips": "Sunset photography is spectacular as the sun dips behind the Western Ghats ridges."
+        },
+        {
+            "name": "Hebbe Falls",
+            "category": "Two-Tiered Wilderness Waterfall",
+            "location": "Kemmangundi Forest Reserve (55 km from town)",
+            "lat": 13.5420,
+            "lng": 75.7230,
+            "boundary_status": "NEARBY_EXCURSION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Karnataka Forest Department",
+            "description": "Dramatic 168-meter two-stage cascade (Dodda Hebbe and Chikka Hebbe) tucked inside dense Kemmangundi hill forests.",
+            "entry_fee_note": "Forest department jeep fee approx. ₹500 per person.",
+            "visiting_tips": "Requires a dedicated half-day excursion from Chikkamagaluru town; leech protection advised during monsoon."
+        }
+    ],
+
+    # 11. UDUPI (KARNATAKA)
+    "udupi": [
+        {
+            "name": "Udupi Sri Krishna Temple & Kanakana Kindi",
+            "category": "Ancient Vaishnavite Temple & Car Street",
+            "location": "Car Street, Udupi Center",
+            "lat": 13.3409,
+            "lng": 74.7421,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Ashta Mathas of Udupi & Karnataka Tourism",
+            "description": "World-renowned 13th-century temple founded by Saint Madhvacharya where Lord Krishna is viewed through the sacred silver window (Kanakana Kindi).",
+            "entry_fee_note": "Free entry and authentic temple meals (Maha Prasada).",
+            "visiting_tips": "Men must remove shirts/upper garments before entering the sanctum; dress modestly."
+        },
+        {
+            "name": "Malpe Beach & Sea Walk",
+            "category": "Arabian Sea Beach & Paved Marine Pier",
+            "location": "Malpe (6 km west of Udupi)",
+            "lat": 13.3510,
+            "lng": 74.7020,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Malpe Beach Development Committee",
+            "description": "Expansive golden sand beach featuring Karnataka's first 450-meter paved Sea Walk projecting directly into the ocean waves.",
+            "entry_fee_note": "Beach and Sea Walk free access.",
+            "visiting_tips": "Board the passenger ferry to St. Mary's Island from the Malpe jetty."
+        },
+        {
+            "name": "St. Mary's Island (Columnar Basalt Rocks)",
+            "category": "National Geological Monument",
+            "location": "4 km off Malpe Coast, Arabian Sea",
+            "lat": 13.3800,
+            "lng": 74.6730,
+            "boundary_status": "IN_DESTINATION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Geological Survey of India & Malpe Tourism",
+            "description": "Fascinating geological formation of hexagonal basaltic lava pillars formed millions of years ago during prehistoric Madagascar-India rift.",
+            "entry_fee_note": "Ferry round-trip ₹300 - ₹400 per person; island entry ₹20.",
+            "visiting_tips": "Closed during monsoon season (June to September). No plastic allowed on the pristine island."
+        },
+        {
+            "name": "Kaup (Kapu) Beach & 1901 Lighthouse",
+            "category": "Rocky Beach & Heritage Lighthouse",
+            "location": "Kaup (13 km south of Udupi)",
+            "lat": 13.2240,
+            "lng": 74.7390,
+            "boundary_status": "NEARBY_EXCURSION",
+            "confidence": "HIGH CONFIDENCE",
+            "source": "Directorate of Lighthouses & Lightships",
+            "description": "Picturesque rocky coastline topped by a 1901 stone lighthouse offering 360-degree Arabian Sea views and sunset panoramas.",
+            "entry_fee_note": "Beach free; Lighthouse climb ₹20 (open 4:00 PM - 6:00 PM).",
+            "visiting_tips": "Climb the spiral steps to the lantern room for an unforgettable sunset view."
+        }
     ]
 }
 
@@ -639,36 +833,10 @@ def research_destination_facts(destination_name: str) -> Dict[str, Any]:
             except Exception as e:
                 print(f"Brave POI lookup note: {e}")
 
-        # High-confidence fallback synthesis from live geocoded identity if Brave not available or returned no POIs
+        # Strict zero-fabrication: Never invent synthetic places like "{city_name} Historic Town Center"
+        # If no verified bank or live POIs exist, leave attractions list empty so Gemini is not fed fake data
         if not in_dest_attractions:
-            in_dest_attractions = [
-                {
-                    "name": f"{city_name} Historic Town Center",
-                    "category": "Heritage & Urban Walk",
-                    "location": f"Central {city_name}, {state_name}",
-                    "lat": identity.get("lat", 12.9716),
-                    "lng": identity.get("lng", 77.5946),
-                    "boundary_status": "IN_DESTINATION",
-                    "confidence": "MEDIUM CONFIDENCE",
-                    "source": "OpenStreetMap Geographic Registry",
-                    "description": f"Foundational civic center and authentic neighborhood streets reflecting the architecture and living culture of {city_name}.",
-                    "entry_fee_note": "Free public access.",
-                    "visiting_tips": "Explore on foot in the morning hours to observe authentic local daily life."
-                },
-                {
-                    "name": f"{city_name} Cultural Heritage Landmark",
-                    "category": "Culture & Architecture",
-                    "location": f"{city_name}, {state_name}",
-                    "lat": identity.get("lat", 12.9716) + 0.005,
-                    "lng": identity.get("lng", 77.5946) + 0.004,
-                    "boundary_status": "IN_DESTINATION",
-                    "confidence": "MEDIUM CONFIDENCE",
-                    "source": "Regional Tourism Directory",
-                    "description": f"Signature landmark celebrating the regional history and artistic traditions of the {city_name} area.",
-                    "entry_fee_note": "Check local timings at site entrance.",
-                    "visiting_tips": "Dress respectfully in accordance with local cultural conventions."
-                }
-            ]
+            in_dest_attractions = []
 
     # 4. Compile verified facts summary
     return {

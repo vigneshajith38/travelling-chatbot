@@ -30,6 +30,10 @@ from app.services.brave_search_service import (
     search_web,
     search_places
 )
+from app.services.geo_search_router import (
+    route_and_discover_places,
+    format_geo_evidence_for_gemini
+)
 
 # =====================================================================
 # MASTER TRAVEL-TECHNOLOGY ARCHITECT SYSTEM PROMPT
@@ -1019,10 +1023,15 @@ def generate_conversational_response(
             grounded_in_dest = "\n".join([f"• {a['name']} ({a['location']}): {a['description']}" for a in research.get("in_destination_attractions", [])[:5]])
             grounded_excursions = "\n".join([f"• {a['name']} ({a['location']}): {a['description']}" for a in research.get("nearby_excursions", [])[:3]])
 
+            coords = research.get("coordinates") or {}
+            c_lat = coords.get("lat")
+            c_lng = coords.get("lng")
+            coords_str = f"{c_lat:.4f}°N, {c_lng:.4f}°E" if (c_lat is not None and c_lng is not None) else "Verified at destination regional centroid"
+
             verified_research_context = (
                 f"[VERIFIED GROUND-TRUTH RESEARCH FROM OFFICIAL TOURISM REGISTRIES & OPENSTREETMAP for {research.get('destination_name', current_dest)}:\n"
-                f"• Classification: {research.get('destination_type')} in {research.get('district')}, {research.get('state')}, {research.get('country')}\n"
-                f"• Elevation: {research.get('elevation_m')}m | Coordinates: {research.get('coordinates', {}).get('lat', 12.9716):.4f}°N, {research.get('coordinates', {}).get('lng', 77.5946):.4f}°E\n"
+                f"• Classification: {research.get('destination_type')} in {research.get('district') + ', ' if research.get('district') else ''}{research.get('state')}, {research.get('country')}\n"
+                f"• Elevation: {research.get('elevation_m')}m | Coordinates: {coords_str}\n"
                 f"• VERIFIED IN-DESTINATION ATTRACTIONS (Strict Ground Truth):\n{grounded_in_dest}\n"
                 f"• VERIFIED NEARBY EXCURSIONS (Clearly separate >25km away):\n{grounded_excursions}\n"
                 f"• Official Tourism Portal: {research.get('official_tourism_url')}\n"
@@ -1032,6 +1041,16 @@ def generate_conversational_response(
             extra_context += f"\n\n{verified_research_context}"
         except Exception as e:
             print(f"Research grounding note: {e}")
+
+    # Step 5: Query Intelligent Geo Search Router (OpenTripMap + Overpass OpenStreetMap)
+    if current_dest and "->" not in current_dest:
+        try:
+            geo_places = route_and_discover_places(current_dest, user_message)
+            if geo_places.get("total_found", 0) > 0:
+                geo_evidence = format_geo_evidence_for_gemini(geo_places)
+                extra_context += f"\n\n{geo_evidence}"
+        except Exception as e:
+            print(f"Geo search routing note: {e}")
 
     # Step 5: Inject Brave Search API Real-Time Live Grounding (LLM Context & Web Search)
     brave_sources: List[Dict[str, str]] = []

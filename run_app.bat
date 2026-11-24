@@ -46,10 +46,14 @@ echo.
 echo ========================================================
 echo   BOTH SERVERS ARE RUNNING!
 echo.
-echo   Opening http://localhost:8000 in your browser...
+echo   * Vite Frontend UI:  http://localhost:5173
+echo   * FastAPI Backend:   http://localhost:8000
+echo   * API Swagger Docs:  http://localhost:8000/docs
 echo.
-echo   NOTE: Keep the two server command windows open!
+echo   Opening http://localhost:5173 in your browser...
+echo.
+echo   NOTE: Keep both command windows open while testing!
 echo ========================================================
 echo.
 
-start http://localhost:8000
+start http://localhost:5173
