@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
     
     # External APIs
+    BRAVE_API_KEY: str = os.getenv("BRAVE_API_KEY", "")
     OPEN_METEO_URL: str = "https://api.open-meteo.com/v1/forecast"
     OSRM_ROUTING_URL: str = "https://router.project-osrm.org/route/v1/driving"
     

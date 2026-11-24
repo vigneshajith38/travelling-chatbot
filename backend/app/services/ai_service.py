@@ -23,6 +23,13 @@ from app.services.travel_research_service import (
     research_destination_facts,
     research_multi_destination_circuit
 )
+from app.services.brave_search_service import (
+    is_brave_available,
+    get_brave_travel_intelligence,
+    search_llm_context,
+    search_web,
+    search_places
+)
 
 # =====================================================================
 # MASTER TRAVEL-TECHNOLOGY ARCHITECT SYSTEM PROMPT
@@ -922,8 +929,24 @@ def perform_deep_search(destination_name: str, memory: Dict[str, Any]) -> Dict[s
             "Wikipedia Encyclopedic Registry",
             "Official State Tourism Registries",
             f"{research.get('destination_name', destination_name)} Tourism Authority"
-        ]
+        ] + ([f"Brave Search API ({s['title']})" for s in get_brave_travel_intelligence(destination_name).get("sources", [])[:2]] if is_brave_available() else [])
     }
+
+def append_brave_sources_to_actions(suggested_actions: List[Dict[str, Any]], brave_sources: List[Dict[str, str]]) -> List[Dict[str, Any]]:
+    """Appends live verified web citations from Brave Search into interactive chat actions."""
+    if not brave_sources:
+        return suggested_actions
+    res = list(suggested_actions)
+    for src in brave_sources[:2]:
+        url = src.get("url")
+        title = src.get("title", "Live Web Source")
+        if url and not any(a.get("url") == url for a in res):
+            res.append({
+                "label": f"🌐 {title[:26]}",
+                "action": "open_link",
+                "url": url
+            })
+    return res
 
 def generate_conversational_response(
     user_message: str,
@@ -1009,6 +1032,17 @@ def generate_conversational_response(
             extra_context += f"\n\n{verified_research_context}"
         except Exception as e:
             print(f"Research grounding note: {e}")
+
+    # Step 5: Inject Brave Search API Real-Time Live Grounding (LLM Context & Web Search)
+    brave_sources: List[Dict[str, str]] = []
+    if current_dest and is_brave_available():
+        try:
+            brave_intel = get_brave_travel_intelligence(current_dest, user_message)
+            if brave_intel.get("available") and brave_intel.get("grounding_context"):
+                extra_context += f"\n\n{brave_intel['grounding_context']}"
+                brave_sources = brave_intel.get("sources", [])
+        except Exception as e:
+            print(f"Brave grounding note: {e}")
 
     # =========================================================================
     # INTENT 0: AMBIGUOUS DESTINATION RESOLUTION (Section 1)
@@ -1220,11 +1254,11 @@ def generate_conversational_response(
             "content": guide_content,
             "structured_type": None,
             "memory": memory,
-            "suggested_actions": [
+            "suggested_actions": append_brave_sources_to_actions([
                 {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"},
                 {"label": f"Where to Stay in {clean_d}", "action": "prompt", "text": f"Where should I stay in {clean_d}?"},
                 {"label": f"Transit Costs to {clean_d}", "action": "prompt", "text": f"How do I travel to {clean_d} and what are costs?"}
-            ]
+            ], brave_sources)
         }
 
     # =========================================================================
@@ -1293,12 +1327,12 @@ def generate_conversational_response(
                 "itinerary": itinerary_data
             },
             "memory": memory,
-            "suggested_actions": [
+            "suggested_actions": append_brave_sources_to_actions([
                 {"label": f"✈️ How to Reach {clean_d}", "action": "prompt", "text": f"How do I travel to {current_dest} and what are the flight/train costs?"},
                 {"label": f"🏨 Where to Stay in {clean_d}", "action": "prompt", "text": f"Where should I stay in {current_dest}?"},
                 {"label": f"Local Food in {clean_d}", "action": "prompt", "text": f"What authentic local food should I eat in {current_dest}?"},
                 {"label": f"DeepSearch {clean_d} ⚡", "action": "deep_search", "destination": current_dest}
-            ]
+            ], brave_sources)
         }
 
     # =========================================================================
@@ -1393,11 +1427,11 @@ def generate_conversational_response(
             "content": inquiry_reply,
             "structured_type": None,
             "memory": memory,
-            "suggested_actions": [
+            "suggested_actions": append_brave_sources_to_actions([
                 {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"},
                 {"label": f"Where to Stay in {clean_d}", "action": "prompt", "text": f"Where should I stay in {clean_d}?"},
                 {"label": f"How to Reach {clean_d}", "action": "prompt", "text": f"How do I travel to {clean_d} and what are costs?"}
-            ]
+            ], brave_sources)
         }
 
     # =========================================================================
