@@ -427,6 +427,281 @@ VERIFIED_DESTINATION_REGISTRY: Dict[str, Dict[str, Any]] = {
         "terrain": "Vast Kanto plain fronting Tokyo Bay with distant vistas of Mount Fuji",
         "official_tourism_url": "https://www.gotokyo.org/en/",
         "boundary_radius_km": 30.0
+    },
+
+    # Additional Verified Hubs
+    "delhi": {
+        "canonical_name": "New Delhi (Delhi)",
+        "destination_type": "National Capital & Historic Metropolis",
+        "district": "New Delhi",
+        "state": "Delhi",
+        "country": "India",
+        "lat": 28.6139,
+        "lng": 77.2090,
+        "elevation_m": 216,
+        "terrain": "Yamuna River basin surrounded by the historic Aravalli ridge",
+        "official_tourism_url": "https://delhitourism.gov.in/",
+        "boundary_radius_km": 30.0
+    },
+    "mumbai": {
+        "canonical_name": "Mumbai (Bombay), Maharashtra",
+        "destination_type": "Coastal Metropolis & Financial Capital",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "country": "India",
+        "lat": 19.0760,
+        "lng": 72.8777,
+        "elevation_m": 14,
+        "terrain": "Arabian Sea peninsula of seven historic islands",
+        "official_tourism_url": "https://www.maharashtratourism.gov.in/",
+        "boundary_radius_km": 30.0
+    },
+    "chennai": {
+        "canonical_name": "Chennai (Madras), Tamil Nadu",
+        "destination_type": "Coastal Metropolis & Cultural Capital",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "lat": 13.0827,
+        "lng": 80.2707,
+        "elevation_m": 6,
+        "terrain": "Coromandel Coast along the Bay of Bengal with Marina Beach",
+        "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/",
+        "boundary_radius_km": 25.0
+    },
+    "kolkata": {
+        "canonical_name": "Kolkata (Calcutta), West Bengal",
+        "destination_type": "Cultural Metropolis & Historic Capital",
+        "district": "Kolkata",
+        "state": "West Bengal",
+        "country": "India",
+        "lat": 22.5726,
+        "lng": 88.3639,
+        "elevation_m": 9,
+        "terrain": "Lower Gangetic Delta along the east bank of the Hooghly River",
+        "official_tourism_url": "https://www.wbtourism.gov.in/",
+        "boundary_radius_km": 25.0
+    },
+    "hyderabad": {
+        "canonical_name": "Hyderabad, Telangana",
+        "destination_type": "Historic City & Tech Metropolis",
+        "district": "Hyderabad",
+        "state": "Telangana",
+        "country": "India",
+        "lat": 17.3850,
+        "lng": 78.4867,
+        "elevation_m": 542,
+        "terrain": "Hilly Deccan Plateau terrain with granitic formations and artificial lakes",
+        "official_tourism_url": "https://tourism.telangana.gov.in/",
+        "boundary_radius_km": 30.0
+    },
+    "shimla": {
+        "canonical_name": "Shimla, Himachal Pradesh",
+        "destination_type": "Colonial Hill Station & State Capital",
+        "district": "Shimla",
+        "state": "Himachal Pradesh",
+        "country": "India",
+        "lat": 31.1048,
+        "lng": 77.1734,
+        "elevation_m": 2276,
+        "terrain": "Seven forested pine and deodar ridges of the northwestern Himalayas",
+        "official_tourism_url": "https://himachaltourism.gov.in/",
+        "boundary_radius_km": 20.0
+    },
+    "rishikesh": {
+        "canonical_name": "Rishikesh, Uttarakhand",
+        "destination_type": "Yoga Capital & Himalayan Ganga Foothills",
+        "district": "Dehradun",
+        "state": "Uttarakhand",
+        "country": "India",
+        "lat": 30.0869,
+        "lng": 78.2676,
+        "elevation_m": 372,
+        "terrain": "Where emerald holy Ganga emerges from the Shivalik Himalayan foothills",
+        "official_tourism_url": "https://uttarakhandtourism.gov.in/",
+        "boundary_radius_km": 15.0
+    },
+    "leh": {
+        "canonical_name": "Leh, Ladakh",
+        "destination_type": "High-Altitude Cold Desert & Monasteries",
+        "district": "Leh",
+        "state": "Ladakh",
+        "country": "India",
+        "lat": 34.1526,
+        "lng": 77.5771,
+        "elevation_m": 3524,
+        "terrain": "Indus river valley flanked by rugged snow-crested Karakoram and Ladakh ranges",
+        "official_tourism_url": "https://ladakh.nic.in/tourism/",
+        "boundary_radius_km": 30.0
+    },
+    "srinagar": {
+        "canonical_name": "Srinagar, Jammu & Kashmir",
+        "destination_type": "Himalayan Lake Valley & Summer Capital",
+        "district": "Srinagar",
+        "state": "Jammu and Kashmir",
+        "country": "India",
+        "lat": 34.0837,
+        "lng": 74.7973,
+        "elevation_m": 1585,
+        "terrain": "Kashmir Valley basin around Dal and Nigeen lakes framed by Zabarwan mountains",
+        "official_tourism_url": "https://jktourism.jk.gov.in/",
+        "boundary_radius_km": 25.0
+    },
+    "udaipur": {
+        "canonical_name": "Udaipur (City of Lakes), Rajasthan",
+        "destination_type": "Historic Mewar Royal Lake City",
+        "district": "Udaipur",
+        "state": "Rajasthan",
+        "country": "India",
+        "lat": 24.5854,
+        "lng": 73.7125,
+        "elevation_m": 598,
+        "terrain": "Interconnected lakes (Pichola, Fateh Sagar) framed by the Aravalli Hills",
+        "official_tourism_url": "https://www.tourism.rajasthan.gov.in/udaipur.html",
+        "boundary_radius_km": 20.0
+    },
+    "amritsar": {
+        "canonical_name": "Amritsar, Punjab",
+        "destination_type": "Spiritual Capital & Golden Temple",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "country": "India",
+        "lat": 31.6340,
+        "lng": 74.8723,
+        "elevation_m": 234,
+        "terrain": "Fertile Majha agricultural plains of Punjab",
+        "official_tourism_url": "https://punjabtourism.punjab.gov.in/",
+        "boundary_radius_km": 20.0
+    },
+    "darjeeling": {
+        "canonical_name": "Darjeeling, West Bengal",
+        "destination_type": "Himalayan Hill Station & Tea Capital",
+        "district": "Darjeeling",
+        "state": "West Bengal",
+        "country": "India",
+        "lat": 27.0410,
+        "lng": 88.2663,
+        "elevation_m": 2042,
+        "terrain": "Steep emerald tea garden slopes facing panoramic views of Kangchenjunga",
+        "official_tourism_url": "https://www.wbtourism.gov.in/",
+        "boundary_radius_km": 20.0
+    },
+    "rameswaram": {
+        "canonical_name": "Rameswaram, Tamil Nadu",
+        "destination_type": "Sacred Island & Coastal Pilgrimage",
+        "district": "Ramanathapuram",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "lat": 9.2876,
+        "lng": 79.3129,
+        "elevation_m": 10,
+        "terrain": "Pamban Island situated between peninsular India and Sri Lanka across Gulf of Mannar",
+        "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/",
+        "boundary_radius_km": 15.0
+    },
+    "kanyakumari": {
+        "canonical_name": "Kanyakumari, Tamil Nadu",
+        "destination_type": "Southernmost Tip & Oceans Confluence",
+        "district": "Kanyakumari",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "lat": 8.0883,
+        "lng": 77.5385,
+        "elevation_m": 30,
+        "terrain": "Confluence point of Arabian Sea, Bay of Bengal, and Indian Ocean with rock memorials",
+        "official_tourism_url": "https://www.tamilnadutourism.tn.gov.in/",
+        "boundary_radius_km": 15.0
+    },
+    "london": {
+        "canonical_name": "London",
+        "destination_type": "Global Financial & Cultural Metropolis",
+        "district": "Greater London",
+        "state": "England",
+        "country": "United Kingdom",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "elevation_m": 25,
+        "terrain": "Thames River basin with Royal parks and historic architectural quarters",
+        "official_tourism_url": "https://www.visitlondon.com/",
+        "boundary_radius_km": 30.0
+    },
+    "rome": {
+        "canonical_name": "Rome",
+        "destination_type": "Ancient Capital & Living Open-Air Museum",
+        "district": "Lazio",
+        "state": "Lazio",
+        "country": "Italy",
+        "lat": 41.9028,
+        "lng": 12.4964,
+        "elevation_m": 21,
+        "terrain": "Seven historic hills overlooking the Tiber River",
+        "official_tourism_url": "https://www.turismoroma.it/en",
+        "boundary_radius_km": 25.0
+    },
+    "dubai": {
+        "canonical_name": "Dubai",
+        "destination_type": "Ultra-Modern Desert & Coastal Metropolis",
+        "district": "Emirate of Dubai",
+        "state": "Dubai",
+        "country": "United Arab Emirates",
+        "lat": 25.2048,
+        "lng": 55.2708,
+        "elevation_m": 5,
+        "terrain": "Arabian Gulf coastline merging into the Arabian Desert with architectural marvels",
+        "official_tourism_url": "https://www.visitdubai.com/en",
+        "boundary_radius_km": 30.0
+    },
+    "singapore": {
+        "canonical_name": "Singapore",
+        "destination_type": "Island City-State & Garden Metropolis",
+        "district": "Central Region",
+        "state": "Singapore",
+        "country": "Singapore",
+        "lat": 1.3521,
+        "lng": 103.8198,
+        "elevation_m": 15,
+        "terrain": "Tropical island with nature reserves, botanical gardens, and futuristic bayfront",
+        "official_tourism_url": "https://www.visitsingapore.com/",
+        "boundary_radius_km": 25.0
+    },
+    "new york": {
+        "canonical_name": "New York City",
+        "destination_type": "Global Cultural & Financial Metropolis",
+        "district": "New York",
+        "state": "New York",
+        "country": "United States",
+        "lat": 40.7128,
+        "lng": -74.0060,
+        "elevation_m": 10,
+        "terrain": "Hudson and East River archipelago with iconic Central Park and skyscraper canyons",
+        "official_tourism_url": "https://www.nyctourism.com/",
+        "boundary_radius_km": 25.0
+    },
+    "bali": {
+        "canonical_name": "Bali",
+        "destination_type": "Tropical Island & Spiritual Biosphere",
+        "district": "Bali Province",
+        "state": "Bali",
+        "country": "Indonesia",
+        "lat": -8.3405,
+        "lng": 115.0920,
+        "elevation_m": 50,
+        "terrain": "Volcanic peaks (Mount Batur, Agung), terraced rice paddies, and coral reef beaches",
+        "official_tourism_url": "https://www.indonesia.travel/gb/en/destinations/bali-nusa-tenggara/bali",
+        "boundary_radius_km": 40.0
+    },
+    "bangkok": {
+        "canonical_name": "Bangkok",
+        "destination_type": "Vibrant Capital & River Metropolis",
+        "district": "Bangkok",
+        "state": "Bangkok",
+        "country": "Thailand",
+        "lat": 13.7563,
+        "lng": 100.5018,
+        "elevation_m": 2,
+        "terrain": "Chao Phraya River delta plain with canal networks and golden Buddhist wats",
+        "official_tourism_url": "https://www.tourismthailand.org/Destinations/Provinces/Bangkok/219",
+        "boundary_radius_km": 25.0
     }
 }
 
@@ -457,9 +732,103 @@ def normalize_destination_key(name: str) -> str:
         "banaras": "varanasi",
         "calcutta": "kolkata",
         "bombay": "mumbai",
-        "madras": "chennai"
+        "madras": "chennai",
+        "new delhi": "delhi",
+        "nyc": "new york",
+        "mamallapuram": "mahabalipuram"
     }
     return alias_map.get(clean, clean)
+
+# Comprehensive set of conversational words, pronouns, verbs, and domain terms that must NEVER be extracted as destinations
+CONVERSATIONAL_STOPWORDS = {
+    # Pronouns & determiners
+    "i", "me", "my", "myself", "we", "us", "our", "ours", "ourselves",
+    "you", "your", "yours", "yourself", "yourselves",
+    "he", "him", "his", "himself", "she", "her", "hers", "herself",
+    "it", "its", "itself", "they", "them", "their", "theirs", "themselves",
+    "this", "that", "these", "those", "what", "which", "who", "whom", "whose",
+    "all", "any", "both", "each", "few", "more", "most", "other", "some", "such",
+    "anything", "something", "nothing", "everything", "anyone", "someone", "everyone",
+    
+    # Common verbs & auxiliaries
+    "am", "is", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "having", "do", "does", "did", "doing",
+    "would", "should", "could", "ought", "might", "must", "shall", "will", "can",
+    "prefer", "prefers", "preferred", "preferring", "preference", "preferences",
+    "want", "wants", "wanted", "wanting",
+    "like", "likes", "liked", "liking",
+    "love", "loves", "loved", "loving",
+    "hate", "hates", "hated", "hating",
+    "need", "needs", "needed", "needing",
+    "plan", "plans", "planned", "planning",
+    "visit", "visits", "visited", "visiting",
+    "travel", "travels", "traveled", "travelling",
+    "go", "goes", "went", "gone", "going",
+    "see", "sees", "saw", "seen", "seeing",
+    "show", "shows", "showed", "showing",
+    "tell", "tells", "told", "telling",
+    "give", "gives", "gave", "given", "giving",
+    "find", "finds", "found", "finding",
+    "make", "makes", "made", "making",
+    "look", "looks", "looked", "looking",
+    "take", "takes", "took", "taken", "taking",
+    "come", "comes", "came", "coming",
+    "think", "thinks", "thought", "thinking",
+    "know", "knows", "knew", "known", "knowing",
+    "suggest", "suggests", "suggested", "suggesting", "suggestion", "suggestions",
+    "recommend", "recommends", "recommended", "recommending", "recommendation", "recommendations",
+    "help", "helps", "helped", "helping",
+    "book", "books", "booked", "booking",
+    "cost", "costs", "costing",
+    "spend", "spends", "spent", "spending",
+    "stay", "stays", "stayed", "staying",
+    "eat", "eats", "ate", "eaten", "eating",
+    "drink", "drinks", "drank", "drinking",
+    "stop", "stops", "stopped", "stopping",
+    "avoid", "avoids", "avoided", "avoiding",
+    "skip", "skips", "skipped", "skipping",
+    "include", "includes", "included", "including",
+    "exclude", "excludes", "excluded", "excluding",
+    "reduce", "reduces", "reduced", "reducing",
+    "increase", "increases", "increased", "increasing",
+    "change", "changes", "changed", "changing",
+    "update", "updates", "updated", "updating",
+    "fit", "fits", "fitted", "fitting",
+    "cover", "covers", "covered", "covering",
+
+    # Travel domain terms (nouns/adjectives)
+    "trip", "trips", "tour", "tours", "vacation", "vacations", "holiday", "holidays",
+    "itinerary", "itineraries", "schedule", "schedules",
+    "budget", "budgets", "budgeting", "expense", "expenses", "price", "prices", "fee", "fees", "ticket", "tickets", "rate", "rates", "fare", "fares",
+    "food", "foods", "dish", "dishes", "meal", "meals", "dining", "cuisine", "cuisines", "breakfast", "lunch", "dinner", "snack", "snacks",
+    "cafe", "cafes", "coffee", "restaurant", "restaurants", "eatery", "eateries", "bar", "bars", "pub", "pubs",
+    "hotel", "hotels", "resort", "resorts", "hostel", "hostels", "homestay", "homestays", "lodge", "lodging", "room", "rooms", "accommodation", "accommodations",
+    "place", "places", "spot", "spots", "location", "locations", "destination", "destinations", "attraction", "attractions", "sight", "sights", "landmark", "landmarks", "viewpoint", "viewpoints",
+    "waterfall", "waterfalls", "beach", "beaches", "mountain", "mountains", "hill", "hills", "lake", "lakes", "river", "rivers", "temple", "temples", "church", "churches", "mosque", "mosques", "museum", "museums", "fort", "forts", "palace", "palaces",
+    "peaceful", "quiet", "serene", "calm", "crowded", "touristy", "offbeat", "hidden", "secret", "famous", "popular", "best", "better", "good", "bad", "cheap", "expensive", "affordable", "luxury", "safe", "safety", "danger", "scam", "scams",
+    "weather", "climate", "temperature", "rain", "monsoon", "season", "winter", "summer", "autumn", "spring",
+    "transit", "transport", "flight", "flights", "train", "trains", "bus", "buses", "cab", "cabs", "taxi", "taxis", "car", "drive", "driving", "walk", "walking", "route", "distance",
+    "day", "days", "night", "nights", "week", "weeks", "month", "months", "weekend", "weekends", "today", "tomorrow", "tonight", "morning", "afternoon", "evening",
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "first", "second", "third", "last", "next", "previous",
+    "yes", "no", "ok", "okay", "sure", "please", "thanks", "thank", "hello", "hi", "hey", "instead", "also", "with", "from", "near", "around", "about"
+}
+
+def is_conversational_phrase(text: str) -> bool:
+    """Returns True if the entire text consists of English stopwords/conversational phrases rather than a destination."""
+    if not text:
+        return True
+    words = [w.strip() for w in re.sub(r'[^\w\s]', ' ', text.lower()).split() if w.strip()]
+    if not words:
+        return True
+    # If all words are in conversational stopwords, it is not a destination
+    stopword_count = sum(1 for w in words if w in CONVERSATIONAL_STOPWORDS)
+    if stopword_count == len(words):
+        return True
+    # If 2 or more words and at least 60% are stopwords, reject as a destination
+    if len(words) >= 2 and (stopword_count / len(words)) >= 0.6:
+        return True
+    return False
 
 def parse_destination_query(user_message: str) -> Dict[str, Any]:
     """
@@ -467,6 +836,7 @@ def parse_destination_query(user_message: str) -> Dict[str, Any]:
     1. Single destination vs. multiple destinations (e.g. 'Trivandrum, Vagamon and Munnar').
     2. Comparison queries (e.g. 'Vagamon vs Munnar').
     3. Preserves distinct identities without cross-contaminating.
+    4. Accurately rejects conversational follow-ups ('I prefer peaceful places', 'What about food?').
     """
     text = user_message.strip()
     text_lower = text.lower()
@@ -499,45 +869,37 @@ def parse_destination_query(user_message: str) -> Dict[str, Any]:
             recognized_destinations.append(rec)
 
     # 2. Second Pass: If no registered destination found, try natural language patterns
-    if not recognized_destinations:
+    if not recognized_destinations and not is_conversational_phrase(text):
         dest_patterns = [
-            r'\b(?:plan\s+(?:a\s+)?(?:\d+[- ]?day\s+)?trip\s+to|trip\s+to|travel\s+to|visit|explore|vacation\s+in|holiday\s+in|guide\s+(?:to|for)|itinerary\s+for|about)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
-            r'\b(?:places\s+(?:to\s+visit\s+)?(?:in|around|near)|sights\s+in|attractions\s+in|what\s+to\s+see\s+in|things\s+to\s+do\s+in|cafes?\s+in|restaurants?\s+in|waterfalls?\s+in|food\s+in)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
+            r'\b(?:plan\s+(?:a\s+)?(?:\d+[- ]?day\s+)?trip\s+to|trip\s+to|travel\s+to|visit|explore|vacation\s+in|holiday\s+in|guide\s+(?:to|for)|itinerary\s+for)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
+            r'\b(?:places\s+(?:to\s+visit\s+)?(?:in|around|near)|sights\s+in|attractions\s+in|what\s+to\s+see\s+in|things\s+to\s+do\s+in|cafes?\s+in|restaurants?\s+in|waterfalls?\s+in)\s+([A-Za-z\s,]{3,32}?)(?:\s+(?:for|with|under|in|from|at|on|\d+days?)|$|[?!.])',
             r'\b(?:hotels?|resorts?|stay|accommodation)\s+(?:in|at|near)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:for|with|under|in|from|at|on|\d+)|$|[?!.])',
             r'\b(?:tell me about|overview of|info about|information on)\s+([A-Za-z\s,]{3,30}?)(?:\s+(?:like|for)|$|[?!.])'
         ]
-        non_dest_words = {
-            "a trip", "an itinerary", "peaceful", "budget", "friends", "couple", "family", "days", "food",
-            "weather", "safety", "cheap", "expensive", "hotel", "flight", "there", "that place", "it",
-            "places", "attractions", "things", "sights", "activities", "cafes", "waterfalls", "best"
-        }
         for pat in dest_patterns:
             m = re.search(pat, text_lower)
             if m:
                 raw_cand = m.group(1).strip()
-                # Strip leading/trailing prepositions (e.g. 'In Chickmagalur' -> 'Chickmagalur')
                 clean_cand = re.sub(r'^(?:in|at|to|near|around|about|for|from)\s+', '', raw_cand, flags=re.I).strip().title()
-                if clean_cand.lower() not in non_dest_words and len(clean_cand) >= 3:
+                if not is_conversational_phrase(clean_cand) and len(clean_cand) >= 3:
                     cand_info = get_destination_identity(clean_cand)
-                    if cand_info and cand_info.get("canonical_name"):
+                    if cand_info and cand_info.get("canonical_name") and cand_info.get("coordinates_verified"):
                         rec = cand_info.copy()
                         rec["key"] = normalize_destination_key(clean_cand)
                         recognized_destinations.append(rec)
                         break
 
-    # 3. Third Pass: Bare destination or short inquiry (e.g. 'Madurai', 'Chikkamagaluru', 'Udupi')
+    # 3. Third Pass: Bare destination only when entire input is 1-3 words and NOT a conversational sentence
     if not recognized_destinations:
-        words = [w for w in re.sub(r'[^\w\s]', '', text_lower).split() if w not in non_dest_words and len(w) >= 3]
-        if 1 <= len(words) <= 3:
-            candidate_phrase = " ".join(words).title()
-            # Avoid single common action verbs or nouns
-            action_words = {"plan", "show", "tell", "need", "find", "give", "make", "help", "book", "cost", "safe"}
-            if not any(w in action_words for w in words):
-                cand_info = get_destination_identity(candidate_phrase)
-                if cand_info and cand_info.get("canonical_name"):
-                    rec = cand_info.copy()
-                    rec["key"] = normalize_destination_key(candidate_phrase)
-                    recognized_destinations.append(rec)
+        all_words = [w for w in re.sub(r'[^\w\s]', '', text_lower).split() if w]
+        # Only evaluate if whole input is 1-3 words and not conversational
+        if 1 <= len(all_words) <= 3 and not is_conversational_phrase(text):
+            candidate_phrase = " ".join(all_words).title()
+            cand_info = get_destination_identity(candidate_phrase)
+            if cand_info and cand_info.get("canonical_name") and cand_info.get("coordinates_verified"):
+                rec = cand_info.copy()
+                rec["key"] = normalize_destination_key(candidate_phrase)
+                recognized_destinations.append(rec)
 
     # Determine query classification
     if len(recognized_destinations) >= 2:
@@ -545,7 +907,7 @@ def parse_destination_query(user_message: str) -> Dict[str, Any]:
     elif len(recognized_destinations) == 1:
         query_type = "single_destination"
     else:
-        query_type = "general_travel"
+        query_type = "conversational" if is_conversational_phrase(text) else "general_travel"
 
     return {
         "query_type": query_type,
@@ -559,12 +921,16 @@ def get_destination_identity(dest_name: str) -> Dict[str, Any]:
     """
     Resolves full geographical identity (type, district, state, country, coordinates).
     Uses curated database first, dynamic geocaching, then Nominatim, and avoids fake fallback coordinates.
+    Returns {} if input is conversational or cannot be verified as a geographic entity.
     """
     if not dest_name:
         return {}
 
     # Strip any leading prepositions
     clean_dest = re.sub(r'^(?:in|at|to|near|around|about|for|from)\s+', '', dest_name.strip(), flags=re.I).strip()
+    if not clean_dest or is_conversational_phrase(clean_dest):
+        return {}
+
     key = normalize_destination_key(clean_dest)
 
     if key in VERIFIED_DESTINATION_REGISTRY:
@@ -590,55 +956,62 @@ def get_destination_identity(dest_name: str) -> Dict[str, Any]:
                 results = resp.json()
                 if results and len(results) > 0:
                     r0 = results[0]
-                    lat = float(r0["lat"])
-                    lng = float(r0["lon"])
-                    addr = r0.get("address", {})
-                    
-                    city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or clean_dest.title()
-                    district = addr.get("state_district") or addr.get("county") or ""
-                    state = addr.get("state") or ""
-                    country = addr.get("country") or "India"
-                    place_type = r0.get("type", "town").replace("_", " ").title()
+                    # Verify it's an actual geographic place class
+                    place_class = r0.get("class", "")
+                    if place_class in ["place", "boundary", "natural", "landuse", "highway"]:
+                        lat = float(r0["lat"])
+                        lng = float(r0["lon"])
+                        addr = r0.get("address", {})
+                        
+                        city = addr.get("city") or addr.get("town") or addr.get("village") or addr.get("county") or clean_dest.title()
+                        district = addr.get("state_district") or addr.get("county") or ""
+                        state = addr.get("state") or ""
+                        country = addr.get("country") or "India"
+                        place_type = r0.get("type", "town").replace("_", " ").title()
 
-                    resolved = {
-                        "canonical_name": f"{city}, {state}" if state else city,
-                        "destination_type": f"{place_type} & Regional Destination",
-                        "district": district,
-                        "state": state,
-                        "country": country,
-                        "lat": lat,
-                        "lng": lng,
-                        "elevation_m": None,
-                        "terrain": f"Regional landscape in {district or state}, {country}",
-                        "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city + ' tourism official website')}",
-                        "boundary_radius_km": 25.0,
-                        "coordinates_verified": True,
-                        "key": key
-                    }
-                    _DYNAMIC_GEOCODE_CACHE[key] = resolved
-                    return resolved
+                        resolved = {
+                            "canonical_name": f"{city}, {state}" if state else city,
+                            "destination_type": f"{place_type} & Regional Destination",
+                            "district": district,
+                            "state": state,
+                            "country": country,
+                            "lat": lat,
+                            "lng": lng,
+                            "elevation_m": None,
+                            "terrain": f"Regional landscape in {district or state}, {country}",
+                            "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city + ' tourism official website')}",
+                            "boundary_radius_km": 25.0,
+                            "coordinates_verified": True,
+                            "key": key
+                        }
+                        _DYNAMIC_GEOCODE_CACHE[key] = resolved
+                        return resolved
     except Exception as e:
         print(f"Nominatim lookup exception for '{clean_dest}': {e}")
 
     # Parse state / country if comma-separated (e.g. 'Interlaken, Switzerland' or 'Kumbakonam, Tamil Nadu')
-    parts = [p.strip().title() for p in clean_dest.split(",")]
-    city_name = parts[0]
-    inferred_state = parts[1] if len(parts) > 1 else ""
-    inferred_country = parts[2] if len(parts) > 2 else ("India" if inferred_state in ["Tamil Nadu", "Karnataka", "Kerala", "Maharashtra", "Goa", "Rajasthan"] else "")
+    if "," in clean_dest:
+        parts = [p.strip().title() for p in clean_dest.split(",")]
+        city_name = parts[0]
+        inferred_state = parts[1] if len(parts) > 1 else ""
+        inferred_country = parts[2] if len(parts) > 2 else ("India" if inferred_state in ["Tamil Nadu", "Karnataka", "Kerala", "Maharashtra", "Goa", "Rajasthan"] else "")
 
-    # Zero-fabrication fallback: coordinates marked None if unverified rather than injecting fake Bangalore coords
-    return {
-        "canonical_name": f"{city_name}, {inferred_state}" if inferred_state else city_name,
-        "destination_type": "Travel Destination",
-        "district": "",
-        "state": inferred_state,
-        "country": inferred_country or "World Destination",
-        "lat": None,
-        "lng": None,
-        "elevation_m": None,
-        "terrain": f"Regional terrain in {city_name}",
-        "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city_name + ' tourism')}",
-        "boundary_radius_km": 25.0,
-        "coordinates_verified": False,
-        "key": key
-    }
+        if city_name and not is_conversational_phrase(city_name):
+            return {
+                "canonical_name": f"{city_name}, {inferred_state}" if inferred_state else city_name,
+                "destination_type": "Travel Destination",
+                "district": "",
+                "state": inferred_state,
+                "country": inferred_country or "World Destination",
+                "lat": None,
+                "lng": None,
+                "elevation_m": None,
+                "terrain": f"Regional terrain in {city_name}",
+                "official_tourism_url": f"https://www.google.com/search?q={urllib.parse.quote(city_name + ' tourism')}",
+                "boundary_radius_km": 25.0,
+                "coordinates_verified": False,
+                "key": key
+            }
+
+    # If unverified and not explicitly qualified, return empty dict rather than fake destination
+    return {}

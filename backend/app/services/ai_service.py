@@ -17,7 +17,8 @@ from app.services.hotel_service import get_worldwide_hotel_suggestions
 from app.services.destination_verifier import (
     parse_destination_query,
     get_destination_identity,
-    normalize_destination_key
+    normalize_destination_key,
+    is_conversational_phrase
 )
 from app.services.travel_research_service import (
     research_destination_facts,
@@ -950,15 +951,28 @@ def build_contextual_fallback(user_message: str, current_dest: str, days: int, t
     intel = DESTINATION_INTELLIGENCE.get(dest_key, {})
     t = user_message.lower()
 
-    if any(k in t for k in ["hidden", "offbeat", "secret", "peaceful"]):
-        gems = intel.get("offbeat_gems", [
-            {"name": f"Ancient Artisanal Quarters of {clean_d}", "desc": "Generational craft studios tucked away from tourist buses."},
-            {"name": f"Panoramic Ridge Trail", "desc": "Quiet hill or waterfront overlook offering untouched views."}
-        ])
-        lines = [f"### 💎 Hidden Gems & Secret Spots in **{clean_d}**:\n"]
-        for g in gems:
-            lines.append(f"• **{g['name']}**: {g['desc']}")
-        lines.append(f"\n💡 *Local Tip:* Visit these spots in the early morning (before 9:00 AM) or late afternoon for the most peaceful experience.")
+    # 1. Entry fees and ticketing
+    if any(k in t for k in ["entry fee", "ticket", "tickets", "entry cost", "cost to enter", "admission", "ticket price"]):
+        research = research_destination_facts(current_dest)
+        in_dest = research.get("in_destination_attractions", [])
+        if in_dest:
+            lines = [f"### 🎟️ Verified Entry Fees & Ticketing in **{clean_d}**:\n"]
+            for a in in_dest[:5]:
+                lines.append(f"• **{a['name']}**: {a.get('entry_fee_note', 'Nominal entrance fee / Free entry')}")
+            lines.append(f"\n💡 *Ticketing Tip:* Indian citizens typically pay ₹20–₹50 at ASI monuments (carry government ID); foreign tourist tickets range ₹300–₹600.")
+            return "\n".join(lines)
+
+    # 2. Less crowded / peaceful alternatives
+    if any(k in t for k in ["less crowded", "crowded", "crowd", "peaceful", "quiet", "serene", "calm", "hidden", "offbeat", "secret"]):
+        gems = intel.get("offbeat_gems", [])
+        lines = [f"### 🌿 Peaceful & Less Crowded Spots in **{clean_d}**:\n"]
+        if gems:
+            for g in gems:
+                lines.append(f"• **{g['name']}**: {g['desc']}")
+        else:
+            lines.append(f"• **Early Morning Heritage Quarters (06:30 AM–08:30 AM)**: Tranquil hours before commercial tour buses arrive.")
+            lines.append(f"• **Panoramic Ridge Trail**: Elevated natural vantage point offering untouched views away from city noise.")
+        lines.append(f"\n💡 *Local Tip:* Visit primary landmarks right at opening (06:00–07:30 AM) or after 06:00 PM for the most serene, crowd-free experience.")
         return "\n".join(lines)
 
     if any(k in t for k in ["food", "cafes", "cafe", "eat", "dining", "restaurants", "dish"]):
@@ -1323,17 +1337,21 @@ def generate_conversational_response(
     # INTENT 2: COMPLETE DESTINATION GUIDE (Section 4 - 16 Standard Sections)
     # =========================================================================
     is_guide_request = (
-        any(k in text_lower for k in [
-            "complete guide", "comprehensive guide", "tell me about", "overview of", "guide to",
-            "everything about", "guide for", "travel guide", "and all", "details of", "about ",
-            "explore ", "visit ", "information on", "info about", "what to see"
-        ]) or (
-            current_dest and len(text_lower.split()) <= 4 and not any(w in text_lower for w in [
-                "hotel", "bus", "flight", "food", "budget", "safe", "pack", "reach", "trip", "plan",
-                "itinerary", "cost", "price", "fee", "ticket", "day", "days", "more day", "less day"
-            ])
+        not is_conversational_phrase(user_message) and
+        current_dest and (
+            any(k in text_lower for k in [
+                "complete guide", "comprehensive guide", "tell me about", "overview of", "guide to",
+                "everything about", "guide for", "travel guide", "details of",
+                "information on", "info about", "what to see"
+            ]) or (
+                len(text_lower.split()) <= 3 and not any(w in text_lower for w in [
+                    "hotel", "bus", "flight", "food", "budget", "safe", "pack", "reach", "trip", "plan",
+                    "itinerary", "cost", "price", "fee", "ticket", "day", "days", "more day", "less day",
+                    "cafe", "cafes", "how", "what", "where", "why", "can", "is", "distance", "far"
+                ])
+            )
         )
-    ) and current_dest
+    )
 
     if is_guide_request:
         if memory.get("is_multi_destination") and len(memory.get("destinations_list", [])) >= 2:
@@ -1533,6 +1551,88 @@ def generate_conversational_response(
                 {"label": f"Plan {days}-Day Itinerary", "action": "prompt", "text": f"Plan a {days}-day trip to {clean_d}"}
             ]
         }
+
+    # =========================================================================
+    # INTENT 4B: EXACT DISTANCE & TRAVEL TIME ("How far is Munnar from Kochi?")
+    # =========================================================================
+    is_distance_query = any(k in text_lower for k in [
+        "how far", "distance between", "distance from", "driving distance",
+        "how long does it take to drive", "travel time between", "travel time from",
+        "how long to drive", "driving time", "km between", "road distance"
+    ]) or (
+        "distance" in text_lower and any(w in text_lower for w in ["from", "to", "between", "how", "what is"])
+    )
+
+    if is_distance_query:
+        import math
+        parsed = parse_destination_query(user_message)
+        d_list = parsed.get("destinations", [])
+        dest_a = None
+        dest_b = None
+        if len(d_list) >= 2:
+            dest_a = d_list[0]["canonical_name"]
+            dest_b = d_list[1]["canonical_name"]
+        elif len(d_list) == 1 and current_dest and normalize_destination_key(d_list[0]["canonical_name"]) != normalize_destination_key(current_dest):
+            dest_a = current_dest
+            dest_b = d_list[0]["canonical_name"]
+        elif memory.get("origin") and current_dest:
+            dest_a = memory.get("origin")
+            dest_b = current_dest
+
+        # Try regex if not yet found
+        if not (dest_a and dest_b):
+            dist_match = re.search(r'\b(?:how far is|distance (?:between|from))\s+([A-Za-z\s]+?)\s+(?:from|to|and)\s+([A-Za-z\s?!.]+)', text_lower)
+            if dist_match:
+                cand_1 = dist_match.group(1).strip().title()
+                cand_2 = dist_match.group(2).strip().rstrip("?!.").title()
+                ident1 = get_destination_identity(cand_1)
+                ident2 = get_destination_identity(cand_2)
+                if ident1 and ident2:
+                    dest_a = ident1.get("canonical_name", cand_1)
+                    dest_b = ident2.get("canonical_name", cand_2)
+
+        if dest_a and dest_b and dest_a != dest_b:
+            lat1, lng1 = resolve_destination_coordinates(dest_a)
+            lat2, lng2 = resolve_destination_coordinates(dest_b)
+
+            dlat = math.radians(lat2 - lat1)
+            dlng = math.radians(lng2 - lng1)
+            a_val = math.sin(dlat/2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlng/2)**2
+            c_val = 2 * math.atan2(math.sqrt(a_val), math.sqrt(1-a_val))
+            geo_km = 6371.0 * c_val
+            # Typical road winding factor: ~1.3x on plains, ~1.45x on mountain ghats
+            is_mountain = any(m in (dest_a + " " + dest_b).lower() for m in ["munnar", "vagamon", "manali", "shimla", "ooty", "kodaikanal", "coorg", "leh", "darjeeling", "wayanad"])
+            road_factor = 1.45 if is_mountain else 1.3
+            road_km = round(geo_km * road_factor, 1) if geo_km > 0 else 0
+            speed_kmh = 35.0 if is_mountain else 55.0
+            drive_hours = round(road_km / speed_kmh, 1)
+            drive_min_str = f"{int(drive_hours)} hr {int((drive_hours % 1) * 60)} mins" if drive_hours >= 1 else f"{int(drive_hours * 60)} mins"
+
+            dist_prompt = (
+                f"The user asks about distance and route: '{user_message}'\n"
+                f"Origin: {dest_a} ({lat1:.4f}°N, {lng1:.4f}°E). Destination: {dest_b} ({lat2:.4f}°N, {lng2:.4f}°E).\n"
+                f"Estimated road distance: ~{int(road_km)} km. Driving time: ~{drive_min_str}.\n"
+                f"Give a direct, concise, 100% accurate answer stating the exact highway route, road distance, travel time by car and bus, and road condition notes.\n"
+                f"Do NOT generate a full 16-section guide. Answer this exact question directly."
+            )
+            gemini_dist = try_gemini_multiturn_chat(dist_prompt, conversation_history, extra_context=extra_context)
+            dist_fallback = (
+                f"### 🚗 Distance & Route: **{dest_a.split(',')[0]} ➔ {dest_b.split(',')[0]}**\n\n"
+                f"• **Road Distance:** Approximately **{int(road_km)} km** (Straight-line: {geo_km:.1f} km).\n"
+                f"• **Estimated Driving Time:** **{drive_min_str}** depending on mountain terrain, ghat curves, and traffic.\n"
+                f"• **Recommended Mode:** Private cab or self-drive car allows scenic waterfall stops; state KSRTC/express buses connect the main bus stands.\n"
+                f"• **Route Tip:** Start early in the morning (by 7:00–8:00 AM) to avoid afternoon traffic and mountain mist."
+            )
+            return {
+                "role": "assistant",
+                "content": gemini_dist or dist_fallback,
+                "structured_type": None,
+                "memory": memory,
+                "suggested_actions": [
+                    {"label": f"Plan Itinerary for {dest_b.split(',')[0]}", "action": "prompt", "text": f"Plan a trip to {dest_b.split(',')[0]}"},
+                    {"label": f"Where to Stay in {dest_b.split(',')[0]}", "action": "prompt", "text": f"Where should I stay in {dest_b.split(',')[0]}?"}
+                ]
+            }
 
     # =========================================================================
     # INTENT 5: WORLDWIDE HOTEL & ACCOMMODATION RECOMMENDATIONS
